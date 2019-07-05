@@ -22,25 +22,25 @@ CPPFLAGS = -I. -I../utils -I../fem $(MINIFE_TYPES) $(MINIFE_MATRIX_TYPE) -DHAVE_
 #CPPFLAGS = -I. -I../utils -I../fem $(MINIFE_TYPES) $(MINIFE_MATRIX_TYPE) #-DHAVE_MPI -DMPICH_IGNORE_CXX_SEEK -DMATVEC_OVERLAP #-DGPUDIRECT #-DMATVEC_OVERLAP #-DMINIFE_DEBUG
 #CPPFLAGS = -I. -I../utils -I../fem $(MINIFE_TYPES) $(MINIFE_MATRIX_TYPE) -DHAVE_MPI -DMPICH_IGNORE_CXX_SEEK -DGPUDIRECT -DMATVEC_OVERLAP #-DMINIFE_DEBUG
 
-LDFLAGS= 
-LIBS= -l nvToolsExt
+LDFLAGS = -L${CUDA_HOME}/lib64 -fopenmp
+LIBS = -ldl -lm -lrt -lnsl -lutil -lnvToolsExt -lcudart
 
 # The MPICH_IGNORE_CXX_SEEK macro is required for some mpich versions,
 # such as the one on my cygwin machine.
 
 #mvapich
-#MPICFLAGS=-I/usr/local/mvapich/include -pthread 
+#MPICFLAGS=-I/usr/local/mvapich/include -pthread
 #MPILDFLAGS=-L/usr/local/mvapich/lib -lmpichcxx -lmpich -lopa -lmpl -lcudart -lcuda -libverbs -ldl -lrt -lm -lpthread
 #c++ -L/usr/local/cuda//lib64 -L/usr/local/cuda//lib -L/lib -L/lib -L/lib -Wl,-rpath,/lib -L/lib -Wl,-rpath,/lib -L/lib -Wl,-rpath,/lib -L/lib -L/lib -I/usr/local/mvapich/include -L/usr/local/mvapich/lib -lmpichcxx -lmpich -lopa -lmpl -lcudart -lcuda -libverbs -ldl -lrt -lm -lpthread
 
 #openmpi
-MPICFLAGS=-I$(MPI_HOME)/include -pthread 
-MPILDFLAGS=-L$(MPI_HOME)/lib -lmpi -lmpi_cxx -ldl -lm -lrt -lnsl -lutil -lm -ldl
+MPI_HOME=${MPI_ROOT}
+MPICFLAGS=-I$(MPI_HOME)/include -pthread
 
-NVCCFLAGS=-lineinfo -gencode=arch=compute_35,code=\"sm_35,compute_35\" #-gencode=arch=compute_20,code=\"sm_20,compute_20\" 
+NVCCFLAGS=-lineinfo -gencode=arch=compute_70,code=\"sm_70,compute_70\"
 
-NVCC=nvcc -Xcompiler -fopenmp 
+NVCC=nvcc -Xcompiler -fopenmp
 CXX=mpicxx
-CC=mpiccc
+CC=mpicc
 
 include make_targets

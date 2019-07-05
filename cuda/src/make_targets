@@ -21,7 +21,7 @@ vpath %.cpp ../utils
 all: common_files generate_info miniFE.x 
 
 miniFE.x: $(MAIN_OBJ) $(OBJS) $(UTIL_OBJS) $(OPTIONAL_OBJS) *.hpp *.h
-	$(INSTRUMENT) $(NVCC) -Xcompiler "$(MPICFLAGS)" $(CXXFLAGS) $(CPPFLAGS) $(MAIN_OBJ) $(OBJS) $(UTIL_OBJS) $(OPTIONAL_OBJS) -o miniFE.x $(MPILDFLAGS) $(LDFLAGS) $(OPTIONAL_LIBS) $(LIBS) 
+	mpicxx $(MAIN_OBJ) $(OBJS) $(UTIL_OBJS) $(OPTIONAL_OBJS) -o $@ $(LDFLAGS) $(OPTIONAL_LIBS) $(LIBS)
 
 common_files:
 	./get_common_files
