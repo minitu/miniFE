@@ -1,0 +1,277 @@
+==109475== NVPROF is profiling process 109475, command: ./miniFE.x --num_devices 4 -nx 1600 -ny 1600 -nz 200
+==109475== Profiling application: ./miniFE.x --num_devices 4 -nx 1600 -ny 1600 -nz 200
+==109475== Profiling result:
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"GPU activities",62.482741,3085.819179,201,15.352334,15.321465,15.385913,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"GPU activities",12.332580,609.065954,1,609.065954,609.065954,609.065954,"_ZN6miniFE19element_loop_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEENS_7PODMeshIiEEEEvT1_NT_17GlobalOrdinalTypeEPKS9_S8_T0_PKNS8_10ScalarTypeESF_"
+"GPU activities",11.059251,546.180423,602,0.907276,0.628507,0.910808,"_ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_"
+"GPU activities",4.404681,217.532878,606,0.358965,0.001279,99.397816,"[CUDA memcpy DtoH]"
+"GPU activities",3.600966,177.839983,400,0.444599,0.307102,0.582811,"_ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE"
+"GPU activities",2.287786,112.986303,201,0.562120,0.560123,0.564667,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"GPU activities",0.881458,43.532322,1,43.532322,43.532322,43.532322,"_ZN6miniFE32generate_matrix_structure_kernelINS_7PODMeshIiEENS_12PODELLMatrixIdiiEEEEvT_T0_iii"
+"GPU activities",0.728854,35.995748,2,17.997874,17.996962,17.998786,"_ZN6miniFE30impose_dirichlet_second_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvNT_10ScalarTypeES5_T0_PNS5_17GlobalOrdinalTypeES8_"
+"GPU activities",0.313831,15.499094,201,0.077109,0.041568,0.124575,"_ZN6miniFE20copyElementsToBufferIdiEEvPT_S2_PT0_i"
+"GPU activities",0.250946,12.393396,10,1.239339,0.000992,11.161502,"[CUDA memcpy HtoD]"
+"GPU activities",0.241019,11.903127,1,11.903127,11.903127,11.903127,"_ZN6miniFE24markExternalColumnsInMapINS_12PODELLMatrixIdiiEENS_13PODColMarkMapIiEEEEvT_T0_"
+"GPU activities",0.196047,9.682123,10,0.968212,0.001152,8.191128,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"GPU activities",0.192701,9.516876,1,9.516876,9.516876,9.516876,"_ZN6miniFE25renumberExternalsAndCountINS_12PODELLMatrixIdiiEEEEvT_NS3_17GlobalOrdinalTypeES4_PS4_"
+"GPU activities",0.186462,9.208751,3,3.069583,2.990950,3.225316,"_ZN6thrust8cuda_cub3cub30DeviceRadixSortDownsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb1ELb0EiS4_iEEvPKT2_PS7_PKT3_PSB_PT4_SF_iiNS1_13GridEvenShareISF_EE"
+"GPU activities",0.152120,7.512702,1,7.512702,7.512702,7.512702,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_8__unique11UniqueAgentINS_6detail15normal_iteratorINS_10device_ptrIiEEEES9_NS_8equal_toIiEEiPiEES9_S9_SB_SC_iNS0_3cub13ScanTileStateIiLb1EEEmEEvT0_T1_T2_T3_T4_T5_T6_"
+"GPU activities",0.130259,6.433064,2,3.216532,3.172452,3.260612,"_ZN6thrust8cuda_cub3cub30DeviceRadixSortDownsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb0ELb0EiS4_iEEvPKT2_PS7_PKT3_PSB_PT4_SF_iiNS1_13GridEvenShareISF_EE"
+"GPU activities",0.111195,5.491535,10,0.549153,0.001504,3.937853,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIiEEiEEmEES9_mEEvT0_T1_"
+"GPU activities",0.108475,5.357233,1,5.357233,5.357233,5.357233,"_ZN6miniFE17renumberExternalsINS_12PODELLMatrixIdiiEEEEvT_PNS3_17GlobalOrdinalTypeES4_S5_"
+"GPU activities",0.091420,4.514936,1,4.514936,4.514936,4.514936,"_ZN6miniFE21createExternalMappingINS_12PODELLMatrixIdiiEEEEvT_"
+"GPU activities",0.070134,3.463682,3,1.154560,1.150006,1.157558,"_ZN6thrust8cuda_cub3cub28DeviceRadixSortUpsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb1ELb0EiiEEvPKT2_PT3_SA_iiNS1_13GridEvenShareISA_EE"
+"GPU activities",0.050447,2.491434,1,2.491434,2.491434,2.491434,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_11__transform17unary_transform_fIPiS7_NS5_14no_stencil_tagENS_8identityIiEENS5_21always_true_predicateEEElEESC_lEEvT0_T1_"
+"GPU activities",0.047001,2.321228,2,1.160614,1.153814,1.167414,"_ZN6thrust8cuda_cub3cub28DeviceRadixSortUpsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb0ELb0EiiEEvPKT2_PT3_SA_iiNS1_13GridEvenShareISA_EE"
+"GPU activities",0.027756,1.370772,1,1.370772,1.370772,1.370772,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_6__fill7functorINS_6detail15normal_iteratorINS_10device_ptrIiEEEEiEEmEESC_mEEvT0_T1_"
+"GPU activities",0.018492,0.913243,400,0.002283,0.002208,0.002528,"_ZN6miniFE23dot_final_reduce_kernelIdEEvPT_"
+"GPU activities",0.015842,0.782361,2,0.391180,0.042208,0.740153,"_ZN6miniFE29impose_dirichlet_first_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvNT_10ScalarTypeES5_T0_PNS5_17GlobalOrdinalTypeES8_S8_S8_"
+"GPU activities",0.009581,0.473178,400,0.001182,0.001120,0.001536,"_ZN6miniFE17cudaMemset_kernelIdEEvPT_S1_i"
+"GPU activities",0.005903,0.291549,1,0.291549,0.291549,0.291549,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_6__fill7functorINS_6detail15normal_iteratorINS_10device_ptrIdEEEEiEElEESC_lEEvT0_T1_"
+"GPU activities",0.001932,0.095392,5,0.019078,0.018816,0.019712,"_ZN6thrust8cuda_cub3cub23RadixSortScanBinsKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700EiEEvPT0_i"
+"GPU activities",0.000121,0.005984,1,0.005984,0.005984,0.005984,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_8__unique9InitAgentINS0_3cub13ScanTileStateIiLb1EEEPiiEES7_mS8_EEvT0_T1_T2_"
+"API calls",55.347133,2483.454416,602,4.125339,0.006562,16.854877,"cudaEventSynchronize"
+"API calls",19.717452,884.732228,23,38.466618,0.014543,609.349145,"cudaFree"
+"API calls",13.713086,615.313254,2,307.656627,0.005933,615.307321,"cudaStreamCreate"
+"API calls",6.997538,313.983141,24,13.082630,0.007844,125.140835,"cudaMalloc"
+"API calls",1.519713,68.190302,2455,0.027776,0.010073,0.058507,"cudaLaunchKernel"
+"API calls",1.137414,51.036347,614,0.083121,0.007774,15.019365,"cudaMemcpyAsync"
+"API calls",0.589182,26.436879,384,0.068846,0.000209,3.512164,"cuDeviceGetAttribute"
+"API calls",0.218235,9.792300,4,2.448075,1.370043,3.217092,"cuDeviceTotalMem"
+"API calls",0.179244,8.042758,4,2.010689,0.047500,6.431228,"cudaHostRegister"
+"API calls",0.176897,7.937476,11,0.721588,0.007107,7.518448,"cudaDeviceSynchronize"
+"API calls",0.110816,4.972370,1,4.972370,4.972370,4.972370,"cudaGetDeviceProperties"
+"API calls",0.078484,3.521617,804,0.004380,0.003009,0.007269,"cudaEventRecord"
+"API calls",0.069877,3.135414,4,0.783853,0.232708,1.334871,"cuDeviceGetName"
+"API calls",0.042639,1.913235,402,0.004759,0.003117,0.006045,"cudaStreamWaitEvent"
+"API calls",0.042329,1.899312,3,0.633104,0.038901,1.820723,"cudaHostUnregister"
+"API calls",0.037426,1.679316,2032,0.000826,0.000215,0.001341,"cudaGetLastError"
+"API calls",0.011026,0.494720,1,0.494720,0.494720,0.494720,"cudaMemcpy"
+"API calls",0.005374,0.241122,27,0.008930,0.005027,0.020224,"cudaFuncGetAttributes"
+"API calls",0.001087,0.048766,2,0.024383,0.019532,0.029234,"cudaStreamDestroy"
+"API calls",0.001048,0.047009,30,0.001566,0.000541,0.006120,"cudaGetDevice"
+"API calls",0.000836,0.037510,3,0.012503,0.007029,0.022995,"cudaStreamSynchronize"
+"API calls",0.000788,0.035336,29,0.001218,0.000584,0.002609,"cudaDeviceGetAttribute"
+"API calls",0.000553,0.024821,65,0.000381,0.000193,0.001172,"cudaPeekAtLastError"
+"API calls",0.000452,0.020266,12,0.001688,0.000932,0.004332,"cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags"
+"API calls",0.000353,0.015854,4,0.003963,0.001286,0.010879,"cuDeviceGetPCIBusId"
+"API calls",0.000323,0.014511,1,0.014511,0.014511,0.014511,"cudaSetDevice"
+"API calls",0.000218,0.009802,2,0.004901,0.003494,0.006308,"cudaEventDestroy"
+"API calls",0.000204,0.009171,1,0.009171,0.009171,0.009171,"cudaMemcpyToSymbolAsync"
+"API calls",0.000097,0.004367,8,0.000545,0.000283,0.000945,"cuDeviceGet"
+"API calls",0.000084,0.003773,2,0.001886,0.001254,0.002519,"cudaEventCreateWithFlags"
+"API calls",0.000034,0.001542,3,0.000514,0.000430,0.000627,"cuDeviceGetCount"
+"API calls",0.000034,0.001513,1,0.001513,0.001513,0.001513,"cudaThreadSetCacheConfig"
+"API calls",0.000026,0.001164,1,0.001164,0.001164,0.001164,"cudaDeviceSetSharedMemConfig"
+
+==109475== NVTX result:
+==109475==   Thread "<unnamed>" (id = 312240)
+==109475==     Domain "<unnamed>"
+==109475==       Range "Allocation of Temporary Vectors"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,136.578876,1,136.578876,136.578876,136.578876,"Allocation of Temporary Vectors"
+"GPU activities",100.000000,0.885945,3,0.295315,0.291198,0.303229,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"API calls",100.000000,0.156153,3,0.052051,0.047953,0.054104,"cudaLaunchKernel"
+
+==109475==       Range "Create external_local_index"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,31.712414,1,31.712414,31.712414,31.712414,"Create external_local_index"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "MPI All Reduce"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,184.697244,401,0.460591,0.008064,22.678146,"MPI All Reduce"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "MPI Communication"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,25.216427,2,12.608213,1.916645,23.299782,"MPI Communication"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "MPI Reduce"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,277.641680,1,277.641680,277.641680,277.641680,"MPI Reduce"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "Set External Processors"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,42.383746,1,42.383746,42.383746,42.383746,"Set External Processors"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "add to recv_list"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,0.001834,1,0.001834,0.001834,0.001834,"add to recv_list"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "allocate device memory"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,190.975571,1,190.975571,190.975571,190.975571,"allocate device memory"
+"GPU activities",66.715927,8.191128,1,8.191128,8.191128,8.191128,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"GPU activities",33.284073,4.086492,2,2.043246,0.148639,3.937853,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIiEEiEEmEES9_mEEvT0_T1_"
+"API calls",100.000000,0.123479,3,0.041159,0.036975,0.046504,"cudaLaunchKernel"
+
+==109475==       Range "allocate host memory"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,429.552164,1,429.552164,429.552164,429.552164,"allocate host memory"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "allocation"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,8.729140,1,8.729140,8.729140,8.729140,"allocation"
+"GPU activities",57.761362,0.017984,1,0.017984,0.017984,0.017984,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"GPU activities",42.238638,0.013151,1,0.013151,0.013151,0.013151,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIiEEiEEmEES9_mEEvT0_T1_"
+"API calls",100.000000,0.098068,2,0.049034,0.043844,0.054224,"cudaLaunchKernel"
+
+==109475==       Range "assemble FE data"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,723.716171,1,723.716171,723.716171,723.716171,"assemble FE data"
+"GPU activities",98.153307,609.065954,1,609.065954,609.065954,609.065954,"_ZN6miniFE19element_loop_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEENS_7PODMeshIiEEEEvT1_NT_17GlobalOrdinalTypeEPKS9_S8_T0_PKNS8_10ScalarTypeESF_"
+"GPU activities",1.799276,11.164958,4,2.791239,0.000992,11.161502,"[CUDA memcpy HtoD]"
+"GPU activities",0.046984,0.291549,1,0.291549,0.291549,0.291549,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_6__fill7functorINS_6detail15normal_iteratorINS_10device_ptrIdEEEEiEElEESC_lEEvT0_T1_"
+"GPU activities",0.000433,0.002688,2,0.001344,0.001152,0.001536,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"API calls",99.295355,11.303116,3,3.767705,0.007774,11.282518,"cudaMemcpyAsync"
+"API calls",0.624079,0.071041,4,0.017760,0.012843,0.024288,"cudaLaunchKernel"
+"API calls",0.080565,0.009171,1,0.009171,0.009171,0.009171,"cudaMemcpyToSymbolAsync"
+
+==109475==       Range "assign new external"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,5.905514,2,2.952757,0.869309,5.036205,"assign new external"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "begin exchange"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,16.850569,201,0.083833,0.072476,0.107976,"begin exchange"
+"GPU activities",86.849857,102.363454,201,0.509270,0.320157,0.754330,"[CUDA memcpy DtoH]"
+"GPU activities",13.150143,15.499094,201,0.077109,0.041568,0.124575,"_ZN6miniFE20copyElementsToBufferIdiEEvPT_S2_PT0_i"
+"API calls",55.738743,5.780344,201,0.028757,0.021994,0.037608,"cudaLaunchKernel"
+"API calls",44.261257,4.590080,201,0.022836,0.018502,0.029340,"cudaMemcpyAsync"
+
+==109475==       Range "cgsolve"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,4936.212974,1,4936.212974,4936.212974,4936.212974,"cgsolve"
+"GPU activities",76.315870,3085.819179,201,15.352334,15.321465,15.385913,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"GPU activities",13.507672,546.180423,602,0.907276,0.628507,0.910808,"_ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_"
+"GPU activities",4.398188,177.839983,400,0.444599,0.307102,0.582811,"_ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE"
+"GPU activities",2.794282,112.986303,201,0.562120,0.560123,0.564667,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"GPU activities",2.544440,102.883995,601,0.171188,0.001279,0.754330,"[CUDA memcpy DtoH]"
+"GPU activities",0.383310,15.499094,201,0.077109,0.041568,0.124575,"_ZN6miniFE20copyElementsToBufferIdiEEvPT_S2_PT0_i"
+"GPU activities",0.022586,0.913243,400,0.002283,0.002208,0.002528,"_ZN6miniFE23dot_final_reduce_kernelIdEEvPT_"
+"GPU activities",0.021949,0.887513,4,0.221878,0.001568,0.303229,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"GPU activities",0.011702,0.473178,400,0.001182,0.001120,0.001536,"_ZN6miniFE17cudaMemset_kernelIdEEvPT_S1_i"
+"API calls",83.422677,67.187153,2409,0.027890,0.018138,0.058507,"cudaLaunchKernel"
+"API calls",16.577323,13.351084,601,0.022214,0.017085,0.029340,"cudaMemcpyAsync"
+
+==109475==       Range "create recv list"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,5.936917,1,5.936917,5.936917,5.936917,"create recv list"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "create tmp_neighbors"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,9.622441,1,9.622441,9.622441,9.622441,"create tmp_neighbors"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "end exchange"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,3906.086828,201,19.433267,16.460753,139.067066,"end exchange"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==109475==       Range "exterier region"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,7.185268,201,0.035747,0.026509,0.065966,"exterier region"
+"GPU activities",100.000000,112.986303,201,0.562120,0.560123,0.564667,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"API calls",100.000000,6.413896,201,0.031909,0.023754,0.058507,"cudaLaunchKernel"
+
+==109475==       Range "generate matrix structure"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,1191.511255,1,1191.511255,1191.511255,1191.511255,"generate matrix structure"
+"GPU activities",67.125736,114.254454,2,57.127227,14.856638,99.397816,"[CUDA memcpy DtoH]"
+"GPU activities",25.575713,43.532322,1,43.532322,43.532322,43.532322,"_ZN6miniFE32generate_matrix_structure_kernelINS_7PODMeshIiEENS_12PODELLMatrixIdiiEEEEvT_T0_iii"
+"GPU activities",4.812377,8.191128,1,8.191128,8.191128,8.191128,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"GPU activities",2.486174,4.231707,3,1.410569,0.145215,3.937853,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIiEEiEEmEES9_mEEvT0_T1_"
+"API calls",98.902970,15.039602,2,7.519801,0.020237,15.019365,"cudaMemcpyAsync"
+"API calls",1.097030,0.166819,5,0.033363,0.019323,0.046504,"cudaLaunchKernel"
+
+==109475==       Range "impose boundary conditions"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,43.699838,1,43.699838,43.699838,43.699838,"impose boundary conditions"
+"GPU activities",97.820580,35.995748,2,17.997874,17.996962,17.998786,"_ZN6miniFE30impose_dirichlet_second_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvNT_10ScalarTypeES5_T0_PNS5_17GlobalOrdinalTypeES8_"
+"GPU activities",2.126112,0.782361,2,0.391180,0.042208,0.740153,"_ZN6miniFE29impose_dirichlet_first_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvNT_10ScalarTypeES5_T0_PNS5_17GlobalOrdinalTypeES8_S8_S8_"
+"GPU activities",0.043220,0.015904,2,0.007952,0.007904,0.008000,"[CUDA memcpy HtoD]"
+"GPU activities",0.010088,0.003712,2,0.001856,0.001728,0.001984,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIiEEiEEmEES9_mEEvT0_T1_"
+"API calls",64.094353,0.097467,6,0.016244,0.012398,0.019423,"cudaLaunchKernel"
+"API calls",35.905647,0.054601,2,0.027300,0.025968,0.028633,"cudaMemcpyAsync"
+
+==109475==       Range "interier region"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,6.394444,201,0.031813,0.024380,0.039748,"interier region"
+"GPU activities",100.000000,3085.819179,201,15.352334,15.321465,15.385913,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"API calls",100.000000,5.794120,201,0.028826,0.021910,0.033634,"cudaLaunchKernel"
+
+==109475==       Range "make local matrix"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,543.874407,1,543.874407,543.874407,543.874407,"make local matrix"
+"GPU activities",17.802084,11.903127,1,11.903127,11.903127,11.903127,"_ZN6miniFE24markExternalColumnsInMapINS_12PODELLMatrixIdiiEENS_13PODColMarkMapIiEEEEvT_T0_"
+"GPU activities",14.233254,9.516876,1,9.516876,9.516876,9.516876,"_ZN6miniFE25renumberExternalsAndCountINS_12PODELLMatrixIdiiEEEEvT_NS3_17GlobalOrdinalTypeES4_PS4_"
+"GPU activities",13.772428,9.208751,3,3.069583,2.990950,3.225316,"_ZN6thrust8cuda_cub3cub30DeviceRadixSortDownsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb1ELb0EiS4_iEEvPKT2_PS7_PKT3_PSB_PT4_SF_iiNS1_13GridEvenShareISF_EE"
+"GPU activities",11.235850,7.512702,1,7.512702,7.512702,7.512702,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_8__unique11UniqueAgentINS_6detail15normal_iteratorINS_10device_ptrIiEEEES9_NS_8equal_toIiEEiPiEES9_S9_SB_SC_iNS0_3cub13ScanTileStateIiLb1EEEmEEvT0_T1_T2_T3_T4_T5_T6_"
+"GPU activities",9.621165,6.433064,2,3.216532,3.172452,3.260612,"_ZN6thrust8cuda_cub3cub30DeviceRadixSortDownsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb0ELb0EiS4_iEEvPKT2_PS7_PKT3_PSB_PT4_SF_iiNS1_13GridEvenShareISF_EE"
+"GPU activities",8.012173,5.357233,1,5.357233,5.357233,5.357233,"_ZN6miniFE17renumberExternalsINS_12PODELLMatrixIdiiEEEEvT_PNS3_17GlobalOrdinalTypeES4_S5_"
+"GPU activities",6.752450,4.514936,1,4.514936,4.514936,4.514936,"_ZN6miniFE21createExternalMappingINS_12PODELLMatrixIdiiEEEEvT_"
+"GPU activities",5.180215,3.463682,3,1.154560,1.150006,1.157558,"_ZN6thrust8cuda_cub3cub28DeviceRadixSortUpsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb1ELb0EiiEEvPKT2_PT3_SA_iiNS1_13GridEvenShareISA_EE"
+"GPU activities",3.726140,2.491434,1,2.491434,2.491434,2.491434,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_11__transform17unary_transform_fIPiS7_NS5_14no_stencil_tagENS_8identityIiEENS5_21always_true_predicateEEElEESC_lEEvT0_T1_"
+"GPU activities",3.471583,2.321228,2,1.160614,1.153814,1.167414,"_ZN6thrust8cuda_cub3cub28DeviceRadixSortUpsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb0ELb0EiiEEvPKT2_PT3_SA_iiNS1_13GridEvenShareISA_EE"
+"GPU activities",2.050100,1.370772,1,1.370772,1.370772,1.370772,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_6__fill7functorINS_6detail15normal_iteratorINS_10device_ptrIiEEEEiEEmEESC_mEEvT0_T1_"
+"GPU activities",1.868285,1.249204,3,0.416401,0.001504,1.234549,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIiEEiEEmEES9_mEEvT0_T1_"
+"GPU activities",1.505858,1.006872,2,0.503436,0.489916,0.516956,"[CUDA memcpy HtoD]"
+"GPU activities",0.589900,0.394429,3,0.131476,0.001984,0.390461,"[CUDA memcpy DtoH]"
+"GPU activities",0.142666,0.095392,5,0.019078,0.018816,0.019712,"_ZN6thrust8cuda_cub3cub23RadixSortScanBinsKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700EiEEvPT0_i"
+"GPU activities",0.026897,0.017984,1,0.017984,0.017984,0.017984,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"GPU activities",0.008950,0.005984,1,0.005984,0.005984,0.005984,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_8__unique9InitAgentINS0_3cub13ScanTileStateIiLb1EEEPiiEES7_mS8_EEvT0_T1_T2_"
+"API calls",91.294156,10.930097,4,2.732524,0.028376,9.534506,"cudaMemcpyAsync"
+"API calls",4.573671,0.547578,27,0.020280,0.010073,0.054807,"cudaLaunchKernel"
+"API calls",4.132172,0.494720,1,0.494720,0.494720,0.494720,"cudaMemcpy"
+
+==109475==       Range "reserve space in A"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,194.829563,1,194.829563,194.829563,194.829563,"reserve space in A"
+"GPU activities",65.936060,8.191128,1,8.191128,8.191128,8.191128,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"GPU activities",34.063940,4.231707,3,1.410569,0.145215,3.937853,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIiEEiEEmEES9_mEEvT0_T1_"
+"API calls",100.000000,0.142802,4,0.035700,0.019323,0.046504,"cudaLaunchKernel"
+

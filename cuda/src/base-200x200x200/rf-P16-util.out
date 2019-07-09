@@ -1,0 +1,176 @@
+/g/g90/choi18/.bashrc: line 15: module: command not found
+/g/g90/choi18/.bashrc: line 16: module: command not found
+/g/g90/choi18/.bashrc: line 17: module: command not found
+Mon Jul  8 13:52:34 PDT 2019
+lassen555
+Job ID is 363292
+gpuroofperf-tool v.0.9.0 (CLI)
+
+
+------- Running kernel inspection -------
+Executing: nvprof
+Executing: nvprof --devices all --query-metrics
+Retrieving GPU information... Done, took 0.44 seconds
+Profiling on GPU: Tesla V100-SXM2-16GB
+Invocation: "/g/g90/choi18/miniFE/cuda/src/miniFE.x --num_devices 4 -nx 800 -ny 800 -nz 200"
+Executing: jsrun -n4 -a4 -g4 -c40 -r1 nvprof -u ms --demangling off --csv --log-file tmp-simple-363292-%q{OMPI_COMM_WORLD_RANK}.csv /g/g90/choi18/miniFE/cuda/src/miniFE.x --num_devices 4 -nx 800 -ny 800 -nz 200
+Running simple profiling... Done, took 6.57 seconds
+GPU kernel functions invoked:
+1. _ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_ (Time(%):64.92, 757.9315 msecs, 201 invocations)
+2. _ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_ (Time(%):11.67, 136.2646 msecs, 602 invocations)
+3. _ZN6miniFE19element_loop_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEENS_7PODMeshIiEEEEvT1_NT_17GlobalOrdinalTypeEPKS9_S8_T0_PKNS8_10ScalarTypeESF_ (Time(%):10.52, 122.8619 msecs, 1 invocations)
+4. _ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE (Time(%):3.98, 46.4293 msecs, 400 invocations)
+5. _ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_ (Time(%):2.76, 32.2637 msecs, 201 invocations)
+6. _ZN6miniFE32generate_matrix_structure_kernelINS_7PODMeshIiEENS_12PODELLMatrixIdiiEEEEvT_T0_iii (Time(%):0.97, 11.2980 msecs, 1 invocations)
+7. _ZN6miniFE30impose_dirichlet_second_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvNT_10ScalarTypeES5_T0_PNS5_17GlobalOrdinalTypeES8_ (Time(%):0.51, 5.9823 msecs, 1 invocations)
+8. _ZN6miniFE20copyElementsToBufferIdiEEvPT_S2_PT0_i (Time(%):0.31, 3.5683 msecs, 201 invocations)
+9. _ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_ (Time(%):0.21, 2.3973 msecs, 10 invocations)
+10. _ZN6miniFE25renumberExternalsAndCountINS_12PODELLMatrixIdiiEEEEvT_NS3_17GlobalOrdinalTypeES4_PS4_ (Time(%):0.19, 2.2402 msecs, 1 invocations)
+11. _ZN6miniFE24markExternalColumnsInMapINS_12PODELLMatrixIdiiEENS_13PODColMarkMapIiEEEEvT_T0_ (Time(%):0.17, 1.9888 msecs, 1 invocations)
+12. _ZN6thrust8cuda_cub3cub30DeviceRadixSortDownsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb1ELb0EiS4_iEEvPKT2_PS7_PKT3_PSB_PT4_SF_iiNS1_13GridEvenShareISF_EE (Time(%):0.12, 1.3861 msecs, 3 invocations)
+13. _ZN6miniFE17renumberExternalsINS_12PODELLMatrixIdiiEEEEvT_PNS3_17GlobalOrdinalTypeES4_S5_ (Time(%):0.12, 1.3462 msecs, 1 invocations)
+14. _ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIiEEiEEmEES9_mEEvT0_T1_ (Time(%):0.11, 1.2386 msecs, 9 invocations)
+15. _ZN6thrust8cuda_cub4core13_kernel_agentINS0_8__unique11UniqueAgentINS_6detail15normal_iteratorINS_10device_ptrIiEEEES9_NS_8equal_toIiEEiPiEES9_S9_SB_SC_iNS0_3cub13ScanTileStateIiLb1EEEmEEvT0_T1_T2_T3_T4_T5_T6_ (Time(%):0.10, 1.1352 msecs, 1 invocations)
+16. _ZN6miniFE21createExternalMappingINS_12PODELLMatrixIdiiEEEEvT_ (Time(%):0.09, 1.0954 msecs, 1 invocations)
+17. _ZN6thrust8cuda_cub3cub30DeviceRadixSortDownsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb0ELb0EiS4_iEEvPKT2_PS7_PKT3_PSB_PT4_SF_iiNS1_13GridEvenShareISF_EE (Time(%):0.09, 1.0241 msecs, 2 invocations)
+18. _ZN6miniFE23dot_final_reduce_kernelIdEEvPT_ (Time(%):0.08, 0.9031 msecs, 400 invocations)
+19. _ZN6thrust8cuda_cub3cub28DeviceRadixSortUpsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb1ELb0EiiEEvPKT2_PT3_SA_iiNS1_13GridEvenShareISA_EE (Time(%):0.05, 0.5554 msecs, 3 invocations)
+20. _ZN6miniFE17cudaMemset_kernelIdEEvPT_S1_i (Time(%):0.04, 0.4740 msecs, 400 invocations)
+21. _ZN6miniFE29impose_dirichlet_first_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvNT_10ScalarTypeES5_T0_PNS5_17GlobalOrdinalTypeES8_S8_S8_ (Time(%):0.03, 0.4060 msecs, 1 invocations)
+22. _ZN6thrust8cuda_cub3cub28DeviceRadixSortUpsweepKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700ELb0ELb0EiiEEvPKT2_PT3_SA_iiNS1_13GridEvenShareISA_EE (Time(%):0.03, 0.3897 msecs, 2 invocations)
+23. _ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_11__transform17unary_transform_fIPiS7_NS5_14no_stencil_tagENS_8identityIiEENS5_21always_true_predicateEEElEESC_lEEvT0_T1_ (Time(%):0.03, 0.3650 msecs, 1 invocations)
+24. _ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_6__fill7functorINS_6detail15normal_iteratorINS_10device_ptrIiEEEEiEEmEESC_mEEvT0_T1_ (Time(%):0.02, 0.1811 msecs, 1 invocations)
+25. _ZN6thrust8cuda_cub3cub23RadixSortScanBinsKernelINS1_21DeviceRadixSortPolicyIiNS1_8NullTypeEiE9Policy700EiEEvPT0_i (Time(%):0.01, 0.1016 msecs, 5 invocations)
+26. _ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_6__fill7functorINS_6detail15normal_iteratorINS_10device_ptrIdEEEEiEElEESC_lEEvT0_T1_ (Time(%):0.01, 0.0767 msecs, 1 invocations)
+27. _ZN6thrust8cuda_cub4core13_kernel_agentINS0_8__unique9InitAgentINS0_3cub13ScanTileStateIiLb1EEEPiiEES7_mS8_EEvT0_T1_T2_ (Time(%):0.00, 0.0021 msecs, 1 invocations)
+Total percentage: 97.13%
+Selected percentage: 91.10% (93.79% of total)
+Selected kernels: "_ZN6miniFE19element_loop_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEENS_7PODMeshIiEEEEvT1_NT_17GlobalOrdinalTypeEPKS9_S8_T0_PKNS8_10ScalarTypeESF_", "_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_", "_ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_", "_ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE"
+Executing: jsrun -n4 -a4 -g4 -c40 -r1 nvprof -u ms --csv --demangling off --log-file tmp-metric-363292-%q{OMPI_COMM_WORLD_RANK}.csv --kernels _ZN6miniFE19element_loop_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEENS_7PODMeshIiEEEEvT1_NT_17GlobalOrdinalTypeEPKS9_S8_T0_PKNS8_10ScalarTypeESF_ --metrics dram_utilization,sysmem_utilization,shared_utilization,l2_utilization,tex_utilization,ldst_fu_utilization,cf_fu_utilization,tex_fu_utilization,special_fu_utilization,single_precision_fu_utilization,double_precision_fu_utilization,sysmem_read_utilization,sysmem_write_utilization --kernels _ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_ --metrics dram_utilization,sysmem_utilization,shared_utilization,l2_utilization,tex_utilization,ldst_fu_utilization,cf_fu_utilization,tex_fu_utilization,special_fu_utilization,single_precision_fu_utilization,double_precision_fu_utilization,sysmem_read_utilization,sysmem_write_utilization --kernels _ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_ --metrics dram_utilization,sysmem_utilization,shared_utilization,l2_utilization,tex_utilization,ldst_fu_utilization,cf_fu_utilization,tex_fu_utilization,special_fu_utilization,single_precision_fu_utilization,double_precision_fu_utilization,sysmem_read_utilization,sysmem_write_utilization --kernels _ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE --metrics dram_utilization,sysmem_utilization,shared_utilization,l2_utilization,tex_utilization,ldst_fu_utilization,cf_fu_utilization,tex_fu_utilization,special_fu_utilization,single_precision_fu_utilization,double_precision_fu_utilization,sysmem_read_utilization,sysmem_write_utilization /g/g90/choi18/miniFE/cuda/src/miniFE.x --num_devices 4 -nx 800 -ny 800 -nz 200
+Running metric profiling (utilization, 13 total metrics)... Done, took 2602.51 seconds
+Kernel inspection done!
+Executing: nvidia-smi -q
+Querying GPU driver version (via nvidia-smi)... 
+_ZN6miniFE19element_loop_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEENS_7PODMeshIiEEEEvT1_NT_17GlobalOrdinalTypeEPKS9_S8_T0_PKNS8_10ScalarTypeESF_
+Warning: Low utilizations observed (highest utilizations dram_utilization:4). Low utilizations potentially express other latencies that cannot be captured by the model.
+Done
+
+_ZN6miniFE19element_loop_kernelINS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEENS_7PODMeshIiEEEEvT1_NT_17GlobalOrdinalTypeEPKS9_S8_T0_PKNS8_10ScalarTypeESF_ utilization info
+dram_utilization: 4
+sysmem_utilization: 1
+shared_utilization: 0
+l2_utilization: 1
+tex_utilization: 1
+ldst_fu_utilization: 1
+cf_fu_utilization: 1
+tex_fu_utilization: 0
+special_fu_utilization: 1
+single_precision_fu_utilization: 1
+double_precision_fu_utilization: 2
+sysmem_read_utilization: 0
+sysmem_write_utilization: 1
+
+_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_ utilization info
+dram_utilization: 9
+sysmem_utilization: 1
+shared_utilization: 0
+l2_utilization: 2
+tex_utilization: 1
+ldst_fu_utilization: 1
+cf_fu_utilization: 1
+tex_fu_utilization: 0
+special_fu_utilization: 0
+single_precision_fu_utilization: 1
+double_precision_fu_utilization: 1
+sysmem_read_utilization: 0
+sysmem_write_utilization: 1
+
+_ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_ utilization info
+dram_utilization: 9
+sysmem_utilization: 1
+shared_utilization: 0
+l2_utilization: 2
+tex_utilization: 1
+ldst_fu_utilization: 1
+cf_fu_utilization: 1
+tex_fu_utilization: 0
+special_fu_utilization: 0
+single_precision_fu_utilization: 1
+double_precision_fu_utilization: 1
+sysmem_read_utilization: 0
+sysmem_write_utilization: 1
+
+_ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE utilization info
+dram_utilization: 9
+sysmem_utilization: 1
+shared_utilization: 1
+l2_utilization: 2
+tex_utilization: 1
+ldst_fu_utilization: 1
+cf_fu_utilization: 1
+tex_fu_utilization: 0
+special_fu_utilization: 0
+single_precision_fu_utilization: 1
+double_precision_fu_utilization: 1
+sysmem_read_utilization: 0
+sysmem_write_utilization: 1
+
+Kernel parameters saved to  "miniFE-P16-util.json"
+Done
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 363292: <rf-g16-util> in cluster <lassen> Done
+
+Job <rf-g16-util> was submitted from host <lassen708> by user <choi18> in cluster <lassen> at Mon Jul  8 11:33:41 2019
+Job was executed on host(s) <1*lassen710>, in queue <pbatch>, as user <choi18> in cluster <lassen> at Mon Jul  8 13:52:29 2019
+                            <40*lassen555>
+                            <40*lassen557>
+                            <40*lassen558>
+                            <40*lassen62>
+</g/g90/choi18> was used as the home directory.
+</g/g90/choi18/miniFE/cuda/src> was used as the working directory.
+Started at Mon Jul  8 13:52:29 2019
+Terminated at Mon Jul  8 14:36:36 2019
+Results reported at Mon Jul  8 14:36:36 2019
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+
+#BSUB -nnodes 4
+#BSUB -core_isolation 2
+#BSUB -W 120
+#BSUB -G asccasc
+#BSUB -J rf-g16-util
+#BSUB -q pbatch
+
+date; hostname
+echo -n 'Job ID is '; echo $LSB_JOBID
+cd /g/g90/choi18/gpuroofperf-toolkit/tool
+
+python3 gpuroofperf-cli.py -x "jsrun -n4 -a4 -g4 -c40 -r1" -o miniFE-P16-util.json -u /g/g90/choi18/miniFE/cuda/src/miniFE.x --num_devices 4 -nx 800 -ny 800 -nz 200
+
+echo 'Done'
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.52 sec.
+    Max Memory :                                 57 MB
+    Average Memory :                             56.86 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1421 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   2643 sec.
+    Turnaround time :                            10975 sec.
+
+The output (if any) is above this job summary.
+
