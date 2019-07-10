@@ -1,277 +1,204 @@
-==134310== NVPROF is profiling process 134310, command: ./miniFE.x --num_devices 4 -nx 800 -ny 800 -nz 200
-==134310== Profiling application: ./miniFE.x --num_devices 4 -nx 800 -ny 800 -nz 200
-==134310== Profiling result:
+==105522== NVPROF is profiling process 105522, command: ./miniFE.x --num_devices 4 -nx 800 -ny 800 -nz 200
+==105522== Profiling application: ./miniFE.x --num_devices 4 -nx 800 -ny 800 -nz 200
+==105522== Profiling result:
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"GPU activities",65.014315,762.243894,201,3.792258,3.781728,3.799200,"void miniFE::matvec_overlap_ell_kernel<miniFE::MATVEC_RANGE, miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(double, int, double)"
-"GPU activities",11.651721,136.607660,602,0.226923,0.154335,0.230654,"void miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>(doubleScalarType, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>, double, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>)"
-"GPU activities",10.081836,118.201940,1,118.201940,118.201940,118.201940,"void miniFE::element_loop_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>, miniFE::PODMesh<int>>(int, doubleGlobalOrdinalType, double const *, int, int, intScalarType const *, intScalarType const )"
-"GPU activities",3.970806,46.554715,400,0.116386,0.083135,0.150143,"void miniFE::dot_kernel<miniFE::PODVector<double, int, int>>(double, miniFE::dot_kernel<miniFE::PODVector<double, int, int>>, miniFE::TypeTraits<miniFE::dot_kernel<miniFE::PODVector<double, int, int>::ScalarType>>::magnitude_type*)"
-"GPU activities",2.794960,32.768799,201,0.163028,0.160927,0.166590,"void miniFE::matvec_overlap_ell_kernel<miniFE::MATVEC_RANGE, miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(double, int, double)"
-"GPU activities",2.438271,28.586888,606,0.047173,0.001279,17.311181,"[CUDA memcpy DtoH]"
-"GPU activities",0.973550,11.414143,1,11.414143,11.414143,11.414143,"void miniFE::generate_matrix_structure_kernel<miniFE::PODMesh<int>, miniFE::PODELLMatrix<double, int, int>>(int, miniFE::PODMesh<int>, int, int, int)"
-"GPU activities",0.934384,10.954947,2,5.477473,4.998550,5.956397,"void miniFE::impose_dirichlet_second_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(doubleScalarType, miniFE::impose_dirichlet_second_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>, int, miniFE::impose_dirichlet_second_kernel<miniFE::PODELLMatrix<double, int, int>::GlobalOrdinalType, miniFE::PODVector<double, int, int>>*, int)"
-"GPU activities",0.393686,4.615673,10,0.461567,0.001120,4.513113,"[CUDA memcpy HtoD]"
-"GPU activities",0.260409,3.053095,201,0.015189,0.007584,0.022848,"void miniFE::copyElementsToBuffer<double, int>(double*, double, int*, int)"
-"GPU activities",0.205139,2.405099,10,0.240509,0.001216,2.014478,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)"
-"GPU activities",0.192963,2.262349,1,2.262349,2.262349,2.262349,"void miniFE::renumberExternalsAndCount<miniFE::PODELLMatrix<double, int, int>>(double, miniFE::renumberExternalsAndCount<miniFE::PODELLMatrix<double, int, int>::GlobalOrdinalType>, double, double*)"
-"GPU activities",0.149774,1.755985,1,1.755985,1.755985,1.755985,"void miniFE::markExternalColumnsInMap<miniFE::PODELLMatrix<double, int, int>, miniFE::PODColMarkMap<int>>(double, int)"
-"GPU activities",0.123051,1.442676,3,0.480892,0.470012,0.501468,"void thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, thrust::cuda_cub::cub::NullType, int>(thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, thrust::cuda_cub::cub::NullType, int>*, bool=1 const *, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, thrust::cuda_cub::cub::NullType, int>**, bool=0*, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, thrust::cuda_cub::cub::NullType, int>**, int, int, thrust::cuda_cub::cub::GridEvenShare<thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, thrust::cuda_cub::cub::NullType, int>**>)"
-"GPU activities",0.117128,1.373237,1,1.373237,1.373237,1.373237,"void miniFE::renumberExternals<miniFE::PODELLMatrix<double, int, int>>(double, miniFE::renumberExternals<miniFE::PODELLMatrix<double, int, int>::GlobalOrdinalType>*, double, miniFE::renumberExternals<miniFE::PODELLMatrix<double, int, int>::GlobalOrdinalType>)"
-"GPU activities",0.104868,1.229493,10,0.122949,0.001216,0.970551,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>(thrust::device_ptr<int>, int)"
-"GPU activities",0.104608,1.226453,1,1.226453,1.226453,1.226453,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__unique::UniqueAgent<thrust::detail::normal_iterator<thrust::device_ptr<int>>, thrust::detail::normal_iterator<thrust::device_ptr<int>>, thrust::equal_to<int>, int, int*>, thrust::detail::normal_iterator<thrust::device_ptr<int>>, thrust::detail::normal_iterator<thrust::device_ptr<int>>, thrust::equal_to<int>, int*, int, thrust::cuda_cub::cub::ScanTileState<int, bool=1>, unsigned long>(thrust::device_ptr<int>, thrust::detail::normal_iterator<thrust::device_ptr<int>>, thrust::detail::normal_iterator<thrust::device_ptr<int>>, int, thrust::equal_to<int>, int, int*)"
-"GPU activities",0.097310,1.140887,2,0.570443,0.566427,0.574460,"void thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, thrust::cuda_cub::cub::NullType, int>(thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, thrust::cuda_cub::cub::NullType, int>*, bool=0 const *, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, thrust::cuda_cub::cub::NullType, int>**, bool=0*, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, thrust::cuda_cub::cub::NullType, int>**, int, int, thrust::cuda_cub::cub::GridEvenShare<thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, thrust::cuda_cub::cub::NullType, int>**>)"
-"GPU activities",0.093999,1.102071,1,1.102071,1.102071,1.102071,"void miniFE::createExternalMapping<miniFE::PODELLMatrix<double, int, int>>(double)"
-"GPU activities",0.075868,0.889498,400,0.002223,0.002144,0.002560,"void miniFE::dot_final_reduce_kernel<double>(double*)"
-"GPU activities",0.048553,0.569242,3,0.189747,0.185694,0.194622,"void thrust::cuda_cub::cub::DeviceRadixSortUpsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, int>(thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, bool=1*, thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, int, int, thrust::cuda_cub::cub::GridEvenShare<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *>)"
-"GPU activities",0.041541,0.487038,400,0.001217,0.001183,0.001408,"void miniFE::cudaMemset_kernel<double>(double*, miniFE::cudaMemset_kernel<double>, int)"
-"GPU activities",0.035768,0.419356,2,0.209678,0.076991,0.342365,"void miniFE::impose_dirichlet_first_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(doubleScalarType, miniFE::impose_dirichlet_first_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>, int, miniFE::impose_dirichlet_first_kernel<miniFE::PODELLMatrix<double, int, int>::GlobalOrdinalType, miniFE::PODVector<double, int, int>>*, int, int, int)"
-"GPU activities",0.033768,0.395901,2,0.197950,0.192863,0.203038,"void thrust::cuda_cub::cub::DeviceRadixSortUpsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, int>(thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, bool=0*, thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, int, int, thrust::cuda_cub::cub::GridEvenShare<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *>)"
-"GPU activities",0.031295,0.366908,1,0.366908,0.366908,0.366908,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__transform::unary_transform_f<int*, int*, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<int>, thrust::cuda_cub::__transform::always_true_predicate>, long>, thrust::cuda_cub::__transform::unary_transform_f<int*, int*, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<int>, thrust::cuda_cub::__transform::always_true_predicate>, long>(int*, thrust::cuda_cub::__transform::no_stencil_tag)"
-"GPU activities",0.014234,0.166879,1,0.166879,0.166879,0.166879,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__fill::functor<thrust::detail::normal_iterator<thrust::device_ptr<int>>, int>, unsigned long>, thrust::cuda_cub::__fill::functor<thrust::detail::normal_iterator<thrust::device_ptr<int>>, int>, unsigned long>(thrust::device_ptr<int>, thrust::detail::normal_iterator<thrust::device_ptr<int>>)"
-"GPU activities",0.009468,0.111007,5,0.022201,0.021984,0.022880,"void thrust::cuda_cub::cub::RadixSortScanBinsKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, int>(thrust::cuda_cub::cub::NullType*, int)"
-"GPU activities",0.006529,0.076543,1,0.076543,0.076543,0.076543,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__fill::functor<thrust::detail::normal_iterator<thrust::device_ptr<double>>, int>, long>, thrust::cuda_cub::__fill::functor<thrust::detail::normal_iterator<thrust::device_ptr<double>>, int>, long>(thrust::device_ptr<double>, thrust::detail::normal_iterator<thrust::device_ptr<double>>)"
-"GPU activities",0.000199,0.002336,1,0.002336,0.002336,0.002336,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__unique::InitAgent<thrust::cuda_cub::cub::ScanTileState<int, bool=1>, int*, int>, thrust::cuda_cub::cub::ScanTileState<int, bool=1>, unsigned long, int*>(bool=1, thrust::cuda_cub::cub::ScanTileState<int, bool=1>, int*)"
-"API calls",37.013668,622.757936,2,311.378968,0.005492,622.752444,"cudaStreamCreate"
-"API calls",31.469666,529.479657,602,0.879534,0.005513,3.952397,"cudaEventSynchronize"
-"API calls",12.580517,211.668204,23,9.202965,0.013941,118.273135,"cudaFree"
-"API calls",9.375110,157.736975,24,6.572373,0.008101,47.463156,"cudaMalloc"
-"API calls",5.063177,85.188351,2455,0.034699,0.011062,0.061536,"cudaLaunchKernel"
-"API calls",1.568399,26.388432,614,0.042977,0.007983,4.711691,"cudaMemcpyAsync"
-"API calls",1.328255,22.348005,384,0.058197,0.000207,3.583127,"cuDeviceGetAttribute"
-"API calls",0.359892,6.055216,4,1.513804,1.216432,1.748106,"cuDeviceTotalMem"
-"API calls",0.307137,5.167612,1,5.167612,5.167612,5.167612,"cudaGetDeviceProperties"
-"API calls",0.264663,4.452971,804,0.005538,0.003277,0.010013,"cudaEventRecord"
-"API calls",0.169798,2.856858,4,0.714214,0.057709,2.312534,"cudaHostRegister"
-"API calls",0.145018,2.439947,402,0.006069,0.004036,0.007870,"cudaStreamWaitEvent"
-"API calls",0.127515,2.145448,2032,0.001055,0.000209,0.002595,"cudaGetLastError"
-"API calls",0.084682,1.424783,11,0.129525,0.007424,1.231785,"cudaDeviceSynchronize"
-"API calls",0.069671,1.172215,4,0.293053,0.223125,0.351069,"cuDeviceGetName"
-"API calls",0.032846,0.552630,3,0.184210,0.047552,0.453139,"cudaHostUnregister"
-"API calls",0.016085,0.270624,27,0.010023,0.005137,0.024023,"cudaFuncGetAttributes"
-"API calls",0.005691,0.095758,1,0.095758,0.095758,0.095758,"cudaMemcpy"
-"API calls",0.003618,0.060878,2,0.030439,0.027196,0.033682,"cudaStreamDestroy"
-"API calls",0.003176,0.053432,3,0.017810,0.006566,0.040159,"cudaStreamSynchronize"
-"API calls",0.002731,0.045951,30,0.001531,0.000537,0.003959,"cudaGetDevice"
-"API calls",0.002403,0.040424,29,0.001393,0.000625,0.003623,"cudaDeviceGetAttribute"
-"API calls",0.001640,0.027599,65,0.000424,0.000195,0.001327,"cudaPeekAtLastError"
-"API calls",0.001184,0.019917,12,0.001659,0.000951,0.003699,"cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags"
-"API calls",0.001067,0.017945,1,0.017945,0.017945,0.017945,"cudaSetDevice"
-"API calls",0.000578,0.009732,2,0.004866,0.004338,0.005394,"cudaEventDestroy"
-"API calls",0.000561,0.009443,4,0.002360,0.001221,0.004742,"cuDeviceGetPCIBusId"
-"API calls",0.000535,0.009009,1,0.009009,0.009009,0.009009,"cudaMemcpyToSymbolAsync"
-"API calls",0.000265,0.004451,8,0.000556,0.000283,0.000996,"cuDeviceGet"
-"API calls",0.000191,0.003212,2,0.001606,0.001392,0.001820,"cudaEventCreateWithFlags"
-"API calls",0.000099,0.001667,3,0.000555,0.000484,0.000687,"cuDeviceGetCount"
-"API calls",0.000091,0.001523,1,0.001523,0.001523,0.001523,"cudaThreadSetCacheConfig"
-"API calls",0.000072,0.001203,1,0.001203,0.001203,0.001203,"cudaDeviceSetSharedMemConfig"
+"GPU activities",76.879477,761.186579,201,3.786997,3.775967,4.246075,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"GPU activities",13.773593,136.372856,602,0.226532,0.155743,0.229790,"_ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_"
+"GPU activities",4.690672,46.442520,400,0.116106,0.082783,0.149855,"_ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE"
+"GPU activities",3.323068,32.901825,201,0.163690,0.161790,0.166431,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"GPU activities",0.851803,8.433737,601,0.014032,0.001279,0.118079,"[CUDA memcpy DtoH]"
+"GPU activities",0.319928,3.167618,201,0.015759,0.007232,0.023680,"_ZN6miniFE20copyElementsToBufferIdiEEvPT_S2_PT0_i"
+"GPU activities",0.088248,0.873748,400,0.002184,0.002111,0.002560,"_ZN6miniFE23dot_final_reduce_kernelIdEEvPT_"
+"GPU activities",0.049640,0.491485,400,0.001228,0.001183,0.001472,"_ZN6miniFE17cudaMemset_kernelIdEEvPT_S1_i"
+"GPU activities",0.023571,0.233375,4,0.058343,0.001344,0.078880,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"API calls",78.184205,557.345553,601,0.927363,0.039189,4.348900,"cudaEventSynchronize"
+"API calls",13.368672,95.300190,2409,0.039560,0.020837,11.321187,"cudaLaunchKernel"
+"API calls",3.718036,26.504471,4,6.626117,0.030585,9.070208,"cudaMalloc"
+"API calls",2.211666,15.766131,601,0.026233,0.018243,0.034634,"cudaMemcpyAsync"
+"API calls",1.099522,7.838073,3,2.612691,2.220285,2.912814,"cudaFree"
+"API calls",0.617995,4.405450,802,0.005493,0.003511,0.011769,"cudaEventRecord"
+"API calls",0.337706,2.407377,402,0.005988,0.003424,0.008163,"cudaStreamWaitEvent"
+"API calls",0.287570,2.049980,2009,0.001020,0.000486,0.001791,"cudaGetLastError"
+"API calls",0.081278,0.579400,3,0.193133,0.050525,0.465080,"cudaHostRegister"
+"API calls",0.069913,0.498386,2,0.249193,0.049457,0.448929,"cudaHostUnregister"
+"API calls",0.017330,0.123537,4,0.030884,0.021744,0.056394,"cudaFuncGetAttributes"
+"API calls",0.002628,0.018736,4,0.004684,0.002740,0.009334,"cudaGetDevice"
+"API calls",0.001806,0.012874,8,0.001609,0.000818,0.005013,"cudaPeekAtLastError"
+"API calls",0.001673,0.011924,4,0.002981,0.002445,0.003676,"cudaDeviceGetAttribute"
 
-==134310== NVTX result:
-==134310==   Thread "<unnamed>" (id = 312240)
-==134310==     Domain "<unnamed>"
-==134310==       Range "Allocation of Temporary Vectors"
+==105522== NVTX result:
+==105522==   Thread "<unnamed>" (id = 312240)
+==105522==     Domain "<unnamed>"
+==105522==       Range "Allocation of Temporary Vectors"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,67.956579,1,67.956579,67.956579,67.956579,"Allocation of Temporary Vectors"
-"GPU activities",100.000000,0.230335,3,0.076778,0.076127,0.077984,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)"
-"API calls",100.000000,0.173076,3,0.057692,0.054627,0.061536,"cudaLaunchKernel"
+"Range:",100.000000,82.198327,1,82.198327,82.198327,82.198327,"Allocation of Temporary Vectors"
+"GPU activities",100.000000,0.232031,3,0.077343,0.075967,0.078880,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"API calls",100.000000,11.483555,3,3.827851,0.043355,11.321187,"cudaLaunchKernel"
 
-==134310==       Range "Create external_local_index"
+==105522==       Range "Create external_local_index"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,2.768635,1,2.768635,2.768635,2.768635,"Create external_local_index"
+"Range:",100.000000,3.564802,1,3.564802,3.564802,3.564802,"Create external_local_index"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "MPI All Reduce"
+==105522==       Range "MPI All Reduce"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,105.381253,401,0.262796,0.016494,11.284825,"MPI All Reduce"
+"Range:",100.000000,103.161026,401,0.257259,0.017548,10.927934,"MPI All Reduce"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "MPI Communication"
+==105522==       Range "MPI Communication"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,7.507745,2,3.753872,1.142288,6.365457,"MPI Communication"
+"Range:",100.000000,5.614439,2,2.807219,1.134744,4.479695,"MPI Communication"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "MPI Reduce"
+==105522==       Range "MPI Reduce"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,45.452197,1,45.452197,45.452197,45.452197,"MPI Reduce"
+"Range:",100.000000,20.305621,1,20.305621,20.305621,20.305621,"MPI Reduce"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "Set External Processors"
+==105522==       Range "Set External Processors"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,38.765944,1,38.765944,38.765944,38.765944,"Set External Processors"
+"Range:",100.000000,38.053412,1,38.053412,38.053412,38.053412,"Set External Processors"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "add to recv_list"
+==105522==       Range "add to recv_list"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,0.001496,1,0.001496,0.001496,0.001496,"add to recv_list"
+"Range:",100.000000,0.001248,1,0.001248,0.001248,0.001248,"add to recv_list"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "allocate device memory"
+==105522==       Range "allocate device memory"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,94.382196,1,94.382196,94.382196,94.382196,"allocate device memory"
-"GPU activities",66.571845,2.014478,1,2.014478,2.014478,2.014478,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)"
-"GPU activities",33.428155,1.011543,2,0.505771,0.040992,0.970551,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>(thrust::device_ptr<int>, int)"
-"API calls",100.000000,0.074675,3,0.024891,0.019826,0.034299,"cudaLaunchKernel"
-
-==134310==       Range "allocate host memory"
-"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
-,%,ms,,ms,ms,ms,
-"Range:",100.000000,156.214326,1,156.214326,156.214326,156.214326,"allocate host memory"
+"Range:",100.000000,93.724997,1,93.724997,93.724997,93.724997,"allocate device memory"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "allocation"
+==105522==       Range "allocate host memory"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,5.403793,1,5.403793,5.403793,5.403793,"allocation"
-"GPU activities",52.071006,0.002816,1,0.002816,0.002816,0.002816,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)"
-"GPU activities",47.928994,0.002592,1,0.002592,0.002592,0.002592,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>(thrust::device_ptr<int>, int)"
-"API calls",100.000000,0.083012,2,0.041506,0.041467,0.041545,"cudaLaunchKernel"
-
-==134310==       Range "assemble FE data"
-"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
-,%,ms,,ms,ms,ms,
-"Range:",100.000000,152.107534,1,152.107534,152.107534,152.107534,"assemble FE data"
-"GPU activities",96.256921,118.201940,1,118.201940,118.201940,118.201940,"void miniFE::element_loop_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>, miniFE::PODMesh<int>>(int, doubleGlobalOrdinalType, double const *, int, int, intScalarType const *, intScalarType const )"
-"GPU activities",3.678401,4.517017,4,1.129254,0.001120,4.513113,"[CUDA memcpy HtoD]"
-"GPU activities",0.062332,0.076543,1,0.076543,0.076543,0.076543,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__fill::functor<thrust::detail::normal_iterator<thrust::device_ptr<double>>, int>, long>, thrust::cuda_cub::__fill::functor<thrust::detail::normal_iterator<thrust::device_ptr<double>>, int>, long>(thrust::device_ptr<double>, thrust::detail::normal_iterator<thrust::device_ptr<double>>)"
-"GPU activities",0.002345,0.002880,2,0.001440,0.001216,0.001664,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)"
-"API calls",98.299320,4.731105,3,1.577035,0.007983,4.711691,"cudaMemcpyAsync"
-"API calls",1.513498,0.072844,4,0.018211,0.013377,0.024591,"cudaLaunchKernel"
-"API calls",0.187182,0.009009,1,0.009009,0.009009,0.009009,"cudaMemcpyToSymbolAsync"
-
-==134310==       Range "assign new external"
-"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
-,%,ms,,ms,ms,ms,
-"Range:",100.000000,1.126981,2,0.563490,0.222315,0.904666,"assign new external"
+"Range:",100.000000,134.700252,1,134.700252,134.700252,134.700252,"allocate host memory"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "begin exchange"
+==105522==       Range "allocation"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,20.672040,201,0.102845,0.090665,0.142504,"begin exchange"
-"GPU activities",71.691095,7.731833,201,0.038466,0.024992,0.088415,"[CUDA memcpy DtoH]"
-"GPU activities",28.308905,3.053095,201,0.015189,0.007584,0.022848,"void miniFE::copyElementsToBuffer<double, int>(double*, double, int*, int)"
-"API calls",57.650458,7.306001,201,0.036348,0.028952,0.045094,"cudaLaunchKernel"
-"API calls",42.349542,5.366927,201,0.026701,0.020242,0.051400,"cudaMemcpyAsync"
-
-==134310==       Range "cgsolve"
-"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
-,%,ms,,ms,ms,ms,
-"Range:",100.000000,1299.289265,1,1299.289265,1299.289265,1299.289265,"cgsolve"
-"GPU activities",76.909582,762.243894,201,3.792258,3.781728,3.799200,"void miniFE::matvec_overlap_ell_kernel<miniFE::MATVEC_RANGE, miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(double, int, double)"
-"GPU activities",13.783565,136.607660,602,0.226923,0.154335,0.230654,"void miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>(doubleScalarType, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>, double, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>)"
-"GPU activities",4.697320,46.554715,400,0.116386,0.083135,0.150143,"void miniFE::dot_kernel<miniFE::PODVector<double, int, int>>(double, miniFE::dot_kernel<miniFE::PODVector<double, int, int>>, miniFE::TypeTraits<miniFE::dot_kernel<miniFE::PODVector<double, int, int>::ScalarType>>::magnitude_type*)"
-"GPU activities",3.306336,32.768799,201,0.163028,0.160927,0.166590,"void miniFE::matvec_overlap_ell_kernel<miniFE::MATVEC_RANGE, miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(double, int, double)"
-"GPU activities",0.832875,8.254549,601,0.013734,0.001279,0.088415,"[CUDA memcpy DtoH]"
-"GPU activities",0.308054,3.053095,201,0.015189,0.007584,0.022848,"void miniFE::copyElementsToBuffer<double, int>(double*, double, int*, int)"
-"GPU activities",0.089749,0.889498,400,0.002223,0.002144,0.002560,"void miniFE::dot_final_reduce_kernel<double>(double*)"
-"GPU activities",0.049142,0.487038,400,0.001217,0.001183,0.001408,"void miniFE::cudaMemset_kernel<double>(double*, miniFE::cudaMemset_kernel<double>, int)"
-"GPU activities",0.023376,0.231679,4,0.057919,0.001344,0.077984,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)"
-"API calls",84.317929,84.244247,2409,0.034970,0.020053,0.061536,"cudaLaunchKernel"
-"API calls",15.682071,15.668367,601,0.026070,0.018814,0.051400,"cudaMemcpyAsync"
-
-==134310==       Range "create recv list"
-"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
-,%,ms,,ms,ms,ms,
-"Range:",100.000000,0.930880,1,0.930880,0.930880,0.930880,"create recv list"
+"Range:",100.000000,26.735635,1,26.735635,26.735635,26.735635,"allocation"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "create tmp_neighbors"
+==105522==       Range "assemble FE data"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,1.615318,1,1.615318,1.615318,1.615318,"create tmp_neighbors"
+"Range:",100.000000,149.495858,1,149.495858,149.495858,149.495858,"assemble FE data"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "end exchange"
+==105522==       Range "assign new external"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,881.796015,201,4.387044,0.680160,5.851535,"end exchange"
+"Range:",100.000000,1.127524,2,0.563762,0.210189,0.917335,"assign new external"
 No kernels were profiled in this range.
 No API activities were profiled in this range.
 
-==134310==       Range "exterier region"
+==105522==       Range "begin exchange"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,8.358754,201,0.041585,0.030288,0.053558,"exterier region"
-"GPU activities",100.000000,32.768799,201,0.163028,0.160927,0.166590,"void miniFE::matvec_overlap_ell_kernel<miniFE::MATVEC_RANGE, miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(double, int, double)"
-"API calls",100.000000,7.466219,201,0.037145,0.027063,0.048357,"cudaLaunchKernel"
+"Range:",100.000000,20.388138,201,0.101433,0.088221,0.120026,"begin exchange"
+"GPU activities",71.404824,7.909838,201,0.039352,0.025087,0.118079,"[CUDA memcpy DtoH]"
+"GPU activities",28.595176,3.167618,201,0.015759,0.007232,0.023680,"_ZN6miniFE20copyElementsToBufferIdiEEvPT_S2_PT0_i"
+"API calls",57.436548,7.282705,201,0.036232,0.028705,0.042506,"cudaLaunchKernel"
+"API calls",42.563452,5.396861,201,0.026850,0.020352,0.034634,"cudaMemcpyAsync"
 
-==134310==       Range "generate matrix structure"
+==105522==       Range "cgsolve"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,493.645545,1,493.645545,493.645545,493.645545,"generate matrix structure"
-"GPU activities",58.387570,20.313619,2,10.156809,3.002438,17.311181,"[CUDA memcpy DtoH]"
-"GPU activities",32.807747,11.414143,1,11.414143,11.414143,11.414143,"void miniFE::generate_matrix_structure_kernel<miniFE::PODMesh<int>, miniFE::PODELLMatrix<double, int, int>>(int, miniFE::PODMesh<int>, int, int, int)"
-"GPU activities",5.790228,2.014478,1,2.014478,2.014478,2.014478,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)"
-"GPU activities",3.014455,1.048759,3,0.349586,0.037216,0.970551,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>(thrust::device_ptr<int>, int)"
-"API calls",95.999407,3.161296,2,1.580648,0.014794,3.146502,"cudaMemcpyAsync"
-"API calls",4.000593,0.131741,5,0.026348,0.019826,0.034299,"cudaLaunchKernel"
+"Range:",100.000000,1300.984707,1,1300.984707,1300.984707,1300.984707,"cgsolve"
+"GPU activities",76.879477,761.186579,201,3.786997,3.775967,4.246075,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"GPU activities",13.773593,136.372856,602,0.226532,0.155743,0.229790,"_ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_"
+"GPU activities",4.690672,46.442520,400,0.116106,0.082783,0.149855,"_ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE"
+"GPU activities",3.323068,32.901825,201,0.163690,0.161790,0.166431,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"GPU activities",0.851803,8.433737,601,0.014032,0.001279,0.118079,"[CUDA memcpy DtoH]"
+"GPU activities",0.319928,3.167618,201,0.015759,0.007232,0.023680,"_ZN6miniFE20copyElementsToBufferIdiEEvPT_S2_PT0_i"
+"GPU activities",0.088248,0.873748,400,0.002184,0.002111,0.002560,"_ZN6miniFE23dot_final_reduce_kernelIdEEvPT_"
+"GPU activities",0.049640,0.491485,400,0.001228,0.001183,0.001472,"_ZN6miniFE17cudaMemset_kernelIdEEvPT_S1_i"
+"GPU activities",0.023571,0.233375,4,0.058343,0.001344,0.078880,"_ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_"
+"API calls",85.804760,95.300190,2409,0.039560,0.020837,11.321187,"cudaLaunchKernel"
+"API calls",14.195240,15.766131,601,0.026233,0.018243,0.034634,"cudaMemcpyAsync"
 
-==134310==       Range "impose boundary conditions"
+==105522==       Range "create recv list"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,17.344281,1,17.344281,17.344281,17.344281,"impose boundary conditions"
-"GPU activities",96.067720,10.954947,2,5.477473,4.998550,5.956397,"void miniFE::impose_dirichlet_second_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(doubleScalarType, miniFE::impose_dirichlet_second_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>, int, miniFE::impose_dirichlet_second_kernel<miniFE::PODELLMatrix<double, int, int>::GlobalOrdinalType, miniFE::PODVector<double, int, int>>*, int)"
-"GPU activities",3.677478,0.419356,2,0.209678,0.076991,0.342365,"void miniFE::impose_dirichlet_first_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(doubleScalarType, miniFE::impose_dirichlet_first_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>, int, miniFE::impose_dirichlet_first_kernel<miniFE::PODELLMatrix<double, int, int>::GlobalOrdinalType, miniFE::PODVector<double, int, int>>*, int, int, int)"
-"GPU activities",0.209622,0.023904,2,0.011952,0.005280,0.018624,"[CUDA memcpy HtoD]"
-"GPU activities",0.045180,0.005152,2,0.002576,0.002016,0.003136,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>(thrust::device_ptr<int>, int)"
-"API calls",55.207294,0.115052,2,0.057526,0.025807,0.089245,"cudaMemcpyAsync"
-"API calls",44.792706,0.093348,6,0.015558,0.013173,0.020304,"cudaLaunchKernel"
+"Range:",100.000000,0.940656,1,0.940656,0.940656,0.940656,"create recv list"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
 
-==134310==       Range "interier region"
+==105522==       Range "create tmp_neighbors"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,8.286192,201,0.041224,0.031901,0.050435,"interier region"
-"GPU activities",100.000000,762.243894,201,3.792258,3.781728,3.799200,"void miniFE::matvec_overlap_ell_kernel<miniFE::MATVEC_RANGE, miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(double, int, double)"
-"API calls",100.000000,7.529283,201,0.037459,0.029024,0.046381,"cudaLaunchKernel"
+"Range:",100.000000,1.393632,1,1.393632,1.393632,1.393632,"create tmp_neighbors"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
 
-==134310==       Range "make local matrix"
+==105522==       Range "end exchange"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,148.961942,1,148.961942,148.961942,148.961942,"make local matrix"
-"GPU activities",18.619407,2.262349,1,2.262349,2.262349,2.262349,"void miniFE::renumberExternalsAndCount<miniFE::PODELLMatrix<double, int, int>>(double, miniFE::renumberExternalsAndCount<miniFE::PODELLMatrix<double, int, int>::GlobalOrdinalType>, double, double*)"
-"GPU activities",14.451970,1.755985,1,1.755985,1.755985,1.755985,"void miniFE::markExternalColumnsInMap<miniFE::PODELLMatrix<double, int, int>, miniFE::PODColMarkMap<int>>(double, int)"
-"GPU activities",11.873399,1.442676,3,0.480892,0.470012,0.501468,"void thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, thrust::cuda_cub::cub::NullType, int>(thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, thrust::cuda_cub::cub::NullType, int>*, bool=1 const *, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, thrust::cuda_cub::cub::NullType, int>**, bool=0*, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, thrust::cuda_cub::cub::NullType, int>**, int, int, thrust::cuda_cub::cub::GridEvenShare<thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, thrust::cuda_cub::cub::NullType, int>**>)"
-"GPU activities",11.301907,1.373237,1,1.373237,1.373237,1.373237,"void miniFE::renumberExternals<miniFE::PODELLMatrix<double, int, int>>(double, miniFE::renumberExternals<miniFE::PODELLMatrix<double, int, int>::GlobalOrdinalType>*, double, miniFE::renumberExternals<miniFE::PODELLMatrix<double, int, int>::GlobalOrdinalType>)"
-"GPU activities",10.093857,1.226453,1,1.226453,1.226453,1.226453,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__unique::UniqueAgent<thrust::detail::normal_iterator<thrust::device_ptr<int>>, thrust::detail::normal_iterator<thrust::device_ptr<int>>, thrust::equal_to<int>, int, int*>, thrust::detail::normal_iterator<thrust::device_ptr<int>>, thrust::detail::normal_iterator<thrust::device_ptr<int>>, thrust::equal_to<int>, int*, int, thrust::cuda_cub::cub::ScanTileState<int, bool=1>, unsigned long>(thrust::device_ptr<int>, thrust::detail::normal_iterator<thrust::device_ptr<int>>, thrust::detail::normal_iterator<thrust::device_ptr<int>>, int, thrust::equal_to<int>, int, int*)"
-"GPU activities",9.389639,1.140887,2,0.570443,0.566427,0.574460,"void thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, thrust::cuda_cub::cub::NullType, int>(thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, thrust::cuda_cub::cub::NullType, int>*, bool=0 const *, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, thrust::cuda_cub::cub::NullType, int>**, bool=0*, thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, thrust::cuda_cub::cub::NullType, int>**, int, int, thrust::cuda_cub::cub::GridEvenShare<thrust::cuda_cub::cub::DeviceRadixSortDownsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, thrust::cuda_cub::cub::NullType, int>**>)"
-"GPU activities",9.070178,1.102071,1,1.102071,1.102071,1.102071,"void miniFE::createExternalMapping<miniFE::PODELLMatrix<double, int, int>>(double)"
-"GPU activities",4.684931,0.569242,3,0.189747,0.185694,0.194622,"void thrust::cuda_cub::cub::DeviceRadixSortUpsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=1, bool=0, int, int>(thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, bool=1*, thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, int, int, thrust::cuda_cub::cub::GridEvenShare<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *>)"
-"GPU activities",3.258313,0.395901,2,0.197950,0.192863,0.203038,"void thrust::cuda_cub::cub::DeviceRadixSortUpsweepKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, bool=0, bool=0, int, int>(thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, bool=0*, thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *, int, int, thrust::cuda_cub::cub::GridEvenShare<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700 const *>)"
-"GPU activities",3.019697,0.366908,1,0.366908,0.366908,0.366908,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__transform::unary_transform_f<int*, int*, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<int>, thrust::cuda_cub::__transform::always_true_predicate>, long>, thrust::cuda_cub::__transform::unary_transform_f<int*, int*, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<int>, thrust::cuda_cub::__transform::always_true_predicate>, long>(int*, thrust::cuda_cub::__transform::no_stencil_tag)"
-"GPU activities",1.411087,0.171454,3,0.057151,0.001216,0.167646,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>(thrust::device_ptr<int>, int)"
-"GPU activities",1.373434,0.166879,1,0.166879,0.166879,0.166879,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__fill::functor<thrust::detail::normal_iterator<thrust::device_ptr<int>>, int>, unsigned long>, thrust::cuda_cub::__fill::functor<thrust::detail::normal_iterator<thrust::device_ptr<int>>, int>, unsigned long>(thrust::device_ptr<int>, thrust::detail::normal_iterator<thrust::device_ptr<int>>)"
-"GPU activities",0.913601,0.111007,5,0.022201,0.021984,0.022880,"void thrust::cuda_cub::cub::RadixSortScanBinsKernel<thrust::cuda_cub::cub::DeviceRadixSortPolicy<int, thrust::cuda_cub::cub::NullType, int>::Policy700, int>(thrust::cuda_cub::cub::NullType*, int)"
-"GPU activities",0.342110,0.041568,2,0.020784,0.019680,0.021888,"[CUDA memcpy HtoD]"
-"GPU activities",0.154068,0.018720,3,0.006240,0.001888,0.014592,"[CUDA memcpy DtoH]"
-"GPU activities",0.023176,0.002816,1,0.002816,0.002816,0.002816,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)"
-"GPU activities",0.019226,0.002336,1,0.002336,0.002336,0.002336,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__unique::InitAgent<thrust::cuda_cub::cub::ScanTileState<int, bool=1>, int*, int>, thrust::cuda_cub::cub::ScanTileState<int, bool=1>, unsigned long, int*>(bool=1, thrust::cuda_cub::cub::ScanTileState<int, bool=1>, int*)"
-"API calls",80.380330,2.562205,4,0.640551,0.024891,2.276197,"cudaMemcpyAsync"
-"API calls",16.615594,0.529639,27,0.019616,0.011062,0.054035,"cudaLaunchKernel"
-"API calls",3.004076,0.095758,1,0.095758,0.095758,0.095758,"cudaMemcpy"
+"Range:",100.000000,878.626220,201,4.371274,1.954837,4.798666,"end exchange"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
 
-==134310==       Range "reserve space in A"
+==105522==       Range "exterier region"
 "Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
 ,%,ms,,ms,ms,ms,
-"Range:",100.000000,96.236419,1,96.236419,96.236419,96.236419,"reserve space in A"
-"GPU activities",65.763047,2.014478,1,2.014478,2.014478,2.014478,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)"
-"GPU activities",34.236953,1.048759,3,0.349586,0.037216,0.970551,"void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<int>, int>, unsigned long>(thrust::device_ptr<int>, int)"
-"API calls",100.000000,0.098141,4,0.024535,0.019826,0.034299,"cudaLaunchKernel"
+"Range:",100.000000,8.373756,201,0.041660,0.032460,0.049736,"exterier region"
+"GPU activities",100.000000,32.901825,201,0.163690,0.161790,0.166431,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"API calls",100.000000,7.517943,201,0.037402,0.029327,0.045420,"cudaLaunchKernel"
+
+==105522==       Range "generate matrix structure"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,499.684271,1,499.684271,499.684271,499.684271,"generate matrix structure"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==105522==       Range "impose boundary conditions"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,17.384041,1,17.384041,17.384041,17.384041,"impose boundary conditions"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==105522==       Range "interier region"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,8.066043,201,0.040129,0.029517,0.049173,"interier region"
+"GPU activities",100.000000,761.186579,201,3.786997,3.775967,4.246075,"_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_"
+"API calls",100.000000,7.334373,201,0.036489,0.026624,0.044447,"cudaLaunchKernel"
+
+==105522==       Range "make local matrix"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,170.206734,1,170.206734,170.206734,170.206734,"make local matrix"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==105522==       Range "reserve space in A"
+"Type","Time(%)","Time","Calls","Avg","Min","Max","Name"
+,%,ms,,ms,ms,ms,
+"Range:",100.000000,95.029800,1,95.029800,95.029800,95.029800,"reserve space in A"
+No kernels were profiled in this range.
+No API activities were profiled in this range.
 
