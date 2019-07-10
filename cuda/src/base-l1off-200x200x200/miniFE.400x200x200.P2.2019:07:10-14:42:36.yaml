@@ -1,0 +1,60 @@
+Mini-Application Name: miniFE
+Mini-Application Version: 2.0
+Global Run Parameters: 
+  dimensions: 
+    nx: 400
+    ny: 200
+    nz: 200
+  load_imbalance: 0
+  mv_overlap_comm_comp: 0 (no)
+  number of processors: 2
+  ScalarType: double
+  GlobalOrdinalType: int
+  LocalOrdinalType: int
+Platform: 
+  hostname: lassen708
+  kernel name: 'Linux'
+  kernel release: '4.14.0-49.18.1.bl6.ppc64le'
+  processor: 'ppc64le'
+Build: 
+  CXX: '/usr/tce/packages/spectrum-mpi/spectrum-mpi-rolling-release-xl-2019.02.07/bin/mpicxx'
+  compiler version: 'IBM XL C/C++ for Linux, V16.1.1 (5725-C73, 5765-J13)'
+  CXXFLAGS: '-O3'
+  using MPI: yes
+Run Date/Time: 2019-07-10, 14-42-33
+Rows-per-proc Load Imbalance: 
+  Largest (from avg, %): 0
+  Std Dev (%): 0
+Matrix structure generation: 
+  Mat-struc-gen Time: 0.215164
+FE assembly: 
+  FE assembly Time: 0.112591
+Matrix attributes: 
+  Global Nrows: 16200801
+  Global NNZ: 437421627
+  Global Memory (GB): 5.00927
+  Pll Memory Overhead (MB): 1.84483
+  Rows per proc MIN: 8060100
+  Rows per proc MAX: 8140701
+  Rows per proc AVG: 8.1004e+06
+  NNZ per proc MIN: 217622700
+  NNZ per proc MAX: 219798927
+  NNZ per proc AVG: 2.18711e+08
+CG solve: 
+  Iterations: 200
+  Final Resid Norm: 0.00656452
+  WAXPY Time: 0.0190299
+  WAXPY Flops: 2.8896e+10
+  WAXPY Mflops: 1.51846e+06
+  DOT Time: 0.338668
+  DOT Flops: 1.28e+10
+  DOT Mflops: 37795.1
+  MATVEC Time: 0.619787
+  MATVEC Flops: 1.75843e+11
+  MATVEC Mflops: 283716
+  Total: 
+    Total CG Time: 1.02019
+    Total CG Flops: 2.17539e+11
+    Total CG Mflops: 213234
+  Time per iteration: 0.00510095
+Total Program Time: 3.6743
