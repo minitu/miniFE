@@ -1,0 +1,1224 @@
+Mapped MPI rank 0 to device 0
+ OMP_NUM_THREADS=4
+      creating/filling mesh...0.240136s, total time: 0.240137
+generating matrix structure...0.463074s, total time: 0.703211
+         assembling FE data...0.118955s, total time: 0.822166
+      imposing Dirichlet BC...0.0174279s, total time: 0.839594
+      imposing Dirichlet BC...Mapped MPI rank 2 to device 2
+0.0145509s, total time: 0.854145
+making matrix indices local...Mapped MPI rank 1 to device 1
+Mapped MPI rank 3 to device 3
+0.057904s, total time: 0.912049
+Starting CG solver ... 
+Initial Residual = 283.907
+[2][DOT-1] dot_kernel: 0.104320, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008544, MPI_Allreduce: 0.005043
+[2][WAXPBY-1] waxpby_kernel: 0.243936
+[2][MATVEC] copyElementsToBuffer: 3.579008, D2H memcpy: 0.029024, int kernel: 3.608960, MPI comm: 4.360303, ext kernel: 0.090848
+[2][DOT-2] dot_kernel: 0.151904, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.009760, MPI_Allreduce: 0.075257
+[2][WAXPBY-2] waxpby_kernel: 0.244096
+[2][WAXPBY-3] waxpby_kernel: 0.231968
+[3][DOT-1] dot_kernel: 0.103008, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.001792, MPI_Allreduce: 0.009016
+[3][WAXPBY-1] waxpby_kernel: 0.245280
+[3][MATVEC] copyElementsToBuffer: 3.570720, D2H memcpy: 0.033984, int kernel: 3.587008, MPI comm: 4.037758, ext kernel: 0.086944
+[3][DOT-2] dot_kernel: 0.151648, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.004416, MPI_Allreduce: 0.089321
+[3][WAXPBY-2] waxpby_kernel: 0.243296
+[3][WAXPBY-3] waxpby_kernel: 0.232320
+[4][DOT-1] dot_kernel: 0.100064, dot_final_reduce_kernel: 0.004640, D2H memcpy: 0.002816, MPI_Allreduce: 0.004387
+[4][WAXPBY-1] waxpby_kernel: 0.245248
+[4][MATVEC] copyElementsToBuffer: 3.559072, D2H memcpy: 0.025888, int kernel: 3.589056, MPI comm: 4.040892, ext kernel: 0.087424
+[4][DOT-2] dot_kernel: 0.151648, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008960, MPI_Allreduce: 0.078307
+[4][WAXPBY-2] waxpby_kernel: 0.242784
+[4][WAXPBY-3] waxpby_kernel: 0.232288
+[5][DOT-1] dot_kernel: 0.102784, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.005216, MPI_Allreduce: 0.004336
+[5][WAXPBY-1] waxpby_kernel: 0.243392
+[5][MATVEC] copyElementsToBuffer: 3.568928, D2H memcpy: 0.030464, int kernel: 3.586816, MPI comm: 4.065501, ext kernel: 0.086752
+[5][DOT-2] dot_kernel: 0.152032, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.009472, MPI_Allreduce: 0.074229
+[5][WAXPBY-2] waxpby_kernel: 0.242976
+[5][WAXPBY-3] waxpby_kernel: 0.232160
+[6][DOT-1] dot_kernel: 0.101408, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.002720, MPI_Allreduce: 0.004546
+[6][WAXPBY-1] waxpby_kernel: 0.243680
+[6][MATVEC] copyElementsToBuffer: 3.558432, D2H memcpy: 0.027872, int kernel: 3.589408, MPI comm: 4.044081, ext kernel: 0.088576
+[6][DOT-2] dot_kernel: 0.151776, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.009184, MPI_Allreduce: 0.075634
+[6][WAXPBY-2] waxpby_kernel: 0.243808
+[6][WAXPBY-3] waxpby_kernel: 0.231872
+[7][DOT-1] dot_kernel: 0.101312, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.001952, MPI_Allreduce: 0.004959
+[7][WAXPBY-1] waxpby_kernel: 0.244224
+[7][MATVEC] copyElementsToBuffer: 3.561280, D2H memcpy: 0.034272, int kernel: 3.587744, MPI comm: 4.051544, ext kernel: 0.088352
+[7][DOT-2] dot_kernel: 0.151808, dot_final_reduce_kernel: 0.004768, D2H memcpy: 0.009120, MPI_Allreduce: 0.071620
+[7][WAXPBY-2] waxpby_kernel: 0.244000
+[7][WAXPBY-3] waxpby_kernel: 0.231808
+[8][DOT-1] dot_kernel: 0.102688, dot_final_reduce_kernel: 0.004640, D2H memcpy: 0.001920, MPI_Allreduce: 0.004283
+[8][WAXPBY-1] waxpby_kernel: 0.244352
+[8][MATVEC] copyElementsToBuffer: 3.562624, D2H memcpy: 0.033664, int kernel: 3.585408, MPI comm: 4.058293, ext kernel: 0.086752
+[8][DOT-2] dot_kernel: 0.151616, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.010304, MPI_Allreduce: 0.072495
+[8][WAXPBY-2] waxpby_kernel: 0.241216
+[8][WAXPBY-3] waxpby_kernel: 0.232000
+[9][DOT-1] dot_kernel: 0.102944, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.003904, MPI_Allreduce: 0.003877
+[9][WAXPBY-1] waxpby_kernel: 0.243520
+[9][MATVEC] copyElementsToBuffer: 3.564576, D2H memcpy: 0.026464, int kernel: 3.589760, MPI comm: 4.044539, ext kernel: 0.087936
+[9][DOT-2] dot_kernel: 0.151584, dot_final_reduce_kernel: 0.004768, D2H memcpy: 0.009568, MPI_Allreduce: 0.092855
+[9][WAXPBY-2] waxpby_kernel: 0.244672
+[9][WAXPBY-3] waxpby_kernel: 0.231872
+[10][DOT-1] dot_kernel: 0.103232, dot_final_reduce_kernel: 0.004800, D2H memcpy: 0.006304, MPI_Allreduce: 0.004803
+[10][WAXPBY-1] waxpby_kernel: 0.247808
+[10][MATVEC] copyElementsToBuffer: 3.563072, D2H memcpy: 0.027136, int kernel: 3.592288, MPI comm: 4.010994, ext kernel: 0.091456
+[10][DOT-2] dot_kernel: 0.151008, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.004192, MPI_Allreduce: 0.101324
+[10][WAXPBY-2] waxpby_kernel: 0.242720
+[10][WAXPBY-3] waxpby_kernel: 0.232096
+[11][DOT-1] dot_kernel: 0.103104, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.007776, MPI_Allreduce: 0.003908
+[11][WAXPBY-1] waxpby_kernel: 0.242592
+[11][MATVEC] copyElementsToBuffer: 3.562912, D2H memcpy: 0.032704, int kernel: 3.585248, MPI comm: 4.016583, ext kernel: 0.091296
+[11][DOT-2] dot_kernel: 0.151296, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008960, MPI_Allreduce: 0.078940
+[11][WAXPBY-2] waxpby_kernel: 0.245216
+[11][WAXPBY-3] waxpby_kernel: 0.231840
+[12][DOT-1] dot_kernel: 0.102848, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.003616, MPI_Allreduce: 0.004586
+[12][WAXPBY-1] waxpby_kernel: 0.244672
+[12][MATVEC] copyElementsToBuffer: 3.572160, D2H memcpy: 0.027616, int kernel: 3.595392, MPI comm: 4.044352, ext kernel: 0.085504
+[12][DOT-2] dot_kernel: 0.151264, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.009248, MPI_Allreduce: 0.082624
+[12][WAXPBY-2] waxpby_kernel: 0.245344
+[12][WAXPBY-3] waxpby_kernel: 0.231872
+[13][DOT-1] dot_kernel: 0.100032, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.003328, MPI_Allreduce: 0.004748
+[13][WAXPBY-1] waxpby_kernel: 0.245088
+[13][MATVEC] copyElementsToBuffer: 3.559872, D2H memcpy: 0.027328, int kernel: 3.589728, MPI comm: 4.052757, ext kernel: 0.087776
+[13][DOT-2] dot_kernel: 0.151712, dot_final_reduce_kernel: 0.004736, D2H memcpy: 0.004384, MPI_Allreduce: 0.066126
+[13][WAXPBY-2] waxpby_kernel: 0.245312
+[13][WAXPBY-3] waxpby_kernel: 0.232192
+[14][DOT-1] dot_kernel: 0.103648, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.002016, MPI_Allreduce: 0.004484
+[14][WAXPBY-1] waxpby_kernel: 0.246048
+[14][MATVEC] copyElementsToBuffer: 3.562848, D2H memcpy: 0.030240, int kernel: 3.588544, MPI comm: 4.052739, ext kernel: 0.089664
+[14][DOT-2] dot_kernel: 0.151968, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.002368, MPI_Allreduce: 0.054631
+[14][WAXPBY-2] waxpby_kernel: 0.244928
+[14][WAXPBY-3] waxpby_kernel: 0.231968
+[15][DOT-1] dot_kernel: 0.102752, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.007072, MPI_Allreduce: 0.004404
+[15][WAXPBY-1] waxpby_kernel: 0.245280
+[15][MATVEC] copyElementsToBuffer: 3.565056, D2H memcpy: 0.029856, int kernel: 3.587712, MPI comm: 4.049789, ext kernel: 0.086816
+[15][DOT-2] dot_kernel: 0.151936, dot_final_reduce_kernel: 0.004736, D2H memcpy: 0.003872, MPI_Allreduce: 0.100658
+[15][WAXPBY-2] waxpby_kernel: 0.244288
+[15][WAXPBY-3] waxpby_kernel: 0.231744
+[16][DOT-1] dot_kernel: 0.106336, dot_final_reduce_kernel: 0.004640, D2H memcpy: 0.005088, MPI_Allreduce: 0.004702
+[16][WAXPBY-1] waxpby_kernel: 0.245472
+[16][MATVEC] copyElementsToBuffer: 3.562112, D2H memcpy: 0.026400, int kernel: 3.590528, MPI comm: 4.052244, ext kernel: 0.084896
+[16][DOT-2] dot_kernel: 0.151552, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.002464, MPI_Allreduce: 0.067010
+[16][WAXPBY-2] waxpby_kernel: 0.244544
+[16][WAXPBY-3] waxpby_kernel: 0.232064
+[17][DOT-1] dot_kernel: 0.100288, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.006880, MPI_Allreduce: 0.005159
+[17][WAXPBY-1] waxpby_kernel: 0.245056
+[17][MATVEC] copyElementsToBuffer: 3.562432, D2H memcpy: 0.026656, int kernel: 3.588512, MPI comm: 4.023331, ext kernel: 0.089472
+[17][DOT-2] dot_kernel: 0.151872, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.006112, MPI_Allreduce: 0.083256
+[17][WAXPBY-2] waxpby_kernel: 0.241664
+[17][WAXPBY-3] waxpby_kernel: 0.232064
+[18][DOT-1] dot_kernel: 0.104864, dot_final_reduce_kernel: 0.004768, D2H memcpy: 0.002720, MPI_Allreduce: 0.004723
+[18][WAXPBY-1] waxpby_kernel: 0.241312
+[18][MATVEC] copyElementsToBuffer: 3.560192, D2H memcpy: 0.033056, int kernel: 3.588608, MPI comm: 4.062209, ext kernel: 0.090496
+[18][DOT-2] dot_kernel: 0.151168, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.004832, MPI_Allreduce: 0.077282
+[18][WAXPBY-2] waxpby_kernel: 0.244672
+[18][WAXPBY-3] waxpby_kernel: 0.232448
+[19][DOT-1] dot_kernel: 0.105376, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.004480, MPI_Allreduce: 0.004279
+[19][WAXPBY-1] waxpby_kernel: 0.244640
+[19][MATVEC] copyElementsToBuffer: 3.560288, D2H memcpy: 0.031808, int kernel: 3.586528, MPI comm: 4.051339, ext kernel: 0.088192
+[19][DOT-2] dot_kernel: 0.151424, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.008032, MPI_Allreduce: 0.080770
+[19][WAXPBY-2] waxpby_kernel: 0.245664
+[19][WAXPBY-3] waxpby_kernel: 0.232032
+Iteration = 20   Residual = 0.133074
+[20][DOT-1] dot_kernel: 0.104064, dot_final_reduce_kernel: 0.004640, D2H memcpy: 0.004576, MPI_Allreduce: 0.004619
+[20][WAXPBY-1] waxpby_kernel: 0.245824
+[20][MATVEC] copyElementsToBuffer: 3.562528, D2H memcpy: 0.033472, int kernel: 3.585120, MPI comm: 4.034896, ext kernel: 0.086336
+[20][DOT-2] dot_kernel: 0.151680, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.008928, MPI_Allreduce: 0.066343
+[20][WAXPBY-2] waxpby_kernel: 0.245152
+[20][WAXPBY-3] waxpby_kernel: 0.232224
+[21][DOT-1] dot_kernel: 0.101152, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.001856, MPI_Allreduce: 0.004363
+[21][WAXPBY-1] waxpby_kernel: 0.248160
+[21][MATVEC] copyElementsToBuffer: 3.564160, D2H memcpy: 0.026720, int kernel: 3.589824, MPI comm: 4.015702, ext kernel: 0.095520
+[21][DOT-2] dot_kernel: 0.151328, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.002624, MPI_Allreduce: 0.103392
+[21][WAXPBY-2] waxpby_kernel: 0.244288
+[21][WAXPBY-3] waxpby_kernel: 0.231904
+[22][DOT-1] dot_kernel: 0.102720, dot_final_reduce_kernel: 0.004800, D2H memcpy: 0.007168, MPI_Allreduce: 0.004680
+[22][WAXPBY-1] waxpby_kernel: 0.242784
+[22][MATVEC] copyElementsToBuffer: 3.565632, D2H memcpy: 0.027744, int kernel: 3.587392, MPI comm: 4.041382, ext kernel: 0.087136
+[22][DOT-2] dot_kernel: 0.151360, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.008800, MPI_Allreduce: 0.086779
+[22][WAXPBY-2] waxpby_kernel: 0.244768
+[22][WAXPBY-3] waxpby_kernel: 0.232352
+[23][DOT-1] dot_kernel: 0.101120, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.004896, MPI_Allreduce: 0.004519
+[23][WAXPBY-1] waxpby_kernel: 0.244768
+[23][MATVEC] copyElementsToBuffer: 3.566304, D2H memcpy: 0.030752, int kernel: 3.593824, MPI comm: 4.022777, ext kernel: 0.091328
+[23][DOT-2] dot_kernel: 0.151648, dot_final_reduce_kernel: 0.004768, D2H memcpy: 0.002720, MPI_Allreduce: 0.092108
+[23][WAXPBY-2] waxpby_kernel: 0.241376
+[23][WAXPBY-3] waxpby_kernel: 0.232032
+[24][DOT-1] dot_kernel: 0.103488, dot_final_reduce_kernel: 0.004640, D2H memcpy: 0.003936, MPI_Allreduce: 0.004171
+[24][WAXPBY-1] waxpby_kernel: 0.244384
+[24][MATVEC] copyElementsToBuffer: 3.562528, D2H memcpy: 0.033824, int kernel: 3.588192, MPI comm: 4.044605, ext kernel: 0.089120
+[24][DOT-2] dot_kernel: 0.151168, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.008192, MPI_Allreduce: 0.075872
+[24][WAXPBY-2] waxpby_kernel: 0.243296
+[24][WAXPBY-3] waxpby_kernel: 0.232224
+[25][DOT-1] dot_kernel: 0.103328, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.005728, MPI_Allreduce: 1.124040
+[25][WAXPBY-1] waxpby_kernel: 0.245536
+[25][MATVEC] copyElementsToBuffer: 3.565984, D2H memcpy: 0.029440, int kernel: 3.585952, MPI comm: 4.055564, ext kernel: 0.088384
+[25][DOT-2] dot_kernel: 0.151552, dot_final_reduce_kernel: 0.004768, D2H memcpy: 0.007200, MPI_Allreduce: 0.072389
+[25][WAXPBY-2] waxpby_kernel: 0.246752
+[25][WAXPBY-3] waxpby_kernel: 0.232096
+[26][DOT-1] dot_kernel: 0.103072, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.009408, MPI_Allreduce: 0.004967
+[26][WAXPBY-1] waxpby_kernel: 0.245600
+[26][MATVEC] copyElementsToBuffer: 3.558912, D2H memcpy: 0.031872, int kernel: 3.585024, MPI comm: 4.018379, ext kernel: 0.085760
+[26][DOT-2] dot_kernel: 0.151520, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.005760, MPI_Allreduce: 0.091390
+[26][WAXPBY-2] waxpby_kernel: 0.243584
+[26][WAXPBY-3] waxpby_kernel: 0.231776
+[27][DOT-1] dot_kernel: 0.100192, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.004320, MPI_Allreduce: 0.004363
+[27][WAXPBY-1] waxpby_kernel: 0.244768
+[27][MATVEC] copyElementsToBuffer: 3.557312, D2H memcpy: 0.027520, int kernel: 3.590432, MPI comm: 4.014165, ext kernel: 0.092352
+[27][DOT-2] dot_kernel: 0.151584, dot_final_reduce_kernel: 0.004768, D2H memcpy: 0.007328, MPI_Allreduce: 0.101132
+[27][WAXPBY-2] waxpby_kernel: 0.241152
+[27][WAXPBY-3] waxpby_kernel: 0.232096
+[28][DOT-1] dot_kernel: 0.102400, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.004576, MPI_Allreduce: 0.004333
+[28][WAXPBY-1] waxpby_kernel: 0.243840
+[28][MATVEC] copyElementsToBuffer: 3.564320, D2H memcpy: 0.027264, int kernel: 3.591104, MPI comm: 4.057384, ext kernel: 0.089216
+[28][DOT-2] dot_kernel: 0.151616, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.002336, MPI_Allreduce: 0.080959
+[28][WAXPBY-2] waxpby_kernel: 0.246144
+[28][WAXPBY-3] waxpby_kernel: 0.231776
+[29][DOT-1] dot_kernel: 0.100736, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.007040, MPI_Allreduce: 0.005011
+[29][WAXPBY-1] waxpby_kernel: 0.247520
+[29][MATVEC] copyElementsToBuffer: 3.557664, D2H memcpy: 0.027264, int kernel: 3.588032, MPI comm: 4.022128, ext kernel: 0.089760
+[29][DOT-2] dot_kernel: 0.151520, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.007680, MPI_Allreduce: 0.078098
+[29][WAXPBY-2] waxpby_kernel: 0.243360
+[29][WAXPBY-3] waxpby_kernel: 0.231904
+[30][DOT-1] dot_kernel: 0.103008, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.004416, MPI_Allreduce: 0.003783
+[30][WAXPBY-1] waxpby_kernel: 0.245440
+[30][MATVEC] copyElementsToBuffer: 3.562272, D2H memcpy: 0.031104, int kernel: 3.586976, MPI comm: 4.024104, ext kernel: 0.089504
+[30][DOT-2] dot_kernel: 0.152224, dot_final_reduce_kernel: 0.004832, D2H memcpy: 0.003616, MPI_Allreduce: 0.083689
+[30][WAXPBY-2] waxpby_kernel: 0.244896
+[30][WAXPBY-3] waxpby_kernel: 0.231808
+[31][DOT-1] dot_kernel: 0.103808, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.005216, MPI_Allreduce: 0.004628
+[31][WAXPBY-1] waxpby_kernel: 0.244960
+[31][MATVEC] copyElementsToBuffer: 3.563776, D2H memcpy: 0.033024, int kernel: 3.586656, MPI comm: 4.028000, ext kernel: 0.089504
+[31][DOT-2] dot_kernel: 0.151712, dot_final_reduce_kernel: 0.004768, D2H memcpy: 0.002496, MPI_Allreduce: 0.117003
+[31][WAXPBY-2] waxpby_kernel: 0.242080
+[31][WAXPBY-3] waxpby_kernel: 0.231744
+[32][DOT-1] dot_kernel: 0.103104, dot_final_reduce_kernel: 0.004640, D2H memcpy: 0.006688, MPI_Allreduce: 0.004081
+[32][WAXPBY-1] waxpby_kernel: 0.246976
+[32][MATVEC] copyElementsToBuffer: 3.569664, D2H memcpy: 0.032416, int kernel: 3.593600, MPI comm: 4.062666, ext kernel: 0.085152
+[32][DOT-2] dot_kernel: 0.151968, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.006016, MPI_Allreduce: 0.061644
+[32][WAXPBY-2] waxpby_kernel: 0.245728
+[32][WAXPBY-3] waxpby_kernel: 0.231968
+[33][DOT-1] dot_kernel: 0.100544, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.008992, MPI_Allreduce: 0.005188
+[33][WAXPBY-1] waxpby_kernel: 0.246016
+[33][MATVEC] copyElementsToBuffer: 3.567008, D2H memcpy: 0.027360, int kernel: 3.590432, MPI comm: 4.032372, ext kernel: 0.088704
+[33][DOT-2] dot_kernel: 0.151584, dot_final_reduce_kernel: 0.004736, D2H memcpy: 0.006656, MPI_Allreduce: 0.072843
+[33][WAXPBY-2] waxpby_kernel: 0.243392
+[33][WAXPBY-3] waxpby_kernel: 0.231936
+[34][DOT-1] dot_kernel: 0.103200, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.002176, MPI_Allreduce: 0.003892
+[34][WAXPBY-1] waxpby_kernel: 0.243968
+[34][MATVEC] copyElementsToBuffer: 0.012672, D2H memcpy: 1.088096, int kernel: 3.589184, MPI comm: 4.057717, ext kernel: 0.070624
+[34][DOT-2] dot_kernel: 0.151360, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.011520, MPI_Allreduce: 0.005408
+[34][WAXPBY-2] waxpby_kernel: 0.247552
+[34][WAXPBY-3] waxpby_kernel: 0.232512
+[35][DOT-1] dot_kernel: 0.101440, dot_final_reduce_kernel: 0.004672, D2H memcpy: 0.005472, MPI_Allreduce: 0.004746
+[35][WAXPBY-1] waxpby_kernel: 0.246464
+[35][MATVEC] copyElementsToBuffer: 3.561152, D2H memcpy: 0.036960, int kernel: 3.586912, MPI comm: 5.278021, ext kernel: 0.085280
+[35][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.006112, MPI_Allreduce: 0.075616
+[35][WAXPBY-2] waxpby_kernel: 0.241888
+[35][WAXPBY-3] waxpby_kernel: 0.232384
+[36][DOT-1] dot_kernel: 0.102976, dot_final_reduce_kernel: 0.004672, D2H memcpy: 0.002304, MPI_Allreduce: 0.004371
+[36][WAXPBY-1] waxpby_kernel: 0.241952
+[36][MATVEC] copyElementsToBuffer: 3.560288, D2H memcpy: 0.025888, int kernel: 3.588480, MPI comm: 4.037875, ext kernel: 0.089408
+[36][DOT-2] dot_kernel: 0.151200, dot_final_reduce_kernel: 0.004736, D2H memcpy: 0.008928, MPI_Allreduce: 0.074272
+[36][WAXPBY-2] waxpby_kernel: 0.243936
+[36][WAXPBY-3] waxpby_kernel: 0.232064
+[37][DOT-1] dot_kernel: 0.101024, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.006208, MPI_Allreduce: 0.004922
+[37][WAXPBY-1] waxpby_kernel: 0.246144
+[37][MATVEC] copyElementsToBuffer: 3.569952, D2H memcpy: 0.028160, int kernel: 3.593120, MPI comm: 4.030731, ext kernel: 0.096096
+[37][DOT-2] dot_kernel: 0.151808, dot_final_reduce_kernel: 0.004768, D2H memcpy: 0.008736, MPI_Allreduce: 0.089078
+[37][WAXPBY-2] waxpby_kernel: 0.242496
+[37][WAXPBY-3] waxpby_kernel: 0.232128
+[38][DOT-1] dot_kernel: 0.104000, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.004960, MPI_Allreduce: 0.003592
+[38][WAXPBY-1] waxpby_kernel: 0.246688
+[38][MATVEC] copyElementsToBuffer: 3.563360, D2H memcpy: 0.028960, int kernel: 3.587808, MPI comm: 4.048292, ext kernel: 0.089664
+[38][DOT-2] dot_kernel: 0.151520, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.011200, MPI_Allreduce: 0.047090
+[38][WAXPBY-2] waxpby_kernel: 0.244800
+[38][WAXPBY-3] waxpby_kernel: 0.231936
+[39][DOT-1] dot_kernel: 0.102336, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008512, MPI_Allreduce: 0.005096
+[39][WAXPBY-1] waxpby_kernel: 0.246016
+[39][MATVEC] copyElementsToBuffer: 3.563104, D2H memcpy: 0.034720, int kernel: 3.584000, MPI comm: 4.027963, ext kernel: 0.091584
+[39][DOT-2] dot_kernel: 0.151552, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.003488, MPI_Allreduce: 0.085714
+[39][WAXPBY-2] waxpby_kernel: 0.242592
+[39][WAXPBY-3] waxpby_kernel: 0.232032
+Iteration = 40   Residual = 0.0546777
+[40][DOT-1] dot_kernel: 0.102368, dot_final_reduce_kernel: 0.004928, D2H memcpy: 0.004288, MPI_Allreduce: 0.004113
+[40][WAXPBY-1] waxpby_kernel: 0.244320
+[40][MATVEC] copyElementsToBuffer: 3.562560, D2H memcpy: 0.027808, int kernel: 3.591392, MPI comm: 4.039109, ext kernel: 0.086048
+[40][DOT-2] dot_kernel: 0.151200, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.003264, MPI_Allreduce: 0.084979
+[40][WAXPBY-2] waxpby_kernel: 0.246496
+[40][WAXPBY-3] waxpby_kernel: 0.232480
+[41][DOT-1] dot_kernel: 0.101568, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.005248, MPI_Allreduce: 0.004859
+[41][WAXPBY-1] waxpby_kernel: 0.246560
+[41][MATVEC] copyElementsToBuffer: 3.564992, D2H memcpy: 0.026880, int kernel: 3.592384, MPI comm: 4.033013, ext kernel: 0.087552
+[41][DOT-2] dot_kernel: 0.151360, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008192, MPI_Allreduce: 0.087988
+[41][WAXPBY-2] waxpby_kernel: 0.245792
+[41][WAXPBY-3] waxpby_kernel: 0.232608
+[42][DOT-1] dot_kernel: 0.099232, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.003840, MPI_Allreduce: 0.004678
+[42][WAXPBY-1] waxpby_kernel: 0.244992
+[42][MATVEC] copyElementsToBuffer: 3.566464, D2H memcpy: 0.026784, int kernel: 3.589664, MPI comm: 4.037316, ext kernel: 0.088352
+[42][DOT-2] dot_kernel: 0.150912, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.004736, MPI_Allreduce: 0.076071
+[42][WAXPBY-2] waxpby_kernel: 0.243904
+[42][WAXPBY-3] waxpby_kernel: 0.232448
+[43][DOT-1] dot_kernel: 0.102976, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.002016, MPI_Allreduce: 0.004175
+[43][WAXPBY-1] waxpby_kernel: 0.246144
+[43][MATVEC] copyElementsToBuffer: 3.559168, D2H memcpy: 0.032864, int kernel: 3.586368, MPI comm: 4.034556, ext kernel: 0.085824
+[43][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.004256, MPI_Allreduce: 0.082369
+[43][WAXPBY-2] waxpby_kernel: 0.244288
+[43][WAXPBY-3] waxpby_kernel: 0.232800
+[44][DOT-1] dot_kernel: 0.099968, dot_final_reduce_kernel: 0.004448, D2H memcpy: 0.007328, MPI_Allreduce: 0.005078
+[44][WAXPBY-1] waxpby_kernel: 0.244864
+[44][MATVEC] copyElementsToBuffer: 3.565888, D2H memcpy: 0.027264, int kernel: 3.588704, MPI comm: 4.046652, ext kernel: 0.089120
+[44][DOT-2] dot_kernel: 0.151424, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.010336, MPI_Allreduce: 0.065345
+[44][WAXPBY-2] waxpby_kernel: 0.243904
+[44][WAXPBY-3] waxpby_kernel: 0.232480
+[45][DOT-1] dot_kernel: 0.102080, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.007328, MPI_Allreduce: 0.004283
+[45][WAXPBY-1] waxpby_kernel: 0.245600
+[45][MATVEC] copyElementsToBuffer: 3.564640, D2H memcpy: 0.027776, int kernel: 3.591456, MPI comm: 4.034815, ext kernel: 0.087552
+[45][DOT-2] dot_kernel: 0.150976, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.009536, MPI_Allreduce: 0.076739
+[45][WAXPBY-2] waxpby_kernel: 0.246880
+[45][WAXPBY-3] waxpby_kernel: 0.232832
+[46][DOT-1] dot_kernel: 0.102144, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.009408, MPI_Allreduce: 0.005029
+[46][WAXPBY-1] waxpby_kernel: 0.244896
+[46][MATVEC] copyElementsToBuffer: 3.564416, D2H memcpy: 0.028064, int kernel: 3.589312, MPI comm: 4.021917, ext kernel: 0.088000
+[46][DOT-2] dot_kernel: 0.151392, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.008608, MPI_Allreduce: 0.069921
+[46][WAXPBY-2] waxpby_kernel: 0.245152
+[46][WAXPBY-3] waxpby_kernel: 0.232704
+[47][DOT-1] dot_kernel: 0.100768, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005536, MPI_Allreduce: 0.004223
+[47][WAXPBY-1] waxpby_kernel: 0.243360
+[47][MATVEC] copyElementsToBuffer: 3.566432, D2H memcpy: 0.025856, int kernel: 3.592640, MPI comm: 4.056011, ext kernel: 0.088576
+[47][DOT-2] dot_kernel: 0.151008, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.005600, MPI_Allreduce: 0.065323
+[47][WAXPBY-2] waxpby_kernel: 0.245312
+[47][WAXPBY-3] waxpby_kernel: 0.232480
+[48][DOT-1] dot_kernel: 0.104160, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.002464, MPI_Allreduce: 0.004071
+[48][WAXPBY-1] waxpby_kernel: 0.244160
+[48][MATVEC] copyElementsToBuffer: 3.562016, D2H memcpy: 0.030624, int kernel: 3.585344, MPI comm: 4.021207, ext kernel: 0.086944
+[48][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.006496, MPI_Allreduce: 0.081559
+[48][WAXPBY-2] waxpby_kernel: 0.245312
+[48][WAXPBY-3] waxpby_kernel: 0.232704
+[49][DOT-1] dot_kernel: 0.102528, dot_final_reduce_kernel: 0.004448, D2H memcpy: 0.009088, MPI_Allreduce: 0.004296
+[49][WAXPBY-1] waxpby_kernel: 0.248704
+[49][MATVEC] copyElementsToBuffer: 3.562624, D2H memcpy: 0.028224, int kernel: 3.591232, MPI comm: 4.022962, ext kernel: 0.088000
+[49][DOT-2] dot_kernel: 0.151168, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.006144, MPI_Allreduce: 0.091031
+[49][WAXPBY-2] waxpby_kernel: 0.246208
+[49][WAXPBY-3] waxpby_kernel: 0.232448
+[50][DOT-1] dot_kernel: 0.102816, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.009472, MPI_Allreduce: 0.005054
+[50][WAXPBY-1] waxpby_kernel: 0.246144
+[50][MATVEC] copyElementsToBuffer: 3.564448, D2H memcpy: 0.032544, int kernel: 3.592768, MPI comm: 4.035271, ext kernel: 0.083136
+[50][DOT-2] dot_kernel: 0.151264, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.008704, MPI_Allreduce: 0.074677
+[50][WAXPBY-2] waxpby_kernel: 0.244480
+[50][WAXPBY-3] waxpby_kernel: 0.232416
+[51][DOT-1] dot_kernel: 0.098752, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007776, MPI_Allreduce: 0.004178
+[51][WAXPBY-1] waxpby_kernel: 0.245408
+[51][MATVEC] copyElementsToBuffer: 3.567584, D2H memcpy: 0.033088, int kernel: 3.589728, MPI comm: 4.038748, ext kernel: 0.085152
+[51][DOT-2] dot_kernel: 0.151840, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008384, MPI_Allreduce: 0.089326
+[51][WAXPBY-2] waxpby_kernel: 0.245728
+[51][WAXPBY-3] waxpby_kernel: 0.233024
+[52][DOT-1] dot_kernel: 0.101152, dot_final_reduce_kernel: 0.004448, D2H memcpy: 0.002016, MPI_Allreduce: 0.005046
+[52][WAXPBY-1] waxpby_kernel: 0.247936
+[52][MATVEC] copyElementsToBuffer: 3.570080, D2H memcpy: 0.031712, int kernel: 3.586304, MPI comm: 4.032176, ext kernel: 0.083552
+[52][DOT-2] dot_kernel: 0.151232, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008352, MPI_Allreduce: 0.065113
+[52][WAXPBY-2] waxpby_kernel: 0.245376
+[52][WAXPBY-3] waxpby_kernel: 0.232544
+[53][DOT-1] dot_kernel: 0.099392, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.001952, MPI_Allreduce: 0.004513
+[53][WAXPBY-1] waxpby_kernel: 0.244960
+[53][MATVEC] copyElementsToBuffer: 3.564448, D2H memcpy: 0.028384, int kernel: 3.587232, MPI comm: 4.062549, ext kernel: 0.087744
+[53][DOT-2] dot_kernel: 0.151136, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.004608, MPI_Allreduce: 0.064569
+[53][WAXPBY-2] waxpby_kernel: 0.244928
+[53][WAXPBY-3] waxpby_kernel: 0.232544
+[54][DOT-1] dot_kernel: 0.101600, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005856, MPI_Allreduce: 0.004859
+[54][WAXPBY-1] waxpby_kernel: 0.245728
+[54][MATVEC] copyElementsToBuffer: 3.570816, D2H memcpy: 0.030880, int kernel: 3.591168, MPI comm: 4.020063, ext kernel: 0.085792
+[54][DOT-2] dot_kernel: 0.151168, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.010272, MPI_Allreduce: 0.066430
+[54][WAXPBY-2] waxpby_kernel: 0.245312
+[54][WAXPBY-3] waxpby_kernel: 0.232576
+[55][DOT-1] dot_kernel: 0.103072, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.001696, MPI_Allreduce: 0.004648
+[55][WAXPBY-1] waxpby_kernel: 0.246496
+[55][MATVEC] copyElementsToBuffer: 3.565728, D2H memcpy: 0.027776, int kernel: 3.588832, MPI comm: 4.022653, ext kernel: 0.086016
+[55][DOT-2] dot_kernel: 0.151904, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.009088, MPI_Allreduce: 0.093827
+[55][WAXPBY-2] waxpby_kernel: 0.247456
+[55][WAXPBY-3] waxpby_kernel: 0.232800
+[56][DOT-1] dot_kernel: 0.100800, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.008832, MPI_Allreduce: 0.005289
+[56][WAXPBY-1] waxpby_kernel: 0.247072
+[56][MATVEC] copyElementsToBuffer: 3.573664, D2H memcpy: 0.030560, int kernel: 3.595328, MPI comm: 4.014552, ext kernel: 0.084928
+[56][DOT-2] dot_kernel: 0.151040, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.003872, MPI_Allreduce: 0.098549
+[56][WAXPBY-2] waxpby_kernel: 0.244352
+[56][WAXPBY-3] waxpby_kernel: 0.232512
+[57][DOT-1] dot_kernel: 0.099264, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.008832, MPI_Allreduce: 0.004640
+[57][WAXPBY-1] waxpby_kernel: 0.245760
+[57][MATVEC] copyElementsToBuffer: 3.564736, D2H memcpy: 0.029536, int kernel: 3.595744, MPI comm: 4.013528, ext kernel: 0.087040
+[57][DOT-2] dot_kernel: 0.151776, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.010368, MPI_Allreduce: 0.091836
+[57][WAXPBY-2] waxpby_kernel: 0.242208
+[57][WAXPBY-3] waxpby_kernel: 0.232704
+[58][DOT-1] dot_kernel: 0.098784, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.001824, MPI_Allreduce: 1.283340
+[58][WAXPBY-1] waxpby_kernel: 0.246112
+[58][MATVEC] copyElementsToBuffer: 3.563072, D2H memcpy: 0.026848, int kernel: 3.591264, MPI comm: 4.023342, ext kernel: 0.086688
+[58][DOT-2] dot_kernel: 0.151232, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.007808, MPI_Allreduce: 0.078282
+[58][WAXPBY-2] waxpby_kernel: 0.242752
+[58][WAXPBY-3] waxpby_kernel: 0.232832
+[59][DOT-1] dot_kernel: 0.102624, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.006464, MPI_Allreduce: 0.003972
+[59][WAXPBY-1] waxpby_kernel: 0.242912
+[59][MATVEC] copyElementsToBuffer: 3.562464, D2H memcpy: 0.030144, int kernel: 3.585952, MPI comm: 4.044497, ext kernel: 0.088416
+[59][DOT-2] dot_kernel: 0.151136, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.007712, MPI_Allreduce: 0.083970
+[59][WAXPBY-2] waxpby_kernel: 0.246080
+[59][WAXPBY-3] waxpby_kernel: 0.232608
+Iteration = 60   Residual = 0.301497
+[60][DOT-1] dot_kernel: 0.102624, dot_final_reduce_kernel: 0.004448, D2H memcpy: 0.008384, MPI_Allreduce: 0.004703
+[60][WAXPBY-1] waxpby_kernel: 0.246944
+[60][MATVEC] copyElementsToBuffer: 3.568736, D2H memcpy: 0.033568, int kernel: 3.588608, MPI comm: 4.033312, ext kernel: 0.087616
+[60][DOT-2] dot_kernel: 0.151264, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.008736, MPI_Allreduce: 0.058654
+[60][WAXPBY-2] waxpby_kernel: 0.244800
+[60][WAXPBY-3] waxpby_kernel: 0.232640
+[61][DOT-1] dot_kernel: 0.103136, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.006848, MPI_Allreduce: 0.004278
+[61][WAXPBY-1] waxpby_kernel: 0.245024
+[61][MATVEC] copyElementsToBuffer: 3.563328, D2H memcpy: 0.028576, int kernel: 3.592576, MPI comm: 4.041494, ext kernel: 0.085760
+[61][DOT-2] dot_kernel: 0.151968, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.002432, MPI_Allreduce: 0.079213
+[61][WAXPBY-2] waxpby_kernel: 0.244704
+[61][WAXPBY-3] waxpby_kernel: 0.232704
+[62][DOT-1] dot_kernel: 0.100736, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008064, MPI_Allreduce: 0.004970
+[62][WAXPBY-1] waxpby_kernel: 0.244672
+[62][MATVEC] copyElementsToBuffer: 3.571680, D2H memcpy: 0.029472, int kernel: 3.596096, MPI comm: 4.021958, ext kernel: 0.086848
+[62][DOT-2] dot_kernel: 0.151168, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.007904, MPI_Allreduce: 0.080483
+[62][WAXPBY-2] waxpby_kernel: 0.246304
+[62][WAXPBY-3] waxpby_kernel: 0.232704
+[63][DOT-1] dot_kernel: 0.099264, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008160, MPI_Allreduce: 0.004947
+[63][WAXPBY-1] waxpby_kernel: 0.247040
+[63][MATVEC] copyElementsToBuffer: 3.564352, D2H memcpy: 0.029856, int kernel: 3.592448, MPI comm: 4.014777, ext kernel: 0.087072
+[63][DOT-2] dot_kernel: 0.151008, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.002560, MPI_Allreduce: 0.094670
+[63][WAXPBY-2] waxpby_kernel: 0.244096
+[63][WAXPBY-3] waxpby_kernel: 0.232448
+[64][DOT-1] dot_kernel: 0.101120, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.005536, MPI_Allreduce: 0.004994
+[64][WAXPBY-1] waxpby_kernel: 0.246464
+[64][MATVEC] copyElementsToBuffer: 3.565728, D2H memcpy: 0.026080, int kernel: 3.591136, MPI comm: 4.030625, ext kernel: 0.084768
+[64][DOT-2] dot_kernel: 0.151360, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.007776, MPI_Allreduce: 0.082292
+[64][WAXPBY-2] waxpby_kernel: 0.244864
+[64][WAXPBY-3] waxpby_kernel: 0.232640
+[65][DOT-1] dot_kernel: 0.099584, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.002496, MPI_Allreduce: 0.005011
+[65][WAXPBY-1] waxpby_kernel: 0.246336
+[65][MATVEC] copyElementsToBuffer: 3.563584, D2H memcpy: 0.027872, int kernel: 3.588832, MPI comm: 4.045693, ext kernel: 0.088352
+[65][DOT-2] dot_kernel: 0.151584, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.006528, MPI_Allreduce: 0.068870
+[65][WAXPBY-2] waxpby_kernel: 0.242816
+[65][WAXPBY-3] waxpby_kernel: 0.232992
+[66][DOT-1] dot_kernel: 0.102496, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007968, MPI_Allreduce: 0.004269
+[66][WAXPBY-1] waxpby_kernel: 0.244288
+[66][MATVEC] copyElementsToBuffer: 3.561824, D2H memcpy: 0.029056, int kernel: 3.591008, MPI comm: 4.031522, ext kernel: 0.086080
+[66][DOT-2] dot_kernel: 0.151104, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.006816, MPI_Allreduce: 0.082645
+[66][WAXPBY-2] waxpby_kernel: 0.246176
+[66][WAXPBY-3] waxpby_kernel: 0.232928
+[67][DOT-1] dot_kernel: 0.098848, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.006528, MPI_Allreduce: 0.004850
+[67][WAXPBY-1] waxpby_kernel: 0.247552
+[67][MATVEC] copyElementsToBuffer: 3.571904, D2H memcpy: 0.030304, int kernel: 3.593152, MPI comm: 4.021236, ext kernel: 0.088032
+[67][DOT-2] dot_kernel: 0.151136, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.003584, MPI_Allreduce: 0.097522
+[67][WAXPBY-2] waxpby_kernel: 0.245568
+[67][WAXPBY-3] waxpby_kernel: 0.232512
+[68][DOT-1] dot_kernel: 0.099872, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.007584, MPI_Allreduce: 0.004135
+[68][WAXPBY-1] waxpby_kernel: 0.245504
+[68][MATVEC] copyElementsToBuffer: 3.571072, D2H memcpy: 0.035360, int kernel: 3.593152, MPI comm: 4.022816, ext kernel: 0.086368
+[68][DOT-2] dot_kernel: 0.151232, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.002240, MPI_Allreduce: 0.084452
+[68][WAXPBY-2] waxpby_kernel: 0.242912
+[68][WAXPBY-3] waxpby_kernel: 0.232896
+[69][DOT-1] dot_kernel: 0.102368, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.001888, MPI_Allreduce: 1.174971
+[69][WAXPBY-1] waxpby_kernel: 0.245568
+[69][MATVEC] copyElementsToBuffer: 3.567936, D2H memcpy: 0.033248, int kernel: 3.589792, MPI comm: 4.027215, ext kernel: 0.087200
+[69][DOT-2] dot_kernel: 0.151392, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.010336, MPI_Allreduce: 0.087170
+[69][WAXPBY-2] waxpby_kernel: 0.245920
+[69][WAXPBY-3] waxpby_kernel: 0.232512
+[70][DOT-1] dot_kernel: 0.100768, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.004096, MPI_Allreduce: 0.004826
+[70][WAXPBY-1] waxpby_kernel: 0.245184
+[70][MATVEC] copyElementsToBuffer: 3.559936, D2H memcpy: 0.031104, int kernel: 3.586528, MPI comm: 4.032546, ext kernel: 0.086688
+[70][DOT-2] dot_kernel: 0.150752, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.002784, MPI_Allreduce: 0.084643
+[70][WAXPBY-2] waxpby_kernel: 0.245120
+[70][WAXPBY-3] waxpby_kernel: 0.232416
+[71][DOT-1] dot_kernel: 0.097792, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007680, MPI_Allreduce: 0.005541
+[71][WAXPBY-1] waxpby_kernel: 0.247136
+[71][MATVEC] copyElementsToBuffer: 3.569152, D2H memcpy: 0.034400, int kernel: 3.595296, MPI comm: 4.040385, ext kernel: 0.087328
+[71][DOT-2] dot_kernel: 0.151200, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.003072, MPI_Allreduce: 0.086871
+[71][WAXPBY-2] waxpby_kernel: 0.242880
+[71][WAXPBY-3] waxpby_kernel: 0.232448
+[72][DOT-1] dot_kernel: 0.102176, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.004992, MPI_Allreduce: 0.003890
+[72][WAXPBY-1] waxpby_kernel: 0.243200
+[72][MATVEC] copyElementsToBuffer: 3.571072, D2H memcpy: 0.028864, int kernel: 3.597632, MPI comm: 4.032106, ext kernel: 0.088960
+[72][DOT-2] dot_kernel: 0.151776, dot_final_reduce_kernel: 0.004288, D2H memcpy: 0.008608, MPI_Allreduce: 0.066571
+[72][WAXPBY-2] waxpby_kernel: 0.246528
+[72][WAXPBY-3] waxpby_kernel: 0.233152
+[73][DOT-1] dot_kernel: 0.100480, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.003552, MPI_Allreduce: 0.004967
+[73][WAXPBY-1] waxpby_kernel: 0.245664
+[73][MATVEC] copyElementsToBuffer: 3.567392, D2H memcpy: 0.036448, int kernel: 3.593472, MPI comm: 4.027382, ext kernel: 0.089696
+[73][DOT-2] dot_kernel: 0.151008, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.011616, MPI_Allreduce: 0.087402
+[73][WAXPBY-2] waxpby_kernel: 0.244480
+[73][WAXPBY-3] waxpby_kernel: 0.232768
+[74][DOT-1] dot_kernel: 0.101408, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.006080, MPI_Allreduce: 0.004403
+[74][WAXPBY-1] waxpby_kernel: 0.245184
+[74][MATVEC] copyElementsToBuffer: 3.563904, D2H memcpy: 0.028256, int kernel: 3.594464, MPI comm: 4.026990, ext kernel: 0.084096
+[74][DOT-2] dot_kernel: 0.151136, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.009760, MPI_Allreduce: 0.080452
+[74][WAXPBY-2] waxpby_kernel: 0.246272
+[74][WAXPBY-3] waxpby_kernel: 0.232960
+[75][DOT-1] dot_kernel: 0.101824, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.006144, MPI_Allreduce: 0.005086
+[75][WAXPBY-1] waxpby_kernel: 0.246688
+[75][MATVEC] copyElementsToBuffer: 3.570112, D2H memcpy: 0.035232, int kernel: 3.588896, MPI comm: 4.047941, ext kernel: 0.088928
+[75][DOT-2] dot_kernel: 0.151232, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.004128, MPI_Allreduce: 0.080141
+[75][WAXPBY-2] waxpby_kernel: 0.246016
+[75][WAXPBY-3] waxpby_kernel: 0.233216
+[76][DOT-1] dot_kernel: 0.103840, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.007520, MPI_Allreduce: 0.004330
+[76][WAXPBY-1] waxpby_kernel: 0.246848
+[76][MATVEC] copyElementsToBuffer: 3.562048, D2H memcpy: 0.030848, int kernel: 3.592864, MPI comm: 4.029037, ext kernel: 0.088992
+[76][DOT-2] dot_kernel: 0.151456, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.006208, MPI_Allreduce: 0.068030
+[76][WAXPBY-2] waxpby_kernel: 0.243008
+[76][WAXPBY-3] waxpby_kernel: 0.232608
+[77][DOT-1] dot_kernel: 0.101856, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.001728, MPI_Allreduce: 0.004798
+[77][WAXPBY-1] waxpby_kernel: 0.244800
+[77][MATVEC] copyElementsToBuffer: 3.568992, D2H memcpy: 0.034240, int kernel: 3.589056, MPI comm: 4.061809, ext kernel: 0.086560
+[77][DOT-2] dot_kernel: 0.150944, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.002304, MPI_Allreduce: 0.076982
+[77][WAXPBY-2] waxpby_kernel: 0.246176
+[77][WAXPBY-3] waxpby_kernel: 0.232384
+[78][DOT-1] dot_kernel: 0.102048, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005600, MPI_Allreduce: 0.004981
+[78][WAXPBY-1] waxpby_kernel: 0.245696
+[78][MATVEC] copyElementsToBuffer: 3.564544, D2H memcpy: 0.027552, int kernel: 3.591168, MPI comm: 4.015407, ext kernel: 0.085376
+[78][DOT-2] dot_kernel: 0.151456, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.006048, MPI_Allreduce: 0.076431
+[78][WAXPBY-2] waxpby_kernel: 0.244608
+[78][WAXPBY-3] waxpby_kernel: 0.232832
+[79][DOT-1] dot_kernel: 0.097760, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.002752, MPI_Allreduce: 0.004943
+[79][WAXPBY-1] waxpby_kernel: 0.246272
+[79][MATVEC] copyElementsToBuffer: 3.568928, D2H memcpy: 0.035936, int kernel: 3.588032, MPI comm: 4.034404, ext kernel: 0.086208
+[79][DOT-2] dot_kernel: 0.151552, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005824, MPI_Allreduce: 0.085262
+[79][WAXPBY-2] waxpby_kernel: 0.243552
+[79][WAXPBY-3] waxpby_kernel: 0.232352
+Iteration = 80   Residual = 0.0198472
+[80][DOT-1] dot_kernel: 0.103360, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.004736, MPI_Allreduce: 0.004383
+[80][WAXPBY-1] waxpby_kernel: 0.244096
+[80][MATVEC] copyElementsToBuffer: 3.568256, D2H memcpy: 0.033568, int kernel: 3.587552, MPI comm: 4.009782, ext kernel: 0.089152
+[80][DOT-2] dot_kernel: 0.151520, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.007744, MPI_Allreduce: 0.092207
+[80][WAXPBY-2] waxpby_kernel: 0.245312
+[80][WAXPBY-3] waxpby_kernel: 0.232896
+[81][DOT-1] dot_kernel: 0.101952, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008800, MPI_Allreduce: 0.005047
+[81][WAXPBY-1] waxpby_kernel: 0.245696
+[81][MATVEC] copyElementsToBuffer: 3.561152, D2H memcpy: 0.035008, int kernel: 3.586624, MPI comm: 4.055298, ext kernel: 0.088032
+[81][DOT-2] dot_kernel: 0.150976, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.007776, MPI_Allreduce: 0.061987
+[81][WAXPBY-2] waxpby_kernel: 0.244096
+[81][WAXPBY-3] waxpby_kernel: 0.232704
+[82][DOT-1] dot_kernel: 0.099200, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.006944, MPI_Allreduce: 0.004414
+[82][WAXPBY-1] waxpby_kernel: 0.245792
+[82][MATVEC] copyElementsToBuffer: 3.563200, D2H memcpy: 0.031552, int kernel: 3.592032, MPI comm: 4.020233, ext kernel: 0.087968
+[82][DOT-2] dot_kernel: 0.151200, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.004544, MPI_Allreduce: 0.086796
+[82][WAXPBY-2] waxpby_kernel: 0.242944
+[82][WAXPBY-3] waxpby_kernel: 0.232544
+[83][DOT-1] dot_kernel: 0.103776, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.005312, MPI_Allreduce: 0.004668
+[83][WAXPBY-1] waxpby_kernel: 0.244960
+[83][MATVEC] copyElementsToBuffer: 3.568480, D2H memcpy: 0.037888, int kernel: 3.594656, MPI comm: 4.024373, ext kernel: 0.089472
+[83][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008000, MPI_Allreduce: 0.090635
+[83][WAXPBY-2] waxpby_kernel: 0.244128
+[83][WAXPBY-3] waxpby_kernel: 0.232768
+[84][DOT-1] dot_kernel: 0.098912, dot_final_reduce_kernel: 0.004448, D2H memcpy: 0.001920, MPI_Allreduce: 0.004275
+[84][WAXPBY-1] waxpby_kernel: 0.244160
+[84][MATVEC] copyElementsToBuffer: 3.567360, D2H memcpy: 0.033696, int kernel: 3.586784, MPI comm: 4.025104, ext kernel: 0.086112
+[84][DOT-2] dot_kernel: 0.151360, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.009664, MPI_Allreduce: 0.075854
+[84][WAXPBY-2] waxpby_kernel: 0.243712
+[84][WAXPBY-3] waxpby_kernel: 0.233152
+[85][DOT-1] dot_kernel: 0.101600, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007168, MPI_Allreduce: 0.004007
+[85][WAXPBY-1] waxpby_kernel: 0.244320
+[85][MATVEC] copyElementsToBuffer: 3.566112, D2H memcpy: 0.026400, int kernel: 3.597600, MPI comm: 4.017348, ext kernel: 0.089856
+[85][DOT-2] dot_kernel: 0.151040, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.008960, MPI_Allreduce: 0.096709
+[85][WAXPBY-2] waxpby_kernel: 0.245280
+[85][WAXPBY-3] waxpby_kernel: 0.232960
+[86][DOT-1] dot_kernel: 0.103680, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.002720, MPI_Allreduce: 0.004533
+[86][WAXPBY-1] waxpby_kernel: 0.244224
+[86][MATVEC] copyElementsToBuffer: 3.562432, D2H memcpy: 0.030720, int kernel: 3.587328, MPI comm: 4.034143, ext kernel: 0.084992
+[86][DOT-2] dot_kernel: 0.150880, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.005792, MPI_Allreduce: 0.074545
+[86][WAXPBY-2] waxpby_kernel: 0.246656
+[86][WAXPBY-3] waxpby_kernel: 0.232736
+[87][DOT-1] dot_kernel: 0.100032, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.007776, MPI_Allreduce: 0.004713
+[87][WAXPBY-1] waxpby_kernel: 0.246912
+[87][MATVEC] copyElementsToBuffer: 3.566496, D2H memcpy: 0.026368, int kernel: 3.589312, MPI comm: 4.032789, ext kernel: 0.087264
+[87][DOT-2] dot_kernel: 0.150944, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.002368, MPI_Allreduce: 0.088721
+[87][WAXPBY-2] waxpby_kernel: 0.244896
+[87][WAXPBY-3] waxpby_kernel: 0.232608
+[88][DOT-1] dot_kernel: 0.102272, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.005376, MPI_Allreduce: 0.004459
+[88][WAXPBY-1] waxpby_kernel: 0.244544
+[88][MATVEC] copyElementsToBuffer: 3.568416, D2H memcpy: 0.031392, int kernel: 3.589952, MPI comm: 4.030593, ext kernel: 0.083520
+[88][DOT-2] dot_kernel: 0.150912, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.009088, MPI_Allreduce: 0.093625
+[88][WAXPBY-2] waxpby_kernel: 0.245152
+[88][WAXPBY-3] waxpby_kernel: 0.233056
+[89][DOT-1] dot_kernel: 0.100768, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.002656, MPI_Allreduce: 0.005039
+[89][WAXPBY-1] waxpby_kernel: 0.247136
+[89][MATVEC] copyElementsToBuffer: 3.569984, D2H memcpy: 0.037152, int kernel: 3.590496, MPI comm: 4.027713, ext kernel: 0.086816
+[89][DOT-2] dot_kernel: 0.151040, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.002240, MPI_Allreduce: 0.089732
+[89][WAXPBY-2] waxpby_kernel: 0.243648
+[89][WAXPBY-3] waxpby_kernel: 0.232672
+[90][DOT-1] dot_kernel: 0.103424, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.003584, MPI_Allreduce: 0.004371
+[90][WAXPBY-1] waxpby_kernel: 0.245248
+[90][MATVEC] copyElementsToBuffer: 3.572192, D2H memcpy: 0.030816, int kernel: 3.589504, MPI comm: 4.021639, ext kernel: 0.089088
+[90][DOT-2] dot_kernel: 0.151520, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.003200, MPI_Allreduce: 0.103418
+[90][WAXPBY-2] waxpby_kernel: 0.242592
+[90][WAXPBY-3] waxpby_kernel: 0.232640
+[91][DOT-1] dot_kernel: 0.101952, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005248, MPI_Allreduce: 0.004434
+[91][WAXPBY-1] waxpby_kernel: 0.246624
+[91][MATVEC] copyElementsToBuffer: 3.566976, D2H memcpy: 0.026592, int kernel: 3.598048, MPI comm: 4.034711, ext kernel: 0.086208
+[91][DOT-2] dot_kernel: 0.151456, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.002304, MPI_Allreduce: 0.083010
+[91][WAXPBY-2] waxpby_kernel: 0.245536
+[91][WAXPBY-3] waxpby_kernel: 0.232480
+[92][DOT-1] dot_kernel: 0.100480, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.003264, MPI_Allreduce: 0.004816
+[92][WAXPBY-1] waxpby_kernel: 0.247872
+[92][MATVEC] copyElementsToBuffer: 3.570496, D2H memcpy: 0.030720, int kernel: 3.594272, MPI comm: 4.047200, ext kernel: 0.084736
+[92][DOT-2] dot_kernel: 0.150912, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.003488, MPI_Allreduce: 0.076747
+[92][WAXPBY-2] waxpby_kernel: 0.243232
+[92][WAXPBY-3] waxpby_kernel: 0.232736
+[93][DOT-1] dot_kernel: 0.100640, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007456, MPI_Allreduce: 0.004070
+[93][WAXPBY-1] waxpby_kernel: 0.245952
+[93][MATVEC] copyElementsToBuffer: 3.564736, D2H memcpy: 0.026592, int kernel: 3.592448, MPI comm: 4.045458, ext kernel: 0.086208
+[93][DOT-2] dot_kernel: 0.151200, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005984, MPI_Allreduce: 1.046510
+[93][WAXPBY-2] waxpby_kernel: 0.243104
+[93][WAXPBY-3] waxpby_kernel: 0.232448
+[94][DOT-1] dot_kernel: 0.100672, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005408, MPI_Allreduce: 0.004137
+[94][WAXPBY-1] waxpby_kernel: 0.243904
+[94][MATVEC] copyElementsToBuffer: 3.564224, D2H memcpy: 0.028736, int kernel: 3.591328, MPI comm: 4.027418, ext kernel: 0.089888
+[94][DOT-2] dot_kernel: 0.151456, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.009568, MPI_Allreduce: 0.072360
+[94][WAXPBY-2] waxpby_kernel: 0.244800
+[94][WAXPBY-3] waxpby_kernel: 0.232928
+[95][DOT-1] dot_kernel: 0.102464, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008512, MPI_Allreduce: 0.004523
+[95][WAXPBY-1] waxpby_kernel: 0.244160
+[95][MATVEC] copyElementsToBuffer: 3.563872, D2H memcpy: 0.028736, int kernel: 3.592960, MPI comm: 4.016700, ext kernel: 0.088960
+[95][DOT-2] dot_kernel: 0.151232, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.003744, MPI_Allreduce: 0.095473
+[95][WAXPBY-2] waxpby_kernel: 0.244416
+[95][WAXPBY-3] waxpby_kernel: 0.232544
+[96][DOT-1] dot_kernel: 0.102240, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.008672, MPI_Allreduce: 0.003936
+[96][WAXPBY-1] waxpby_kernel: 0.246880
+[96][MATVEC] copyElementsToBuffer: 3.563232, D2H memcpy: 0.028128, int kernel: 3.587840, MPI comm: 4.010403, ext kernel: 0.089952
+[96][DOT-2] dot_kernel: 0.151872, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.007104, MPI_Allreduce: 0.091088
+[96][WAXPBY-2] waxpby_kernel: 0.245312
+[96][WAXPBY-3] waxpby_kernel: 0.232768
+[97][DOT-1] dot_kernel: 0.103936, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008224, MPI_Allreduce: 0.004957
+[97][WAXPBY-1] waxpby_kernel: 0.245312
+[97][MATVEC] copyElementsToBuffer: 3.564000, D2H memcpy: 0.027776, int kernel: 3.597792, MPI comm: 4.036103, ext kernel: 0.086112
+[97][DOT-2] dot_kernel: 0.151264, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.003776, MPI_Allreduce: 0.077754
+[97][WAXPBY-2] waxpby_kernel: 0.245600
+[97][WAXPBY-3] waxpby_kernel: 0.233184
+[98][DOT-1] dot_kernel: 0.101024, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.004608, MPI_Allreduce: 0.004845
+[98][WAXPBY-1] waxpby_kernel: 0.244064
+[98][MATVEC] copyElementsToBuffer: 3.570048, D2H memcpy: 0.035488, int kernel: 3.591584, MPI comm: 4.037736, ext kernel: 0.086176
+[98][DOT-2] dot_kernel: 0.150880, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.003008, MPI_Allreduce: 0.079136
+[98][WAXPBY-2] waxpby_kernel: 0.242592
+[98][WAXPBY-3] waxpby_kernel: 0.232576
+[99][DOT-1] dot_kernel: 0.102720, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.009440, MPI_Allreduce: 0.003753
+[99][WAXPBY-1] waxpby_kernel: 0.243872
+[99][MATVEC] copyElementsToBuffer: 3.571072, D2H memcpy: 0.032192, int kernel: 3.587712, MPI comm: 4.032580, ext kernel: 0.085856
+[99][DOT-2] dot_kernel: 0.151712, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.007520, MPI_Allreduce: 0.098023
+[99][WAXPBY-2] waxpby_kernel: 0.246784
+[99][WAXPBY-3] waxpby_kernel: 0.232512
+Iteration = 100   Residual = 0.0147087
+[100][DOT-1] dot_kernel: 0.100544, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.004192, MPI_Allreduce: 0.004984
+[100][WAXPBY-1] waxpby_kernel: 0.245408
+[100][MATVEC] copyElementsToBuffer: 3.564384, D2H memcpy: 0.032544, int kernel: 3.592224, MPI comm: 4.021075, ext kernel: 0.087488
+[100][DOT-2] dot_kernel: 0.151104, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.006176, MPI_Allreduce: 0.072046
+[100][WAXPBY-2] waxpby_kernel: 0.242464
+[100][WAXPBY-3] waxpby_kernel: 0.232672
+[101][DOT-1] dot_kernel: 0.100064, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.008096, MPI_Allreduce: 0.004159
+[101][WAXPBY-1] waxpby_kernel: 0.246720
+[101][MATVEC] copyElementsToBuffer: 3.570304, D2H memcpy: 0.033696, int kernel: 3.589056, MPI comm: 4.044318, ext kernel: 0.084192
+[101][DOT-2] dot_kernel: 0.150944, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.004352, MPI_Allreduce: 0.085637
+[101][WAXPBY-2] waxpby_kernel: 0.245344
+[101][WAXPBY-3] waxpby_kernel: 0.232544
+[102][DOT-1] dot_kernel: 0.100096, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.001664, MPI_Allreduce: 0.004247
+[102][WAXPBY-1] waxpby_kernel: 0.245216
+[102][MATVEC] copyElementsToBuffer: 3.565440, D2H memcpy: 0.030016, int kernel: 3.595136, MPI comm: 4.024013, ext kernel: 0.086080
+[102][DOT-2] dot_kernel: 0.151456, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.007008, MPI_Allreduce: 0.073471
+[102][WAXPBY-2] waxpby_kernel: 0.243328
+[102][WAXPBY-3] waxpby_kernel: 0.232064
+[103][DOT-1] dot_kernel: 0.100672, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007936, MPI_Allreduce: 0.004220
+[103][WAXPBY-1] waxpby_kernel: 0.245504
+[103][MATVEC] copyElementsToBuffer: 3.565792, D2H memcpy: 0.027296, int kernel: 3.594496, MPI comm: 4.054550, ext kernel: 0.083872
+[103][DOT-2] dot_kernel: 0.151136, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.008288, MPI_Allreduce: 0.070175
+[103][WAXPBY-2] waxpby_kernel: 0.246080
+[103][WAXPBY-3] waxpby_kernel: 0.232480
+[104][DOT-1] dot_kernel: 0.099680, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.006272, MPI_Allreduce: 0.005000
+[104][WAXPBY-1] waxpby_kernel: 0.245728
+[104][MATVEC] copyElementsToBuffer: 3.568608, D2H memcpy: 0.034528, int kernel: 3.588000, MPI comm: 4.145889, ext kernel: 0.082336
+[104][DOT-2] dot_kernel: 0.151360, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.002464, MPI_Allreduce: 0.095022
+[104][WAXPBY-2] waxpby_kernel: 0.246496
+[104][WAXPBY-3] waxpby_kernel: 0.232576
+[105][DOT-1] dot_kernel: 0.102752, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.004224, MPI_Allreduce: 0.004535
+[105][WAXPBY-1] waxpby_kernel: 0.245824
+[105][MATVEC] copyElementsToBuffer: 3.571136, D2H memcpy: 0.033024, int kernel: 3.592800, MPI comm: 4.024871, ext kernel: 0.088512
+[105][DOT-2] dot_kernel: 0.150976, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.008160, MPI_Allreduce: 0.078948
+[105][WAXPBY-2] waxpby_kernel: 0.245568
+[105][WAXPBY-3] waxpby_kernel: 0.232672
+[106][DOT-1] dot_kernel: 0.102208, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.001888, MPI_Allreduce: 1.116505
+[106][WAXPBY-1] waxpby_kernel: 0.245920
+[106][MATVEC] copyElementsToBuffer: 3.572160, D2H memcpy: 0.028960, int kernel: 3.592896, MPI comm: 4.044101, ext kernel: 0.088000
+[106][DOT-2] dot_kernel: 0.150976, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.006336, MPI_Allreduce: 0.080666
+[106][WAXPBY-2] waxpby_kernel: 0.243200
+[106][WAXPBY-3] waxpby_kernel: 0.232384
+[107][DOT-1] dot_kernel: 0.101472, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.006208, MPI_Allreduce: 0.003922
+[107][WAXPBY-1] waxpby_kernel: 0.244256
+[107][MATVEC] copyElementsToBuffer: 3.564768, D2H memcpy: 0.027648, int kernel: 3.589088, MPI comm: 4.036643, ext kernel: 0.089824
+[107][DOT-2] dot_kernel: 0.151008, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.005280, MPI_Allreduce: 0.074440
+[107][WAXPBY-2] waxpby_kernel: 0.243552
+[107][WAXPBY-3] waxpby_kernel: 0.232384
+[108][DOT-1] dot_kernel: 0.104032, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.001824, MPI_Allreduce: 0.004345
+[108][WAXPBY-1] waxpby_kernel: 0.244928
+[108][MATVEC] copyElementsToBuffer: 3.571616, D2H memcpy: 0.029536, int kernel: 3.591008, MPI comm: 4.051786, ext kernel: 0.084864
+[108][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.003008, MPI_Allreduce: 0.072551
+[108][WAXPBY-2] waxpby_kernel: 0.246144
+[108][WAXPBY-3] waxpby_kernel: 0.232992
+[109][DOT-1] dot_kernel: 0.100864, dot_final_reduce_kernel: 0.004480, D2H memcpy: 0.001664, MPI_Allreduce: 0.004716
+[109][WAXPBY-1] waxpby_kernel: 0.245056
+[109][MATVEC] copyElementsToBuffer: 3.563744, D2H memcpy: 0.029472, int kernel: 3.589440, MPI comm: 4.042117, ext kernel: 0.084384
+[109][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.009376, MPI_Allreduce: 0.060947
+[109][WAXPBY-2] waxpby_kernel: 0.244096
+[109][WAXPBY-3] waxpby_kernel: 0.232896
+[110][DOT-1] dot_kernel: 0.101984, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.002400, MPI_Allreduce: 0.004707
+[110][WAXPBY-1] waxpby_kernel: 0.246240
+[110][MATVEC] copyElementsToBuffer: 3.569696, D2H memcpy: 0.033728, int kernel: 3.588032, MPI comm: 4.049407, ext kernel: 0.088704
+[110][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.007872, MPI_Allreduce: 0.060140
+[110][WAXPBY-2] waxpby_kernel: 0.244032
+[110][WAXPBY-3] waxpby_kernel: 0.232640
+[111][DOT-1] dot_kernel: 0.100288, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007136, MPI_Allreduce: 0.003955
+[111][WAXPBY-1] waxpby_kernel: 0.246048
+[111][MATVEC] copyElementsToBuffer: 3.570272, D2H memcpy: 0.036672, int kernel: 3.594816, MPI comm: 4.045849, ext kernel: 0.085856
+[111][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.008480, MPI_Allreduce: 0.060246
+[111][WAXPBY-2] waxpby_kernel: 0.245984
+[111][WAXPBY-3] waxpby_kernel: 0.232576
+[112][DOT-1] dot_kernel: 0.103200, dot_final_reduce_kernel: 0.004448, D2H memcpy: 0.001920, MPI_Allreduce: 0.005057
+[112][WAXPBY-1] waxpby_kernel: 0.245952
+[112][MATVEC] copyElementsToBuffer: 3.563808, D2H memcpy: 0.029312, int kernel: 3.595456, MPI comm: 4.030067, ext kernel: 0.086016
+[112][DOT-2] dot_kernel: 0.151136, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.002368, MPI_Allreduce: 0.076825
+[112][WAXPBY-2] waxpby_kernel: 0.245024
+[112][WAXPBY-3] waxpby_kernel: 0.232768
+[113][DOT-1] dot_kernel: 0.100352, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.009600, MPI_Allreduce: 0.004924
+[113][WAXPBY-1] waxpby_kernel: 0.243744
+[113][MATVEC] copyElementsToBuffer: 3.563040, D2H memcpy: 0.028576, int kernel: 3.591616, MPI comm: 4.070268, ext kernel: 0.089760
+[113][DOT-2] dot_kernel: 0.151200, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.005216, MPI_Allreduce: 0.071350
+[113][WAXPBY-2] waxpby_kernel: 0.244992
+[113][WAXPBY-3] waxpby_kernel: 0.232896
+[114][DOT-1] dot_kernel: 0.102656, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.001920, MPI_Allreduce: 0.004920
+[114][WAXPBY-1] waxpby_kernel: 0.245920
+[114][MATVEC] copyElementsToBuffer: 3.573856, D2H memcpy: 0.027872, int kernel: 3.597504, MPI comm: 4.030160, ext kernel: 0.088960
+[114][DOT-2] dot_kernel: 0.151168, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.007808, MPI_Allreduce: 0.070640
+[114][WAXPBY-2] waxpby_kernel: 0.244256
+[114][WAXPBY-3] waxpby_kernel: 0.232928
+[115][DOT-1] dot_kernel: 0.100768, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007456, MPI_Allreduce: 0.004193
+[115][WAXPBY-1] waxpby_kernel: 0.244992
+[115][MATVEC] copyElementsToBuffer: 3.577696, D2H memcpy: 0.035584, int kernel: 3.594848, MPI comm: 4.180914, ext kernel: 0.086432
+[115][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.010816, MPI_Allreduce: 0.004470
+[115][WAXPBY-2] waxpby_kernel: 0.243616
+[115][WAXPBY-3] waxpby_kernel: 0.232704
+[116][DOT-1] dot_kernel: 0.102656, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.008352, MPI_Allreduce: 0.004051
+[116][WAXPBY-1] waxpby_kernel: 0.244832
+[116][MATVEC] copyElementsToBuffer: 3.569120, D2H memcpy: 0.032992, int kernel: 3.588256, MPI comm: 4.023883, ext kernel: 0.086816
+[116][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.010656, MPI_Allreduce: 0.083063
+[116][WAXPBY-2] waxpby_kernel: 0.244256
+[116][WAXPBY-3] waxpby_kernel: 0.232832
+[117][DOT-1] dot_kernel: 0.098656, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.009728, MPI_Allreduce: 0.004197
+[117][WAXPBY-1] waxpby_kernel: 0.244960
+[117][MATVEC] copyElementsToBuffer: 3.569504, D2H memcpy: 0.033696, int kernel: 3.586304, MPI comm: 4.005923, ext kernel: 0.089024
+[117][DOT-2] dot_kernel: 0.151552, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.002688, MPI_Allreduce: 0.102029
+[117][WAXPBY-2] waxpby_kernel: 0.242464
+[117][WAXPBY-3] waxpby_kernel: 0.232704
+[118][DOT-1] dot_kernel: 0.100768, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.005888, MPI_Allreduce: 0.003863
+[118][WAXPBY-1] waxpby_kernel: 0.242432
+[118][MATVEC] copyElementsToBuffer: 3.569600, D2H memcpy: 0.032832, int kernel: 3.590368, MPI comm: 4.046855, ext kernel: 0.088416
+[118][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.002752, MPI_Allreduce: 0.083974
+[118][WAXPBY-2] waxpby_kernel: 0.243584
+[118][WAXPBY-3] waxpby_kernel: 0.232768
+[119][DOT-1] dot_kernel: 0.102624, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.002944, MPI_Allreduce: 0.004377
+[119][WAXPBY-1] waxpby_kernel: 0.244352
+[119][MATVEC] copyElementsToBuffer: 3.560768, D2H memcpy: 0.030944, int kernel: 3.584800, MPI comm: 4.034229, ext kernel: 0.088448
+[119][DOT-2] dot_kernel: 0.151424, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.009120, MPI_Allreduce: 0.069833
+[119][WAXPBY-2] waxpby_kernel: 0.244960
+[119][WAXPBY-3] waxpby_kernel: 0.233088
+Iteration = 120   Residual = 0.0105787
+[120][DOT-1] dot_kernel: 0.102752, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.004160, MPI_Allreduce: 0.004047
+[120][WAXPBY-1] waxpby_kernel: 0.244256
+[120][MATVEC] copyElementsToBuffer: 3.571104, D2H memcpy: 0.031328, int kernel: 3.587552, MPI comm: 4.025491, ext kernel: 0.088512
+[120][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.005216, MPI_Allreduce: 0.076885
+[120][WAXPBY-2] waxpby_kernel: 0.245696
+[120][WAXPBY-3] waxpby_kernel: 0.232768
+[121][DOT-1] dot_kernel: 0.102880, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.009120, MPI_Allreduce: 0.004787
+[121][WAXPBY-1] waxpby_kernel: 0.245408
+[121][MATVEC] copyElementsToBuffer: 3.571520, D2H memcpy: 0.029792, int kernel: 3.591424, MPI comm: 4.045314, ext kernel: 0.085344
+[121][DOT-2] dot_kernel: 0.151424, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.007296, MPI_Allreduce: 0.074165
+[121][WAXPBY-2] waxpby_kernel: 0.244096
+[121][WAXPBY-3] waxpby_kernel: 0.232544
+[122][DOT-1] dot_kernel: 0.100256, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005280, MPI_Allreduce: 0.003920
+[122][WAXPBY-1] waxpby_kernel: 0.243936
+[122][MATVEC] copyElementsToBuffer: 3.569856, D2H memcpy: 0.031680, int kernel: 3.592672, MPI comm: 4.049083, ext kernel: 0.086752
+[122][DOT-2] dot_kernel: 0.151424, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.007968, MPI_Allreduce: 0.066610
+[122][WAXPBY-2] waxpby_kernel: 0.245440
+[122][WAXPBY-3] waxpby_kernel: 0.232768
+[123][DOT-1] dot_kernel: 0.098688, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.003776, MPI_Allreduce: 0.005048
+[123][WAXPBY-1] waxpby_kernel: 0.246400
+[123][MATVEC] copyElementsToBuffer: 3.561760, D2H memcpy: 0.029824, int kernel: 3.587744, MPI comm: 4.021428, ext kernel: 0.083232
+[123][DOT-2] dot_kernel: 0.151264, dot_final_reduce_kernel: 0.004640, D2H memcpy: 0.009696, MPI_Allreduce: 0.090555
+[123][WAXPBY-2] waxpby_kernel: 0.246816
+[123][WAXPBY-3] waxpby_kernel: 0.232768
+[124][DOT-1] dot_kernel: 0.096928, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.004640, MPI_Allreduce: 0.005419
+[124][WAXPBY-1] waxpby_kernel: 0.248192
+[124][MATVEC] copyElementsToBuffer: 3.561888, D2H memcpy: 0.030496, int kernel: 3.588736, MPI comm: 4.013540, ext kernel: 0.088352
+[124][DOT-2] dot_kernel: 0.151008, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.002720, MPI_Allreduce: 0.094359
+[124][WAXPBY-2] waxpby_kernel: 0.242784
+[124][WAXPBY-3] waxpby_kernel: 0.232832
+[125][DOT-1] dot_kernel: 0.100288, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007392, MPI_Allreduce: 0.004365
+[125][WAXPBY-1] waxpby_kernel: 0.243808
+[125][MATVEC] copyElementsToBuffer: 3.563712, D2H memcpy: 0.027392, int kernel: 3.589216, MPI comm: 4.041303, ext kernel: 0.088416
+[125][DOT-2] dot_kernel: 0.151520, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.007264, MPI_Allreduce: 0.074608
+[125][WAXPBY-2] waxpby_kernel: 0.243008
+[125][WAXPBY-3] waxpby_kernel: 0.232832
+[126][DOT-1] dot_kernel: 0.100608, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.004256, MPI_Allreduce: 0.004618
+[126][WAXPBY-1] waxpby_kernel: 0.245088
+[126][MATVEC] copyElementsToBuffer: 3.571040, D2H memcpy: 0.028928, int kernel: 3.592448, MPI comm: 4.054300, ext kernel: 0.086976
+[126][DOT-2] dot_kernel: 0.151328, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007392, MPI_Allreduce: 0.057648
+[126][WAXPBY-2] waxpby_kernel: 0.244704
+[126][WAXPBY-3] waxpby_kernel: 0.232512
+[127][DOT-1] dot_kernel: 0.102624, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.004512, MPI_Allreduce: 0.005180
+[127][WAXPBY-1] waxpby_kernel: 0.246368
+[127][MATVEC] copyElementsToBuffer: 3.561600, D2H memcpy: 0.032608, int kernel: 3.588256, MPI comm: 4.038918, ext kernel: 0.088608
+[127][DOT-2] dot_kernel: 0.151456, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.003264, MPI_Allreduce: 0.075938
+[127][WAXPBY-2] waxpby_kernel: 0.245984
+[127][WAXPBY-3] waxpby_kernel: 0.233120
+[128][DOT-1] dot_kernel: 0.103968, dot_final_reduce_kernel: 0.004448, D2H memcpy: 0.001760, MPI_Allreduce: 0.004770
+[128][WAXPBY-1] waxpby_kernel: 0.243904
+[128][MATVEC] copyElementsToBuffer: 3.567104, D2H memcpy: 0.033760, int kernel: 3.585984, MPI comm: 4.048720, ext kernel: 0.084960
+[128][DOT-2] dot_kernel: 0.150912, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.005344, MPI_Allreduce: 0.063925
+[128][WAXPBY-2] waxpby_kernel: 0.246496
+[128][WAXPBY-3] waxpby_kernel: 0.232384
+[129][DOT-1] dot_kernel: 0.101600, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007648, MPI_Allreduce: 0.004858
+[129][WAXPBY-1] waxpby_kernel: 0.247872
+[129][MATVEC] copyElementsToBuffer: 3.570336, D2H memcpy: 0.030016, int kernel: 3.592576, MPI comm: 4.015325, ext kernel: 0.089696
+[129][DOT-2] dot_kernel: 0.151680, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.006720, MPI_Allreduce: 0.094627
+[129][WAXPBY-2] waxpby_kernel: 0.242304
+[129][WAXPBY-3] waxpby_kernel: 0.232928
+[130][DOT-1] dot_kernel: 0.102624, dot_final_reduce_kernel: 0.004736, D2H memcpy: 0.009152, MPI_Allreduce: 0.004728
+[130][WAXPBY-1] waxpby_kernel: 0.246432
+[130][MATVEC] copyElementsToBuffer: 3.566112, D2H memcpy: 0.026880, int kernel: 3.590560, MPI comm: 4.059969, ext kernel: 0.086272
+[130][DOT-2] dot_kernel: 0.151360, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.004480, MPI_Allreduce: 0.065513
+[130][WAXPBY-2] waxpby_kernel: 0.246592
+[130][WAXPBY-3] waxpby_kernel: 0.232896
+[131][DOT-1] dot_kernel: 0.102176, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.004160, MPI_Allreduce: 0.004785
+[131][WAXPBY-1] waxpby_kernel: 0.247296
+[131][MATVEC] copyElementsToBuffer: 3.564288, D2H memcpy: 0.028256, int kernel: 3.590784, MPI comm: 4.025622, ext kernel: 0.088672
+[131][DOT-2] dot_kernel: 0.151104, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.009280, MPI_Allreduce: 0.065134
+[131][WAXPBY-2] waxpby_kernel: 0.243584
+[131][WAXPBY-3] waxpby_kernel: 0.232576
+[132][DOT-1] dot_kernel: 0.103200, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.008320, MPI_Allreduce: 0.004781
+[132][WAXPBY-1] waxpby_kernel: 0.244256
+[132][MATVEC] copyElementsToBuffer: 3.558752, D2H memcpy: 0.031968, int kernel: 3.584928, MPI comm: 4.055458, ext kernel: 0.086560
+[132][DOT-2] dot_kernel: 0.151040, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.004224, MPI_Allreduce: 0.063709
+[132][WAXPBY-2] waxpby_kernel: 0.245888
+[132][WAXPBY-3] waxpby_kernel: 0.232512
+[133][DOT-1] dot_kernel: 0.102432, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.004800, MPI_Allreduce: 0.004582
+[133][WAXPBY-1] waxpby_kernel: 0.246720
+[133][MATVEC] copyElementsToBuffer: 3.566592, D2H memcpy: 0.025664, int kernel: 3.591744, MPI comm: 4.051730, ext kernel: 0.083904
+[133][DOT-2] dot_kernel: 0.151392, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008832, MPI_Allreduce: 0.082848
+[133][WAXPBY-2] waxpby_kernel: 0.243488
+[133][WAXPBY-3] waxpby_kernel: 0.232704
+[134][DOT-1] dot_kernel: 0.099904, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008736, MPI_Allreduce: 0.004339
+[134][WAXPBY-1] waxpby_kernel: 0.244544
+[134][MATVEC] copyElementsToBuffer: 3.566272, D2H memcpy: 0.027296, int kernel: 3.593984, MPI comm: 4.045855, ext kernel: 0.084736
+[134][DOT-2] dot_kernel: 0.152128, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.008832, MPI_Allreduce: 0.059353
+[134][WAXPBY-2] waxpby_kernel: 0.242016
+[134][WAXPBY-3] waxpby_kernel: 0.232288
+[135][DOT-1] dot_kernel: 0.102720, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.006400, MPI_Allreduce: 0.004248
+[135][WAXPBY-1] waxpby_kernel: 0.244320
+[135][MATVEC] copyElementsToBuffer: 3.560864, D2H memcpy: 0.033568, int kernel: 3.586336, MPI comm: 4.056696, ext kernel: 0.083456
+[135][DOT-2] dot_kernel: 0.150624, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008896, MPI_Allreduce: 0.075317
+[135][WAXPBY-2] waxpby_kernel: 0.244224
+[135][WAXPBY-3] waxpby_kernel: 0.232064
+[136][DOT-1] dot_kernel: 0.100032, dot_final_reduce_kernel: 0.004640, D2H memcpy: 0.001824, MPI_Allreduce: 0.004381
+[136][WAXPBY-1] waxpby_kernel: 0.245632
+[136][MATVEC] copyElementsToBuffer: 3.566400, D2H memcpy: 0.026176, int kernel: 3.594016, MPI comm: 4.021811, ext kernel: 0.089984
+[136][DOT-2] dot_kernel: 0.151136, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.009024, MPI_Allreduce: 0.092965
+[136][WAXPBY-2] waxpby_kernel: 0.243840
+[136][WAXPBY-3] waxpby_kernel: 0.232672
+[137][DOT-1] dot_kernel: 0.100704, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.003680, MPI_Allreduce: 0.004307
+[137][WAXPBY-1] waxpby_kernel: 0.243584
+[137][MATVEC] copyElementsToBuffer: 3.570432, D2H memcpy: 0.032448, int kernel: 3.589088, MPI comm: 4.034916, ext kernel: 0.085056
+[137][DOT-2] dot_kernel: 0.151040, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.009472, MPI_Allreduce: 0.066107
+[137][WAXPBY-2] waxpby_kernel: 0.245824
+[137][WAXPBY-3] waxpby_kernel: 0.232800
+[138][DOT-1] dot_kernel: 0.099296, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.004800, MPI_Allreduce: 0.004465
+[138][WAXPBY-1] waxpby_kernel: 0.245600
+[138][MATVEC] copyElementsToBuffer: 3.570560, D2H memcpy: 0.034112, int kernel: 3.589344, MPI comm: 4.018104, ext kernel: 0.088000
+[138][DOT-2] dot_kernel: 0.150752, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.002400, MPI_Allreduce: 0.098283
+[138][WAXPBY-2] waxpby_kernel: 0.245504
+[138][WAXPBY-3] waxpby_kernel: 0.232640
+[139][DOT-1] dot_kernel: 0.101792, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.004544, MPI_Allreduce: 0.004777
+[139][WAXPBY-1] waxpby_kernel: 0.248704
+[139][MATVEC] copyElementsToBuffer: 3.572704, D2H memcpy: 0.029344, int kernel: 3.597472, MPI comm: 4.032892, ext kernel: 0.084864
+[139][DOT-2] dot_kernel: 0.151840, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.005120, MPI_Allreduce: 0.083243
+[139][WAXPBY-2] waxpby_kernel: 0.245344
+[139][WAXPBY-3] waxpby_kernel: 0.232256
+Iteration = 140   Residual = 0.00788214
+[140][DOT-1] dot_kernel: 0.098080, dot_final_reduce_kernel: 0.004448, D2H memcpy: 0.006016, MPI_Allreduce: 0.004400
+[140][WAXPBY-1] waxpby_kernel: 0.245504
+[140][MATVEC] copyElementsToBuffer: 3.568768, D2H memcpy: 0.037280, int kernel: 3.587392, MPI comm: 4.011374, ext kernel: 0.087968
+[140][DOT-2] dot_kernel: 0.151392, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.006112, MPI_Allreduce: 0.089004
+[140][WAXPBY-2] waxpby_kernel: 0.242688
+[140][WAXPBY-3] waxpby_kernel: 0.233056
+[141][DOT-1] dot_kernel: 0.101024, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005856, MPI_Allreduce: 0.004500
+[141][WAXPBY-1] waxpby_kernel: 0.246592
+[141][MATVEC] copyElementsToBuffer: 3.580256, D2H memcpy: 0.029952, int kernel: 3.596320, MPI comm: 4.025204, ext kernel: 0.086848
+[141][DOT-2] dot_kernel: 0.151328, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.003872, MPI_Allreduce: 0.078422
+[141][WAXPBY-2] waxpby_kernel: 0.244736
+[141][WAXPBY-3] waxpby_kernel: 0.232832
+[142][DOT-1] dot_kernel: 0.100096, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005536, MPI_Allreduce: 0.004074
+[142][WAXPBY-1] waxpby_kernel: 0.245216
+[142][MATVEC] copyElementsToBuffer: 3.565728, D2H memcpy: 0.029696, int kernel: 3.593792, MPI comm: 4.016184, ext kernel: 0.090432
+[142][DOT-2] dot_kernel: 0.151232, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.004416, MPI_Allreduce: 0.102449
+[142][WAXPBY-2] waxpby_kernel: 0.243296
+[142][WAXPBY-3] waxpby_kernel: 0.232480
+[143][DOT-1] dot_kernel: 0.101600, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.003712, MPI_Allreduce: 0.003854
+[143][WAXPBY-1] waxpby_kernel: 0.244704
+[143][MATVEC] copyElementsToBuffer: 3.562560, D2H memcpy: 0.031200, int kernel: 3.587904, MPI comm: 4.038656, ext kernel: 0.086432
+[143][DOT-2] dot_kernel: 0.151424, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.008576, MPI_Allreduce: 0.061627
+[143][WAXPBY-2] waxpby_kernel: 0.246112
+[143][WAXPBY-3] waxpby_kernel: 0.232832
+[144][DOT-1] dot_kernel: 0.100544, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.002464, MPI_Allreduce: 0.004984
+[144][WAXPBY-1] waxpby_kernel: 0.245344
+[144][MATVEC] copyElementsToBuffer: 3.564320, D2H memcpy: 0.027040, int kernel: 3.589216, MPI comm: 4.019311, ext kernel: 0.089920
+[144][DOT-2] dot_kernel: 0.151264, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008096, MPI_Allreduce: 0.097830
+[144][WAXPBY-2] waxpby_kernel: 0.242208
+[144][WAXPBY-3] waxpby_kernel: 0.232544
+[145][DOT-1] dot_kernel: 0.103392, dot_final_reduce_kernel: 0.004672, D2H memcpy: 0.005408, MPI_Allreduce: 0.003935
+[145][WAXPBY-1] waxpby_kernel: 0.244352
+[145][MATVEC] copyElementsToBuffer: 3.566560, D2H memcpy: 0.025632, int kernel: 3.591296, MPI comm: 4.023346, ext kernel: 0.088576
+[145][DOT-2] dot_kernel: 0.151456, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.007168, MPI_Allreduce: 0.087520
+[145][WAXPBY-2] waxpby_kernel: 0.245248
+[145][WAXPBY-3] waxpby_kernel: 0.232704
+[146][DOT-1] dot_kernel: 0.102752, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.009056, MPI_Allreduce: 0.004902
+[146][WAXPBY-1] waxpby_kernel: 0.245216
+[146][MATVEC] copyElementsToBuffer: 3.565312, D2H memcpy: 0.030592, int kernel: 3.594400, MPI comm: 4.031760, ext kernel: 0.084032
+[146][DOT-2] dot_kernel: 0.151808, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.002336, MPI_Allreduce: 0.077290
+[146][WAXPBY-2] waxpby_kernel: 0.243584
+[146][WAXPBY-3] waxpby_kernel: 0.232640
+[147][DOT-1] dot_kernel: 0.099040, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.003712, MPI_Allreduce: 0.004755
+[147][WAXPBY-1] waxpby_kernel: 0.245472
+[147][MATVEC] copyElementsToBuffer: 3.564992, D2H memcpy: 0.028256, int kernel: 3.589376, MPI comm: 4.022870, ext kernel: 0.088416
+[147][DOT-2] dot_kernel: 0.150816, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.003552, MPI_Allreduce: 0.083430
+[147][WAXPBY-2] waxpby_kernel: 0.242976
+[147][WAXPBY-3] waxpby_kernel: 0.232576
+[148][DOT-1] dot_kernel: 0.102560, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.006432, MPI_Allreduce: 0.004285
+[148][WAXPBY-1] waxpby_kernel: 0.244288
+[148][MATVEC] copyElementsToBuffer: 3.570688, D2H memcpy: 0.036768, int kernel: 3.594304, MPI comm: 4.012936, ext kernel: 0.087328
+[148][DOT-2] dot_kernel: 0.151168, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.002336, MPI_Allreduce: 0.104343
+[148][WAXPBY-2] waxpby_kernel: 0.243776
+[148][WAXPBY-3] waxpby_kernel: 0.232960
+[149][DOT-1] dot_kernel: 0.102016, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008832, MPI_Allreduce: 0.004949
+[149][WAXPBY-1] waxpby_kernel: 0.244160
+[149][MATVEC] copyElementsToBuffer: 3.565088, D2H memcpy: 0.027456, int kernel: 3.594080, MPI comm: 4.011952, ext kernel: 0.086816
+[149][DOT-2] dot_kernel: 0.150816, dot_final_reduce_kernel: 0.004288, D2H memcpy: 0.009600, MPI_Allreduce: 0.094095
+[149][WAXPBY-2] waxpby_kernel: 0.246624
+[149][WAXPBY-3] waxpby_kernel: 0.232768
+[150][DOT-1] dot_kernel: 0.103296, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.006528, MPI_Allreduce: 0.005051
+[150][WAXPBY-1] waxpby_kernel: 0.243808
+[150][MATVEC] copyElementsToBuffer: 3.569344, D2H memcpy: 0.032320, int kernel: 3.591776, MPI comm: 4.054297, ext kernel: 0.086752
+[150][DOT-2] dot_kernel: 0.151456, dot_final_reduce_kernel: 0.004480, D2H memcpy: 0.002304, MPI_Allreduce: 0.077722
+[150][WAXPBY-2] waxpby_kernel: 0.245312
+[150][WAXPBY-3] waxpby_kernel: 0.232640
+[151][DOT-1] dot_kernel: 0.100928, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008416, MPI_Allreduce: 0.004770
+[151][WAXPBY-1] waxpby_kernel: 0.246400
+[151][MATVEC] copyElementsToBuffer: 3.567200, D2H memcpy: 0.025056, int kernel: 3.595872, MPI comm: 4.048253, ext kernel: 0.087264
+[151][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.010304, MPI_Allreduce: 0.051498
+[151][WAXPBY-2] waxpby_kernel: 0.245248
+[151][WAXPBY-3] waxpby_kernel: 0.232448
+[152][DOT-1] dot_kernel: 0.102688, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.006560, MPI_Allreduce: 0.004088
+[152][WAXPBY-1] waxpby_kernel: 0.246368
+[152][MATVEC] copyElementsToBuffer: 3.560992, D2H memcpy: 0.031904, int kernel: 3.587360, MPI comm: 4.053563, ext kernel: 0.087936
+[152][DOT-2] dot_kernel: 0.150880, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.006624, MPI_Allreduce: 0.062251
+[152][WAXPBY-2] waxpby_kernel: 0.245184
+[152][WAXPBY-3] waxpby_kernel: 0.232640
+[153][DOT-1] dot_kernel: 0.103584, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.003424, MPI_Allreduce: 0.004553
+[153][WAXPBY-1] waxpby_kernel: 0.245024
+[153][MATVEC] copyElementsToBuffer: 3.563648, D2H memcpy: 0.027008, int kernel: 3.590848, MPI comm: 4.041867, ext kernel: 0.085216
+[153][DOT-2] dot_kernel: 0.151968, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.007296, MPI_Allreduce: 0.084098
+[153][WAXPBY-2] waxpby_kernel: 0.243712
+[153][WAXPBY-3] waxpby_kernel: 0.232832
+[154][DOT-1] dot_kernel: 0.099136, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.001856, MPI_Allreduce: 0.004455
+[154][WAXPBY-1] waxpby_kernel: 0.244704
+[154][MATVEC] copyElementsToBuffer: 3.566752, D2H memcpy: 0.039712, int kernel: 3.593312, MPI comm: 4.007444, ext kernel: 0.089088
+[154][DOT-2] dot_kernel: 0.151520, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.002464, MPI_Allreduce: 0.093539
+[154][WAXPBY-2] waxpby_kernel: 0.243776
+[154][WAXPBY-3] waxpby_kernel: 0.232384
+[155][DOT-1] dot_kernel: 0.102624, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.006208, MPI_Allreduce: 0.004080
+[155][WAXPBY-1] waxpby_kernel: 0.244448
+[155][MATVEC] copyElementsToBuffer: 3.566688, D2H memcpy: 0.027040, int kernel: 3.595072, MPI comm: 4.035529, ext kernel: 0.088960
+[155][DOT-2] dot_kernel: 0.151520, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.009024, MPI_Allreduce: 0.087434
+[155][WAXPBY-2] waxpby_kernel: 0.244640
+[155][WAXPBY-3] waxpby_kernel: 0.232480
+[156][DOT-1] dot_kernel: 0.103200, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.001984, MPI_Allreduce: 0.004785
+[156][WAXPBY-1] waxpby_kernel: 0.244320
+[156][MATVEC] copyElementsToBuffer: 3.569856, D2H memcpy: 0.034176, int kernel: 3.587456, MPI comm: 4.045269, ext kernel: 0.085024
+[156][DOT-2] dot_kernel: 0.151136, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008768, MPI_Allreduce: 0.055803
+[156][WAXPBY-2] waxpby_kernel: 0.245280
+[156][WAXPBY-3] waxpby_kernel: 0.232896
+[157][DOT-1] dot_kernel: 0.102912, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005536, MPI_Allreduce: 0.004949
+[157][WAXPBY-1] waxpby_kernel: 0.241920
+[157][MATVEC] copyElementsToBuffer: 3.563744, D2H memcpy: 0.029472, int kernel: 3.590720, MPI comm: 4.058253, ext kernel: 0.087584
+[157][DOT-2] dot_kernel: 0.151296, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.010336, MPI_Allreduce: 0.065864
+[157][WAXPBY-2] waxpby_kernel: 0.246208
+[157][WAXPBY-3] waxpby_kernel: 0.232512
+[158][DOT-1] dot_kernel: 0.102208, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.002912, MPI_Allreduce: 0.005121
+[158][WAXPBY-1] waxpby_kernel: 0.245408
+[158][MATVEC] copyElementsToBuffer: 3.567232, D2H memcpy: 0.026464, int kernel: 3.596000, MPI comm: 4.002666, ext kernel: 0.088960
+[158][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.009632, MPI_Allreduce: 0.082538
+[158][WAXPBY-2] waxpby_kernel: 0.244128
+[158][WAXPBY-3] waxpby_kernel: 0.232800
+[159][DOT-1] dot_kernel: 0.100960, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008032, MPI_Allreduce: 0.004736
+[159][WAXPBY-1] waxpby_kernel: 0.244480
+[159][MATVEC] copyElementsToBuffer: 3.572320, D2H memcpy: 0.029888, int kernel: 3.596704, MPI comm: 4.040902, ext kernel: 0.088256
+[159][DOT-2] dot_kernel: 0.151680, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.004480, MPI_Allreduce: 0.079198
+[159][WAXPBY-2] waxpby_kernel: 0.245728
+[159][WAXPBY-3] waxpby_kernel: 0.232416
+Iteration = 160   Residual = 0.0523715
+[160][DOT-1] dot_kernel: 0.102432, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.002208, MPI_Allreduce: 0.004781
+[160][WAXPBY-1] waxpby_kernel: 0.245664
+[160][MATVEC] copyElementsToBuffer: 3.574176, D2H memcpy: 0.026752, int kernel: 3.596864, MPI comm: 4.000643, ext kernel: 0.089120
+[160][DOT-2] dot_kernel: 0.151360, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.007264, MPI_Allreduce: 0.083883
+[160][WAXPBY-2] waxpby_kernel: 0.241632
+[160][WAXPBY-3] waxpby_kernel: 0.232576
+[161][DOT-1] dot_kernel: 0.101824, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.008960, MPI_Allreduce: 0.003824
+[161][WAXPBY-1] waxpby_kernel: 0.244128
+[161][MATVEC] copyElementsToBuffer: 3.568480, D2H memcpy: 0.035392, int kernel: 3.588320, MPI comm: 4.043070, ext kernel: 0.084960
+[161][DOT-2] dot_kernel: 0.151040, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.008576, MPI_Allreduce: 0.082580
+[161][WAXPBY-2] waxpby_kernel: 0.245536
+[161][WAXPBY-3] waxpby_kernel: 0.232480
+[162][DOT-1] dot_kernel: 0.100352, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.003680, MPI_Allreduce: 0.004821
+[162][WAXPBY-1] waxpby_kernel: 0.246976
+[162][MATVEC] copyElementsToBuffer: 3.561088, D2H memcpy: 0.032000, int kernel: 3.585664, MPI comm: 4.041617, ext kernel: 0.088384
+[162][DOT-2] dot_kernel: 0.151392, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.004960, MPI_Allreduce: 0.053871
+[162][WAXPBY-2] waxpby_kernel: 0.244288
+[162][WAXPBY-3] waxpby_kernel: 0.232640
+[163][DOT-1] dot_kernel: 0.100352, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.001952, MPI_Allreduce: 0.004401
+[163][WAXPBY-1] waxpby_kernel: 0.245600
+[163][MATVEC] copyElementsToBuffer: 3.560128, D2H memcpy: 0.034464, int kernel: 3.588576, MPI comm: 4.030904, ext kernel: 0.087712
+[163][DOT-2] dot_kernel: 0.151616, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.008544, MPI_Allreduce: 0.085755
+[163][WAXPBY-2] waxpby_kernel: 0.243456
+[163][WAXPBY-3] waxpby_kernel: 0.232544
+[164][DOT-1] dot_kernel: 0.101472, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.004192, MPI_Allreduce: 0.005000
+[164][WAXPBY-1] waxpby_kernel: 0.246016
+[164][MATVEC] copyElementsToBuffer: 3.567392, D2H memcpy: 0.033504, int kernel: 3.590432, MPI comm: 4.033394, ext kernel: 0.083808
+[164][DOT-2] dot_kernel: 0.152320, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008736, MPI_Allreduce: 0.073170
+[164][WAXPBY-2] waxpby_kernel: 0.245728
+[164][WAXPBY-3] waxpby_kernel: 0.232672
+[165][DOT-1] dot_kernel: 0.098688, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.006816, MPI_Allreduce: 0.004097
+[165][WAXPBY-1] waxpby_kernel: 0.244416
+[165][MATVEC] copyElementsToBuffer: 3.572640, D2H memcpy: 0.037216, int kernel: 3.595808, MPI comm: 4.017608, ext kernel: 0.089056
+[165][DOT-2] dot_kernel: 0.151360, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.008800, MPI_Allreduce: 0.100021
+[165][WAXPBY-2] waxpby_kernel: 0.241856
+[165][WAXPBY-3] waxpby_kernel: 0.232928
+[166][DOT-1] dot_kernel: 0.101312, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008096, MPI_Allreduce: 0.003693
+[166][WAXPBY-1] waxpby_kernel: 0.244864
+[166][MATVEC] copyElementsToBuffer: 3.564448, D2H memcpy: 0.032576, int kernel: 3.595552, MPI comm: 4.036734, ext kernel: 0.087872
+[166][DOT-2] dot_kernel: 0.151392, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.006912, MPI_Allreduce: 0.064288
+[166][WAXPBY-2] waxpby_kernel: 0.244960
+[166][WAXPBY-3] waxpby_kernel: 0.232768
+[167][DOT-1] dot_kernel: 0.102080, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.001824, MPI_Allreduce: 0.004873
+[167][WAXPBY-1] waxpby_kernel: 0.243136
+[167][MATVEC] copyElementsToBuffer: 3.566528, D2H memcpy: 0.027168, int kernel: 3.597728, MPI comm: 6.072861, ext kernel: 0.091712
+[167][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008672, MPI_Allreduce: 0.346177
+[167][WAXPBY-2] waxpby_kernel: 0.246752
+[167][WAXPBY-3] waxpby_kernel: 0.232896
+[168][DOT-1] dot_kernel: 0.101504, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.003456, MPI_Allreduce: 0.004992
+[168][WAXPBY-1] waxpby_kernel: 0.247776
+[168][MATVEC] copyElementsToBuffer: 3.564352, D2H memcpy: 0.027904, int kernel: 3.593152, MPI comm: 4.015099, ext kernel: 0.085600
+[168][DOT-2] dot_kernel: 0.151296, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.009088, MPI_Allreduce: 0.106797
+[168][WAXPBY-2] waxpby_kernel: 0.246080
+[168][WAXPBY-3] waxpby_kernel: 0.232544
+[169][DOT-1] dot_kernel: 0.097600, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.003040, MPI_Allreduce: 0.004568
+[169][WAXPBY-1] waxpby_kernel: 0.246016
+[169][MATVEC] copyElementsToBuffer: 3.565568, D2H memcpy: 0.027360, int kernel: 3.590368, MPI comm: 4.036749, ext kernel: 0.085440
+[169][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.002272, MPI_Allreduce: 0.084796
+[169][WAXPBY-2] waxpby_kernel: 0.243040
+[169][WAXPBY-3] waxpby_kernel: 0.232608
+[170][DOT-1] dot_kernel: 0.103424, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.002208, MPI_Allreduce: 0.003805
+[170][WAXPBY-1] waxpby_kernel: 0.247328
+[170][MATVEC] copyElementsToBuffer: 3.565536, D2H memcpy: 0.026240, int kernel: 3.588704, MPI comm: 4.019185, ext kernel: 0.088096
+[170][DOT-2] dot_kernel: 0.150560, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.002272, MPI_Allreduce: 0.083018
+[170][WAXPBY-2] waxpby_kernel: 0.244544
+[170][WAXPBY-3] waxpby_kernel: 0.232672
+[171][DOT-1] dot_kernel: 0.101376, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.004128, MPI_Allreduce: 0.004502
+[171][WAXPBY-1] waxpby_kernel: 0.246336
+[171][MATVEC] copyElementsToBuffer: 3.565952, D2H memcpy: 0.027520, int kernel: 3.591360, MPI comm: 4.031943, ext kernel: 0.090336
+[171][DOT-2] dot_kernel: 0.150848, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.003008, MPI_Allreduce: 0.099986
+[171][WAXPBY-2] waxpby_kernel: 0.244736
+[171][WAXPBY-3] waxpby_kernel: 0.232352
+[172][DOT-1] dot_kernel: 0.102688, dot_final_reduce_kernel: 0.004640, D2H memcpy: 0.009088, MPI_Allreduce: 0.003775
+[172][WAXPBY-1] waxpby_kernel: 0.243680
+[172][MATVEC] copyElementsToBuffer: 3.569216, D2H memcpy: 0.034752, int kernel: 3.592416, MPI comm: 4.038023, ext kernel: 0.086912
+[172][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.006208, MPI_Allreduce: 0.077199
+[172][WAXPBY-2] waxpby_kernel: 0.244512
+[172][WAXPBY-3] waxpby_kernel: 0.232512
+[173][DOT-1] dot_kernel: 0.100832, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.001728, MPI_Allreduce: 0.004785
+[173][WAXPBY-1] waxpby_kernel: 0.244448
+[173][MATVEC] copyElementsToBuffer: 3.570304, D2H memcpy: 0.033952, int kernel: 3.592608, MPI comm: 4.046496, ext kernel: 0.087072
+[173][DOT-2] dot_kernel: 0.151200, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008160, MPI_Allreduce: 0.072194
+[173][WAXPBY-2] waxpby_kernel: 0.244096
+[173][WAXPBY-3] waxpby_kernel: 0.232704
+[174][DOT-1] dot_kernel: 0.103840, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008160, MPI_Allreduce: 0.004185
+[174][WAXPBY-1] waxpby_kernel: 0.242336
+[174][MATVEC] copyElementsToBuffer: 3.567360, D2H memcpy: 0.033536, int kernel: 3.588096, MPI comm: 4.027061, ext kernel: 0.086624
+[174][DOT-2] dot_kernel: 0.150944, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.010400, MPI_Allreduce: 0.084812
+[174][WAXPBY-2] waxpby_kernel: 0.246624
+[174][WAXPBY-3] waxpby_kernel: 0.232704
+[175][DOT-1] dot_kernel: 0.103520, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.004256, MPI_Allreduce: 0.005106
+[175][WAXPBY-1] waxpby_kernel: 0.246720
+[175][MATVEC] copyElementsToBuffer: 3.562144, D2H memcpy: 0.030176, int kernel: 3.589440, MPI comm: 4.017194, ext kernel: 0.086880
+[175][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008992, MPI_Allreduce: 0.087566
+[175][WAXPBY-2] waxpby_kernel: 0.243648
+[175][WAXPBY-3] waxpby_kernel: 0.232896
+[176][DOT-1] dot_kernel: 0.101856, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.007168, MPI_Allreduce: 0.004402
+[176][WAXPBY-1] waxpby_kernel: 0.245376
+[176][MATVEC] copyElementsToBuffer: 3.568032, D2H memcpy: 0.033504, int kernel: 3.586912, MPI comm: 4.012774, ext kernel: 0.088224
+[176][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.004832, MPI_Allreduce: 0.090625
+[176][WAXPBY-2] waxpby_kernel: 0.244064
+[176][WAXPBY-3] waxpby_kernel: 0.232640
+[177][DOT-1] dot_kernel: 0.102720, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.004704, MPI_Allreduce: 0.004191
+[177][WAXPBY-1] waxpby_kernel: 0.244992
+[177][MATVEC] copyElementsToBuffer: 3.566944, D2H memcpy: 0.033568, int kernel: 3.588896, MPI comm: 4.035493, ext kernel: 0.086176
+[177][DOT-2] dot_kernel: 0.151552, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.007936, MPI_Allreduce: 0.073094
+[177][WAXPBY-2] waxpby_kernel: 0.244896
+[177][WAXPBY-3] waxpby_kernel: 0.232672
+[178][DOT-1] dot_kernel: 0.099680, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005568, MPI_Allreduce: 0.005140
+[178][WAXPBY-1] waxpby_kernel: 0.243488
+[178][MATVEC] copyElementsToBuffer: 3.568672, D2H memcpy: 0.032320, int kernel: 3.594304, MPI comm: 4.032184, ext kernel: 0.085472
+[178][DOT-2] dot_kernel: 0.151040, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.009024, MPI_Allreduce: 0.084914
+[178][WAXPBY-2] waxpby_kernel: 0.243328
+[178][WAXPBY-3] waxpby_kernel: 0.233120
+[179][DOT-1] dot_kernel: 0.102016, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007840, MPI_Allreduce: 0.003728
+[179][WAXPBY-1] waxpby_kernel: 0.243360
+[179][MATVEC] copyElementsToBuffer: 3.565696, D2H memcpy: 0.025472, int kernel: 3.587872, MPI comm: 4.052943, ext kernel: 0.088096
+[179][DOT-2] dot_kernel: 0.150944, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005280, MPI_Allreduce: 0.056553
+[179][WAXPBY-2] waxpby_kernel: 0.245696
+[179][WAXPBY-3] waxpby_kernel: 0.232768
+Iteration = 180   Residual = 0.00850811
+[180][DOT-1] dot_kernel: 0.103680, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.001664, MPI_Allreduce: 0.004838
+[180][WAXPBY-1] waxpby_kernel: 0.245568
+[180][MATVEC] copyElementsToBuffer: 3.569312, D2H memcpy: 0.032672, int kernel: 3.588128, MPI comm: 5.118735, ext kernel: 0.086880
+[180][DOT-2] dot_kernel: 0.151264, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.007712, MPI_Allreduce: 0.166144
+[180][WAXPBY-2] waxpby_kernel: 0.245664
+[180][WAXPBY-3] waxpby_kernel: 0.232704
+[181][DOT-1] dot_kernel: 0.101952, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005184, MPI_Allreduce: 0.004674
+[181][WAXPBY-1] waxpby_kernel: 0.244000
+[181][MATVEC] copyElementsToBuffer: 3.561376, D2H memcpy: 0.032864, int kernel: 3.586816, MPI comm: 6.928334, ext kernel: 0.086208
+[181][DOT-2] dot_kernel: 0.151392, dot_final_reduce_kernel: 0.004672, D2H memcpy: 0.006592, MPI_Allreduce: 0.217171
+[181][WAXPBY-2] waxpby_kernel: 0.241856
+[181][WAXPBY-3] waxpby_kernel: 0.232704
+[182][DOT-1] dot_kernel: 0.105024, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008032, MPI_Allreduce: 0.003838
+[182][WAXPBY-1] waxpby_kernel: 0.244416
+[182][MATVEC] copyElementsToBuffer: 3.567168, D2H memcpy: 0.025504, int kernel: 3.593920, MPI comm: 4.045519, ext kernel: 0.088256
+[182][DOT-2] dot_kernel: 0.151584, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.010496, MPI_Allreduce: 0.061833
+[182][WAXPBY-2] waxpby_kernel: 0.241856
+[182][WAXPBY-3] waxpby_kernel: 0.232416
+[183][DOT-1] dot_kernel: 0.102048, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.002336, MPI_Allreduce: 0.010056
+[183][WAXPBY-1] waxpby_kernel: 0.243808
+[183][MATVEC] copyElementsToBuffer: 3.561632, D2H memcpy: 0.031360, int kernel: 3.590688, MPI comm: 4.046831, ext kernel: 0.087680
+[183][DOT-2] dot_kernel: 0.151328, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.003296, MPI_Allreduce: 0.061158
+[183][WAXPBY-2] waxpby_kernel: 0.244128
+[183][WAXPBY-3] waxpby_kernel: 0.232512
+[184][DOT-1] dot_kernel: 0.103168, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.002240, MPI_Allreduce: 0.004154
+[184][WAXPBY-1] waxpby_kernel: 0.244480
+[184][MATVEC] copyElementsToBuffer: 3.567936, D2H memcpy: 0.035648, int kernel: 3.590656, MPI comm: 4.047623, ext kernel: 0.088064
+[184][DOT-2] dot_kernel: 0.151840, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.007008, MPI_Allreduce: 0.068188
+[184][WAXPBY-2] waxpby_kernel: 0.243392
+[184][WAXPBY-3] waxpby_kernel: 0.232768
+[185][DOT-1] dot_kernel: 0.103648, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.005600, MPI_Allreduce: 0.004347
+[185][WAXPBY-1] waxpby_kernel: 0.245024
+[185][MATVEC] copyElementsToBuffer: 3.564352, D2H memcpy: 0.029536, int kernel: 3.593440, MPI comm: 4.043115, ext kernel: 0.088736
+[185][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.008672, MPI_Allreduce: 0.062406
+[185][WAXPBY-2] waxpby_kernel: 0.243776
+[185][WAXPBY-3] waxpby_kernel: 0.232288
+[186][DOT-1] dot_kernel: 0.103360, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.002720, MPI_Allreduce: 0.004527
+[186][WAXPBY-1] waxpby_kernel: 0.243872
+[186][MATVEC] copyElementsToBuffer: 3.568384, D2H memcpy: 0.033440, int kernel: 3.586688, MPI comm: 4.040881, ext kernel: 0.094592
+[186][DOT-2] dot_kernel: 0.150944, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.008544, MPI_Allreduce: 0.070776
+[186][WAXPBY-2] waxpby_kernel: 0.243808
+[186][WAXPBY-3] waxpby_kernel: 0.232960
+[187][DOT-1] dot_kernel: 0.102496, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.006272, MPI_Allreduce: 0.004361
+[187][WAXPBY-1] waxpby_kernel: 0.244672
+[187][MATVEC] copyElementsToBuffer: 3.564864, D2H memcpy: 0.026688, int kernel: 3.592256, MPI comm: 4.026778, ext kernel: 0.089920
+[187][DOT-2] dot_kernel: 0.150720, dot_final_reduce_kernel: 0.004544, D2H memcpy: 0.002848, MPI_Allreduce: 0.088399
+[187][WAXPBY-2] waxpby_kernel: 0.242848
+[187][WAXPBY-3] waxpby_kernel: 0.232672
+[188][DOT-1] dot_kernel: 0.104512, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.004736, MPI_Allreduce: 0.004814
+[188][WAXPBY-1] waxpby_kernel: 0.246496
+[188][MATVEC] copyElementsToBuffer: 3.567584, D2H memcpy: 0.036000, int kernel: 3.590048, MPI comm: 4.024327, ext kernel: 0.087840
+[188][DOT-2] dot_kernel: 0.151072, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.006560, MPI_Allreduce: 0.083022
+[188][WAXPBY-2] waxpby_kernel: 0.245280
+[188][WAXPBY-3] waxpby_kernel: 0.232832
+[189][DOT-1] dot_kernel: 0.099040, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.003136, MPI_Allreduce: 0.004898
+[189][WAXPBY-1] waxpby_kernel: 0.245088
+[189][MATVEC] copyElementsToBuffer: 3.564608, D2H memcpy: 0.027520, int kernel: 3.592000, MPI comm: 4.009120, ext kernel: 0.087392
+[189][DOT-2] dot_kernel: 0.151552, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.002304, MPI_Allreduce: 0.106115
+[189][WAXPBY-2] waxpby_kernel: 0.244896
+[189][WAXPBY-3] waxpby_kernel: 0.232992
+[190][DOT-1] dot_kernel: 0.103168, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.008448, MPI_Allreduce: 0.004049
+[190][WAXPBY-1] waxpby_kernel: 0.244768
+[190][MATVEC] copyElementsToBuffer: 3.565952, D2H memcpy: 0.029344, int kernel: 3.593984, MPI comm: 4.043718, ext kernel: 0.087296
+[190][DOT-2] dot_kernel: 0.151264, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.008384, MPI_Allreduce: 0.061476
+[190][WAXPBY-2] waxpby_kernel: 0.245248
+[190][WAXPBY-3] waxpby_kernel: 0.232512
+[191][DOT-1] dot_kernel: 0.101376, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.003296, MPI_Allreduce: 0.004728
+[191][WAXPBY-1] waxpby_kernel: 0.245152
+[191][MATVEC] copyElementsToBuffer: 3.563264, D2H memcpy: 0.031328, int kernel: 3.592832, MPI comm: 4.046810, ext kernel: 0.086656
+[191][DOT-2] dot_kernel: 0.151168, dot_final_reduce_kernel: 0.004512, D2H memcpy: 0.008256, MPI_Allreduce: 0.072763
+[191][WAXPBY-2] waxpby_kernel: 0.244384
+[191][WAXPBY-3] waxpby_kernel: 0.232928
+[192][DOT-1] dot_kernel: 0.100800, dot_final_reduce_kernel: 0.004416, D2H memcpy: 0.004096, MPI_Allreduce: 0.004342
+[192][WAXPBY-1] waxpby_kernel: 0.242304
+[192][MATVEC] copyElementsToBuffer: 3.572672, D2H memcpy: 0.029376, int kernel: 3.594496, MPI comm: 4.032634, ext kernel: 0.085568
+[192][DOT-2] dot_kernel: 0.151296, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.007904, MPI_Allreduce: 0.084877
+[192][WAXPBY-2] waxpby_kernel: 0.245376
+[192][WAXPBY-3] waxpby_kernel: 0.232640
+[193][DOT-1] dot_kernel: 0.101632, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.003200, MPI_Allreduce: 0.004685
+[193][WAXPBY-1] waxpby_kernel: 0.247008
+[193][MATVEC] copyElementsToBuffer: 3.569408, D2H memcpy: 0.036128, int kernel: 3.595008, MPI comm: 4.045677, ext kernel: 0.087808
+[193][DOT-2] dot_kernel: 0.150848, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.002336, MPI_Allreduce: 0.064692
+[193][WAXPBY-2] waxpby_kernel: 0.245088
+[193][WAXPBY-3] waxpby_kernel: 0.232384
+[194][DOT-1] dot_kernel: 0.102816, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.009024, MPI_Allreduce: 0.004564
+[194][WAXPBY-1] waxpby_kernel: 0.244992
+[194][MATVEC] copyElementsToBuffer: 3.562432, D2H memcpy: 0.029376, int kernel: 3.592544, MPI comm: 4.029203, ext kernel: 0.085728
+[194][DOT-2] dot_kernel: 0.150752, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.009120, MPI_Allreduce: 0.084872
+[194][WAXPBY-2] waxpby_kernel: 0.243456
+[194][WAXPBY-3] waxpby_kernel: 0.232672
+[195][DOT-1] dot_kernel: 0.104288, dot_final_reduce_kernel: 0.004576, D2H memcpy: 0.003904, MPI_Allreduce: 0.004535
+[195][WAXPBY-1] waxpby_kernel: 0.245632
+[195][MATVEC] copyElementsToBuffer: 3.566368, D2H memcpy: 0.026304, int kernel: 3.597600, MPI comm: 4.053780, ext kernel: 0.084096
+[195][DOT-2] dot_kernel: 0.151488, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.007872, MPI_Allreduce: 0.065581
+[195][WAXPBY-2] waxpby_kernel: 0.245728
+[195][WAXPBY-3] waxpby_kernel: 0.232416
+[196][DOT-1] dot_kernel: 0.100416, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.008128, MPI_Allreduce: 0.005010
+[196][WAXPBY-1] waxpby_kernel: 0.244064
+[196][MATVEC] copyElementsToBuffer: 3.565376, D2H memcpy: 0.028192, int kernel: 3.597856, MPI comm: 4.028268, ext kernel: 0.086240
+[196][DOT-2] dot_kernel: 0.150720, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.002240, MPI_Allreduce: 0.081075
+[196][WAXPBY-2] waxpby_kernel: 0.243680
+[196][WAXPBY-3] waxpby_kernel: 0.232352
+[197][DOT-1] dot_kernel: 0.101504, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.006560, MPI_Allreduce: 0.004177
+[197][WAXPBY-1] waxpby_kernel: 0.246848
+[197][MATVEC] copyElementsToBuffer: 3.573600, D2H memcpy: 0.029120, int kernel: 3.595648, MPI comm: 4.056454, ext kernel: 0.082752
+[197][DOT-2] dot_kernel: 0.151680, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.007968, MPI_Allreduce: 0.062726
+[197][WAXPBY-2] waxpby_kernel: 0.245856
+[197][WAXPBY-3] waxpby_kernel: 0.232960
+[198][DOT-1] dot_kernel: 0.100448, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.002528, MPI_Allreduce: 0.004330
+[198][WAXPBY-1] waxpby_kernel: 0.245024
+[198][MATVEC] copyElementsToBuffer: 3.565440, D2H memcpy: 0.026432, int kernel: 3.590368, MPI comm: 4.026080, ext kernel: 0.086848
+[198][DOT-2] dot_kernel: 0.151040, dot_final_reduce_kernel: 0.004384, D2H memcpy: 0.002464, MPI_Allreduce: 0.082868
+[198][WAXPBY-2] waxpby_kernel: 0.241824
+[198][WAXPBY-3] waxpby_kernel: 0.232896
+[199][DOT-1] dot_kernel: 0.102976, dot_final_reduce_kernel: 0.004352, D2H memcpy: 0.005888, MPI_Allreduce: 0.003541
+[199][WAXPBY-1] waxpby_kernel: 0.243616
+[199][MATVEC] copyElementsToBuffer: 3.563424, D2H memcpy: 0.028032, int kernel: 3.591168, MPI comm: 4.057423, ext kernel: 0.086112
+[199][DOT-2] dot_kernel: 0.151296, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.006144, MPI_Allreduce: 0.066589
+[199][WAXPBY-2] waxpby_kernel: 0.243296
+[199][WAXPBY-3] waxpby_kernel: 0.232672
+Iteration = 200   Residual = 0.00353714
+[200][DOT-1] dot_kernel: 0.102400, dot_final_reduce_kernel: 0.004608, D2H memcpy: 0.001856, MPI_Allreduce: 0.004863
+[200][WAXPBY-1] waxpby_kernel: 0.244736
+[200][MATVEC] copyElementsToBuffer: 3.566432, D2H memcpy: 0.038112, int kernel: 3.593760, MPI comm: 4.010077, ext kernel: 0.083840
+[200][DOT-2] dot_kernel: 0.151264, dot_final_reduce_kernel: 0.004320, D2H memcpy: 0.010080, MPI_Allreduce: 0.097388
+[200][WAXPBY-2] waxpby_kernel: 0.244064
+[200][WAXPBY-3] waxpby_kernel: 0.232384
+!!! [DOT-1] dot_kernel: 20.244640/0.101732, dot_final_reduce_kernel: 0.885760/0.004451, D2H memcpy: 1.045952/0.005256, MPI_Allreduce: 5.592734/0.028104
+!!! [WAXPBY-1] waxpby_kernel: 48.801632/0.245234
+!!! [MATVEC] copyElementsToBuffer: 706.115873/3.548321, D2H memcpy: 7.132128/0.035840, int kernel: 714.589344/3.590901, MPI comm: 810.723279/4.073986, ext kernel: 17.379520/0.087334
+!!! [DOT-2] dot_kernel: 30.114400/0.151329, dot_final_reduce_kernel: 0.887520/0.004460, D2H memcpy: 1.302752/0.006546, MPI_Allreduce: 17.139783/0.086130
+!!! [WAXPBY-2] waxpby_kernel: 48.647456/0.244460
+!!! [WAXPBY-3] waxpby_kernel: 46.278304/0.232554
+Final Resid Norm: 0.00353714
