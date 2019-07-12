@@ -147,6 +147,8 @@ template<typename GlobalOrdinal>
     return -1;  
 }
 
+#define ET_COUNT 32
+
 class CudaManager {
   public:
     static void initialize() {
@@ -155,6 +157,9 @@ class CudaManager {
         cudaStreamCreate(&s2);
         cudaEventCreateWithFlags(&e1,cudaEventDisableTiming);
         cudaEventCreateWithFlags(&e2,cudaEventDisableTiming);
+        for (int i = 0; i < ET_COUNT; i++) {
+          cudaEventCreate(&et[i]);
+        }
         initialized=true;
       }
     };
@@ -162,6 +167,9 @@ class CudaManager {
       if(initialized) {
         cudaEventDestroy(e1);
         cudaEventDestroy(e2);
+        for (int i = 0; i < ET_COUNT; i++) {
+          cudaEventDestroy(et[i]);
+        }
         cudaStreamDestroy(s1);
         cudaStreamDestroy(s2);
         initialized=false;
@@ -171,6 +179,7 @@ class CudaManager {
     static cudaStream_t s2;
     static cudaEvent_t e1;
     static cudaEvent_t e2;
+    static cudaEvent_t et[ET_COUNT];
   private:
     static bool initialized;
 

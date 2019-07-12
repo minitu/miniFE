@@ -475,7 +475,7 @@ namespace miniFE {
       struct matvec_std {
         void operator()(MatrixType& A,
             VectorType& x,
-            VectorType& y)
+            VectorType& y, double* mpi_time)
         {
           typedef typename MatrixType::ScalarType ScalarType;
           typedef typename MatrixType::GlobalOrdinalType GlobalOrdinalType;
@@ -489,18 +489,34 @@ namespace miniFE {
           exchange_externals(A, x);
           matvec_ell_kernel<<<NUM_BLOCKS,BLOCK_SIZE,0,CudaManager::s1>>>(A.getPOD(), x.getPOD(), y.getPOD());
 #else
+          double mpi_start_time, mpi_end_time;
           nvtxRangeId_t r1=nvtxRangeStartA("begin exchange");
-          begin_exchange_externals(A,x);
+          begin_exchange_externals(A,x, mpi_start_time);
           nvtxRangeEnd(r1);
           nvtxRangeId_t r2=nvtxRangeStartA("interier region");
+#ifdef TIME_BREAKDOWN
+          cudaEventRecord(CudaManager::et[9], CudaManager::s1);
+#endif
           matvec_overlap_ell_kernel<INTERNAL><<<NUM_BLOCKS,BLOCK_SIZE,0,CudaManager::s1>>>(A.getPOD(), x.getPOD(), y.getPOD());
+#ifdef TIME_BREAKDOWN
+          cudaEventRecord(CudaManager::et[10], CudaManager::s1);
+#endif
           nvtxRangeEnd(r2);
           nvtxRangeId_t r3=nvtxRangeStartA("end exchange");
-          finish_exchange_externals(A,x);
+          finish_exchange_externals(A,x, mpi_end_time);
           nvtxRangeEnd(r3);
           nvtxRangeId_t r4=nvtxRangeStartA("exterier region");
+#ifdef TIME_BREAKDOWN
+          cudaEventRecord(CudaManager::et[11], CudaManager::s1);
+#endif
           matvec_overlap_ell_kernel<EXTERNAL><<<NUM_BLOCKS,BLOCK_SIZE,0,CudaManager::s1>>>(A.getPOD(), x.getPOD(), y.getPOD());
+#ifdef TIME_BREAKDOWN
+          cudaEventRecord(CudaManager::et[12], CudaManager::s1);
+#endif
           nvtxRangeEnd(r4);
+#ifdef TIME_BREAKDOWN
+          if (mpi_time != NULL) *mpi_time = (mpi_end_time - mpi_start_time) * 1000;
+#endif
 #endif
         }
       };

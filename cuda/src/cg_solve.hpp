@@ -69,8 +69,8 @@ bool breakdown(typename VectorType::ScalarType inner,
 //v and w are considered orthogonal if
 //  |inner| < 100 * ||v||_2 * ||w||_2 * epsilon
 
-  magnitude vnorm = std::sqrt(dot(v,v));
-  magnitude wnorm = std::sqrt(dot(w,w));
+  magnitude vnorm = std::sqrt(dot(v,v,-1,NULL));
+  magnitude wnorm = std::sqrt(dot(w,w,-1,NULL));
   return std::abs(inner) <= 100*vnorm*wnorm*std::numeric_limits<magnitude>::epsilon();
 }
 
@@ -138,15 +138,15 @@ cg_solve(OperatorType& A,
   ScalarType one = 1.0;
   ScalarType zero = 0.0;
 
-  TICK(); waxpby(one, x, zero, x, p); TOCK(tWAXPY);
+  TICK(); waxpby(one, x, zero, x, p, -1); TOCK(tWAXPY);
 
   TICK();
-  matvec(A, p, Ap);
+  matvec(A, p, Ap, NULL);
   TOCK(tMATVEC);
 
-  TICK(); waxpby(one, b, -one, Ap, r); TOCK(tWAXPY);
+  TICK(); waxpby(one, b, -one, Ap, r, -1); TOCK(tWAXPY);
 
-  TICK(); rtrans = dot(r, r); TOCK(tDOT);
+  TICK(); rtrans = dot(r, r, -1, NULL); TOCK(tDOT);
 
   normr = std::sqrt(rtrans);
 
@@ -161,15 +161,23 @@ cg_solve(OperatorType& A,
   os << "brkdown_tol = " << brkdown_tol << std::endl;
 #endif
 
+#ifdef TIME_BREAKDOWN
+  double dot_times[8] = {0.0};
+  double waxpby_times[3] = {0.0};
+  double matvec_times[5] = {0.0};
+#endif
+
   for(LocalOrdinalType k=1; k <= max_iter && normr > tolerance; ++k) {
+    double dot_mpi_times[2];
+    double matvec_mpi_time;
     if (k == 1) {
-      TICK(); waxpby(one, r, zero, r, p); TOCK(tWAXPY);
+      TICK(); waxpby(one, r, zero, r, p, 1); TOCK(tWAXPY);
     }
     else {
       oldrtrans = rtrans;
-      TICK(); rtrans = dot(r, r); TOCK(tDOT);
+      TICK(); rtrans = dot(r, r, 1, dot_mpi_times); TOCK(tDOT);
       magnitude_type beta = rtrans/oldrtrans;
-      TICK(); waxpby(one, r, beta, p, p); TOCK(tWAXPY);
+      TICK(); waxpby(one, r, beta, p, p, 1); TOCK(tWAXPY);
     }
 
     normr = std::sqrt(rtrans);
@@ -181,9 +189,9 @@ cg_solve(OperatorType& A,
     magnitude_type alpha = 0;
     magnitude_type p_ap_dot = 0;
 
-    TICK(); matvec(A, p, Ap); TOCK(tMATVEC);
+    TICK(); matvec(A, p, Ap, &matvec_mpi_time); TOCK(tMATVEC);
 
-    TICK(); p_ap_dot = dot(Ap, p); TOCK(tDOT);
+    TICK(); p_ap_dot = dot(Ap, p, 2, dot_mpi_times); TOCK(tDOT);
 
 #ifdef MINIFE_DEBUG
     os << "iter " << k << ", p_ap_dot = " << p_ap_dot;
@@ -210,10 +218,69 @@ cg_solve(OperatorType& A,
     os << ", rtrans = " << rtrans << ", alpha = " << alpha << std::endl;
 #endif
 
-    TICK(); waxpby(one, x, alpha, p, x);
-            waxpby(one, r, -alpha, Ap, r); TOCK(tWAXPY);
+    TICK(); waxpby(one, x, alpha, p, x, 2);
+            waxpby(one, r, -alpha, Ap, r, 3); TOCK(tWAXPY);
+
+#ifdef TIME_BREAKDOWN
+    cudaDeviceSynchronize();
+    if (k > 1) {
+      // Compute CUDA times
+      float dot_times_cur[8];
+      float waxpby_times_cur[3];
+      float matvec_times_cur[5];
+      cudaEventElapsedTime(&dot_times_cur[0], CudaManager::et[0], CudaManager::et[1]);
+      cudaEventElapsedTime(&dot_times_cur[1], CudaManager::et[1], CudaManager::et[2]);
+      cudaEventElapsedTime(&dot_times_cur[2], CudaManager::et[2], CudaManager::et[3]);
+      // dot_times_cur[3] is MPI_Allreduce time
+      cudaEventElapsedTime(&waxpby_times_cur[0], CudaManager::et[4], CudaManager::et[5]);
+      cudaEventElapsedTime(&matvec_times_cur[0], CudaManager::et[6], CudaManager::et[7]);
+      cudaEventElapsedTime(&matvec_times_cur[1], CudaManager::et[7], CudaManager::et[8]);
+      cudaEventElapsedTime(&matvec_times_cur[2], CudaManager::et[9], CudaManager::et[10]);
+      // matvec_times_cur[3] is MPI comm time
+      cudaEventElapsedTime(&matvec_times_cur[4], CudaManager::et[11], CudaManager::et[12]);
+      cudaEventElapsedTime(&dot_times_cur[4], CudaManager::et[13], CudaManager::et[14]);
+      cudaEventElapsedTime(&dot_times_cur[5], CudaManager::et[14], CudaManager::et[15]);
+      cudaEventElapsedTime(&dot_times_cur[6], CudaManager::et[15], CudaManager::et[16]);
+      // dot_times_cur[7] is MPI_Allreduce time
+      cudaEventElapsedTime(&waxpby_times_cur[1], CudaManager::et[17], CudaManager::et[18]);
+      cudaEventElapsedTime(&waxpby_times_cur[2], CudaManager::et[19], CudaManager::et[20]);
+
+      // Print times
+      if (myproc == 0) {
+        printf("[%d][DOT-1] dot_kernel: %.6f, dot_final_reduce_kernel: %.6f, D2H memcpy: %.6f, MPI_Allreduce: %.6lf\n", k, dot_times_cur[0], dot_times_cur[1], dot_times_cur[2], dot_mpi_times[0]);
+        printf("[%d][WAXPBY-1] waxpby_kernel: %.6f\n", k, waxpby_times_cur[0]);
+        printf("[%d][MATVEC] copyElementsToBuffer: %.6f, D2H memcpy: %.6f, int kernel: %.6f, MPI comm: %.6lf, ext kernel: %.6f\n", k, matvec_times_cur[0], matvec_times_cur[1], matvec_times_cur[2], matvec_mpi_time, matvec_times_cur[4]);
+        printf("[%d][DOT-2] dot_kernel: %.6f, dot_final_reduce_kernel: %.6f, D2H memcpy: %.6f, MPI_Allreduce: %.6lf\n", k, dot_times_cur[4], dot_times_cur[5], dot_times_cur[6], dot_mpi_times[1]);
+        printf("[%d][WAXPBY-2] waxpby_kernel: %.6f\n", k, waxpby_times_cur[1]);
+        printf("[%d][WAXPBY-3] waxpby_kernel: %.6f\n", k, waxpby_times_cur[2]);
+      }
+
+      // Accumulate times
+      for (int i = 0; i <= 2; i++) dot_times[i] += dot_times_cur[i];
+      dot_times[3] += dot_mpi_times[0];
+      for (int i = 4; i <= 6; i++) dot_times[i] += dot_times_cur[i];
+      dot_times[7] += dot_mpi_times[1];
+      for (int i = 0; i <= 2; i++) waxpby_times[i] += waxpby_times_cur[i];
+      for (int i = 0; i <= 2; i++) matvec_times[i] += matvec_times_cur[i];
+      matvec_times[3] += matvec_mpi_time;
+      matvec_times[4] += matvec_times_cur[4];
+    }
+#endif
+
     num_iters = k;
   }
+
+#ifdef TIME_BREAKDOWN
+  // Print accumulated times
+  if (myproc == 0) {
+    printf("!!! [DOT-1] dot_kernel: %.6lf/%.6lf, dot_final_reduce_kernel: %.6lf/%.6lf, D2H memcpy: %.6lf/%.6lf, MPI_Allreduce: %.6lf/%.6lf\n", dot_times[0], dot_times[0]/(num_iters-1), dot_times[1], dot_times[1]/(num_iters-1), dot_times[2], dot_times[2]/(num_iters-1), dot_times[3], dot_times[3]/(num_iters-1));
+    printf("!!! [WAXPBY-1] waxpby_kernel: %.6lf/%.6lf\n", waxpby_times[0], waxpby_times[0]/(num_iters-1));
+    printf("!!! [MATVEC] copyElementsToBuffer: %.6lf/%.6lf, D2H memcpy: %.6lf/%.6lf, int kernel: %.6lf/%.6lf, MPI comm: %.6lf/%.6lf, ext kernel: %.6lf/%.6lf\n", matvec_times[0], matvec_times[0]/(num_iters-1), matvec_times[1], matvec_times[1]/(num_iters-1), matvec_times[2], matvec_times[2]/(num_iters-1), matvec_times[3], matvec_times[3]/(num_iters-1), matvec_times[4], matvec_times[4]/(num_iters-1));
+    printf("!!! [DOT-2] dot_kernel: %.6lf/%.6lf, dot_final_reduce_kernel: %.6lf/%.6lf, D2H memcpy: %.6lf/%.6lf, MPI_Allreduce: %.6lf/%.6lf\n", dot_times[4], dot_times[4]/(num_iters-1), dot_times[5], dot_times[5]/(num_iters-1), dot_times[6], dot_times[6]/(num_iters-1), dot_times[7], dot_times[7]/(num_iters-1));
+    printf("!!! [WAXPBY-2] waxpby_kernel: %.6lf/%.6lf\n", waxpby_times[1], waxpby_times[1]/(num_iters-1));
+    printf("!!! [WAXPBY-3] waxpby_kernel: %.6lf/%.6lf\n", waxpby_times[2], waxpby_times[2]/(num_iters-1));
+  }
+#endif
   
 #ifdef HAVE_MPI
 #ifndef GPUDIRECT

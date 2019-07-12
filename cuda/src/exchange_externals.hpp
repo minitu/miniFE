@@ -191,7 +191,7 @@ template<typename MatrixType,
          typename VectorType>
 void
 begin_exchange_externals(MatrixType& A,
-                         VectorType& x)
+                         VectorType& x, double& mpi_start_time)
 {
 #ifdef HAVE_MPI
 
@@ -234,6 +234,7 @@ begin_exchange_externals(MatrixType& A,
 
   MPI_Datatype mpi_dtype = TypeTraits<Scalar>::mpi_type();
 
+  mpi_start_time = MPI_Wtime();
   // Post receives first
   for(int i=0; i<num_neighbors; ++i) {
     int n_recv = recv_length[i];
@@ -251,20 +252,28 @@ begin_exchange_externals(MatrixType& A,
   cudaEventRecord(CudaManager::e1,CudaManager::s1);
   cudaStreamWaitEvent(CudaManager::s2,CudaManager::e1,0);
 
+#ifdef TIME_BREAKDOWN
+  cudaEventRecord(CudaManager::et[6], CudaManager::s2);
+#endif
   copyElementsToBuffer<<<BLOCKS,BLOCK_SIZE,0,CudaManager::s2>>>(thrust::raw_pointer_cast(&x.d_coefs[0]),
                                      thrust::raw_pointer_cast(&A.d_send_buffer[0]), 
                                      thrust::raw_pointer_cast(&A.d_elements_to_send[0]),
                                      A.d_elements_to_send.size());
+#ifdef TIME_BREAKDOWN
+  cudaEventRecord(CudaManager::et[7], CudaManager::s2);
+#endif
   cudaCheckError();
   //This isn't necessary for correctness but I want to make sure this starts before the interrior kernel
   cudaStreamWaitEvent(CudaManager::s1,CudaManager::e2,0); 
 #ifndef GPUDIRECT
   std::vector<Scalar>& send_buffer = A.send_buffer;
   cudaMemcpyAsync(&send_buffer[0],thrust::raw_pointer_cast(&A.d_send_buffer[0]),sizeof(Scalar)*A.d_elements_to_send.size(),cudaMemcpyDeviceToHost,CudaManager::s2);
+#ifdef TIME_BREAKDOWN
+  cudaEventRecord(CudaManager::et[8], CudaManager::s2);
+#endif
   cudaCheckError();
 #endif
   cudaEventRecord(CudaManager::e2,CudaManager::s2);
-
 #endif
 }
 
@@ -272,7 +281,7 @@ template<typename MatrixType,
          typename VectorType>
 inline
 void
-finish_exchange_externals(MatrixType &A, VectorType &x)
+finish_exchange_externals(MatrixType &A, VectorType &x, double& mpi_end_time)
 {
 #ifdef HAVE_MPI
   typedef typename MatrixType::ScalarType Scalar;
@@ -316,6 +325,8 @@ finish_exchange_externals(MatrixType &A, VectorType &x)
       MPI_Abort(MPI_COMM_WORLD, -1);
     }
   }
+
+  mpi_end_time = MPI_Wtime();
 
 //endif HAVE_MPI
 #endif
