@@ -1,0 +1,133 @@
+/g/g90/choi18/.bashrc: line 15: module: command not found
+/g/g90/choi18/.bashrc: line 16: module: command not found
+/g/g90/choi18/.bashrc: line 17: module: command not found
+Mon Jul 15 17:20:41 PDT 2019
+lassen519
+Job ID is 377807
+gpuroofperf-tool v.0.9.0 (CLI)
+
+
+------- Running kernel inspection -------
+Executing: nvprof
+Executing: nvprof --devices all --query-metrics
+Retrieving GPU information... Done, took 0.45 seconds
+Profiling on GPU: Tesla V100-SXM2-16GB
+Invocation: "/g/g90/choi18/miniFE/cuda/src/miniFE.x --num_devices 2 -nx 400 -ny 200 -nz 200"
+Executing: jsrun -n1 -a2 -g2 -c40 -r1 nvprof -u ms --profile-from-start off --demangling off --csv --log-file tmp-simple-377807-%q{OMPI_COMM_WORLD_RANK}.csv /g/g90/choi18/miniFE/cuda/src/miniFE.x --num_devices 2 -nx 400 -ny 200 -nz 200
+Running simple profiling... Done, took 6.72 seconds
+GPU kernel functions invoked:
+1. _ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_ (Time(%):75.15, 715.8265 msecs, 201 invocations)
+2. _ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_ (Time(%):14.46, 137.7316 msecs, 602 invocations)
+3. _ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE (Time(%):4.94, 47.0441 msecs, 400 invocations)
+4. _ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_ (Time(%):4.65, 44.3293 msecs, 201 invocations)
+5. _ZN6miniFE20copyElementsToBufferIdiEEvPT_S2_PT0_i (Time(%):0.27, 2.5894 msecs, 201 invocations)
+6. _ZN6miniFE23dot_final_reduce_kernelIdEEvPT_ (Time(%):0.09, 0.8176 msecs, 400 invocations)
+7. _ZN6miniFE17cudaMemset_kernelIdEEvPT_S1_i (Time(%):0.04, 0.4269 msecs, 400 invocations)
+8. _ZN6thrust8cuda_cub4core13_kernel_agentINS0_14__parallel_for16ParallelForAgentINS0_20__uninitialized_fill7functorINS_10device_ptrIdEEdEEmEES9_mEEvT0_T1_ (Time(%):0.02, 0.2319 msecs, 4 invocations)
+Total percentage: 99.62%
+Selected percentage: 99.20% (99.57% of total)
+Selected kernels: "_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_", "_ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_", "_ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE", "_ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_"
+Executing: jsrun -n1 -a2 -g2 -c40 -r1 nvprof -u ms --profile-from-start off --csv --demangling off --log-file tmp-metric-377807-%q{OMPI_COMM_WORLD_RANK}.csv --kernels _ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_ --metrics l2_read_transactions,l2_write_transactions,dram_read_transactions,dram_write_transactions,flop_count_dp,flop_count_dp_add,flop_count_dp_fma,flop_count_dp_mul,flop_count_sp,flop_count_sp_add,flop_count_sp_fma,flop_count_sp_mul,flop_count_sp_special,inst_executed,inst_fp_32,inst_fp_64,inst_integer,inst_compute_ld_st --kernels _ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_ --metrics l2_read_transactions,l2_write_transactions,dram_read_transactions,dram_write_transactions,flop_count_dp,flop_count_dp_add,flop_count_dp_fma,flop_count_dp_mul,flop_count_sp,flop_count_sp_add,flop_count_sp_fma,flop_count_sp_mul,flop_count_sp_special,inst_executed,inst_fp_32,inst_fp_64,inst_integer,inst_compute_ld_st --kernels _ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE --metrics l2_read_transactions,l2_write_transactions,dram_read_transactions,dram_write_transactions,flop_count_dp,flop_count_dp_add,flop_count_dp_fma,flop_count_dp_mul,flop_count_sp,flop_count_sp_add,flop_count_sp_fma,flop_count_sp_mul,flop_count_sp_special,inst_executed,inst_fp_32,inst_fp_64,inst_integer,inst_compute_ld_st --kernels _ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_ --metrics l2_read_transactions,l2_write_transactions,dram_read_transactions,dram_write_transactions,flop_count_dp,flop_count_dp_add,flop_count_dp_fma,flop_count_dp_mul,flop_count_sp,flop_count_sp_add,flop_count_sp_fma,flop_count_sp_mul,flop_count_sp_special,inst_executed,inst_fp_32,inst_fp_64,inst_integer,inst_compute_ld_st /g/g90/choi18/miniFE/cuda/src/miniFE.x --num_devices 2 -nx 400 -ny 200 -nz 200
+Running metric profiling (all, 18 total metrics)... Done, took 2160.04 seconds
+Kernel inspection done!
+Executing: nvidia-smi -q
+Querying GPU driver version (via nvidia-smi)... Done
+
+Kernel parameters saved to  "miniFE-P2-RCB.json"
+
+------- Primary kernel parameters -------
+Kernel name: _ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE1ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_
+	Kernel type:            Floating point (DP)
+	Compute operations:     155257827 ops
+	DRAM accesses:          17379598464 bytes
+	Computation efficiency: 0.95030
+	Instruction mix:
+		Computations:    0.07%
+		Load/Stores:     1.50%
+		Other:          98.43%
+
+Kernel name: _ZN6miniFE25matvec_overlap_ell_kernelILNS_12MATVEC_RANGEE0ENS_12PODELLMatrixIdiiEENS_9PODVectorIdiiEEEEvT0_T1_S7_
+	Kernel type:            Floating point (DP)
+	Compute operations:     87345187572 ops
+	DRAM accesses:          570292463136 bytes
+	Computation efficiency: 1.00000
+	Instruction mix:
+		Computations:    5.12%
+		Load/Stores:    15.75%
+		Other:          79.13%
+
+Kernel name: _ZN6miniFE10dot_kernelINS_9PODVectorIdiiEEEEvT_S3_PNS_10TypeTraitsINS3_10ScalarTypeEE14magnitude_typeE
+	Kernel type:            Floating point (DP)
+	Compute operations:     6673465600 ops
+	DRAM accesses:          40066995200 bytes
+	Computation efficiency: 0.96959
+	Instruction mix:
+		Computations:    7.22%
+		Load/Stores:    14.87%
+		Other:          77.91%
+
+Kernel name: _ZN6miniFE13waxpby_kernelINS_9PODVectorIdiiEEEEvNT_10ScalarTypeES3_S4_S3_S3_
+	Kernel type:            Floating point (DP)
+	Compute operations:     14592841200 ops
+	DRAM accesses:          116664325120 bytes
+	Computation efficiency: 0.75000
+	Instruction mix:
+		Computations:    9.52%
+		Load/Stores:    14.29%
+		Other:          76.19%
+
+Done
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 377807: <rf-g2-rcb> in cluster <lassen> Done
+
+Job <rf-g2-rcb> was submitted from host <lassen7> by user <choi18> in cluster <lassen> at Mon Jul 15 16:59:22 2019
+Job was executed on host(s) <1*lassen710>, in queue <pbatch>, as user <choi18> in cluster <lassen> at Mon Jul 15 17:20:37 2019
+                            <40*lassen519>
+</g/g90/choi18> was used as the home directory.
+</g/g90/choi18/miniFE/cuda/src> was used as the working directory.
+Started at Mon Jul 15 17:20:37 2019
+Terminated at Mon Jul 15 17:57:15 2019
+Results reported at Mon Jul 15 17:57:15 2019
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+
+#BSUB -nnodes 1
+#BSUB -core_isolation 2
+#BSUB -W 240
+#BSUB -G asccasc
+#BSUB -J rf-g2-rcb
+#BSUB -q pbatch
+
+date; hostname
+echo -n 'Job ID is '; echo $LSB_JOBID
+cd /g/g90/choi18/gpuroofperf-toolkit/tool
+
+python3 gpuroofperf-cli.py -x "jsrun -n1 -a2 -g2 -c40 -r1" -o miniFE-P2-RCB.json /g/g90/choi18/miniFE/cuda/src/miniFE.x --num_devices 2 -nx 400 -ny 200 -nz 200
+
+echo 'Done'
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.78 sec.
+    Max Memory :                                 56 MB
+    Average Memory :                             55.84 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1421 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   2198 sec.
+    Turnaround time :                            3473 sec.
+
+The output (if any) is above this job summary.
+
