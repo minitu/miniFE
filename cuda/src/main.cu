@@ -153,7 +153,7 @@ int main(int argc, char** argv) {
   Box global_box = { 0, params.nx, 0, params.ny, 0, params.nz };
   std::vector<Box> local_boxes(numprocs);
 
-  box_partition(0, numprocs, 2, global_box, &local_boxes[0]);
+  box_partition(0, numprocs, 0, global_box, &local_boxes[0]);
 
   Box& my_box = local_boxes[myproc];
 

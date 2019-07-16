@@ -93,7 +93,7 @@ void box_partition( int ip , int up , int axis ,
 
     const int n_upp = (int) (((double) n) * ( ((double)np_upp) / ((double)np)));
     const int n_low = n - n_upp ;
-    const int next_axis = ( axis + 2 ) % 3 ;
+    const int next_axis = ( axis + 1 ) % 3 ;
 
     if ( np_low ) { /* P = [ip,ip+np_low) */
       Box dbox ;
