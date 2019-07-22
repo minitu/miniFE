@@ -146,7 +146,7 @@ template<typename VectorType>
 void
   waxpby(typename VectorType::ScalarType alpha, const VectorType& x,
          typename VectorType::ScalarType beta, const VectorType& y,
-         VectorType& w, int order)
+         VectorType& w)
 {
   typedef typename VectorType::ScalarType ScalarType;
   
@@ -160,17 +160,7 @@ void
   int BLOCK_SIZE=256;
   int BLOCKS=min((n+BLOCK_SIZE-1)/BLOCK_SIZE,2048*16);
 
-#ifdef TIME_BREAKDOWN
-  if (order == 1) cudaEventRecord(CudaManager::et[4], CudaManager::s1);
-  if (order == 2) cudaEventRecord(CudaManager::et[17], CudaManager::s1);
-  if (order == 3) cudaEventRecord(CudaManager::et[19], CudaManager::s1);
-#endif
   waxpby_kernel<<<BLOCKS,BLOCK_SIZE,0,CudaManager::s1>>>(alpha, x.getPOD(), beta, y.getPOD(), w.getPOD());
-#ifdef TIME_BREAKDOWN
-  if (order == 1) cudaEventRecord(CudaManager::et[5], CudaManager::s1);
-  if (order == 2) cudaEventRecord(CudaManager::et[18], CudaManager::s1);
-  if (order == 3) cudaEventRecord(CudaManager::et[20], CudaManager::s1);
-#endif
   cudaCheckError();
 }
 
@@ -237,7 +227,7 @@ __global__ void dot_final_reduce_kernel(Scalar *d) {
 template<typename Vector>
 typename TypeTraits<typename Vector::ScalarType>::magnitude_type
   dot(const Vector& x,
-      const Vector& y, int order, double* mpi_times)
+      const Vector& y)
 {
   typedef typename Vector::ScalarType Scalar;
   typedef typename TypeTraits<typename Vector::ScalarType>::magnitude_type magnitude;
@@ -256,21 +246,9 @@ typename TypeTraits<typename Vector::ScalarType>::magnitude_type
  static thrust::device_vector<magnitude> d(1024);
  cudaMemset_custom(thrust::raw_pointer_cast(&d[0]),(magnitude)0,1024,CudaManager::s1);
 
-#ifdef TIME_BREAKDOWN
- if (order == 1) cudaEventRecord(CudaManager::et[0], CudaManager::s1);
- if (order == 2) cudaEventRecord(CudaManager::et[13], CudaManager::s1);
-#endif
  dot_kernel<<<NUM_BLOCKS,BLOCK_SIZE,0,CudaManager::s1>>>(x.getPOD(), y.getPOD(), thrust::raw_pointer_cast(&d[0]));
-#ifdef TIME_BREAKDOWN
- if (order == 1) cudaEventRecord(CudaManager::et[1], CudaManager::s1);
- if (order == 2) cudaEventRecord(CudaManager::et[14], CudaManager::s1);
-#endif
  cudaCheckError();
  dot_final_reduce_kernel<<<1,1024,0,CudaManager::s1>>>(thrust::raw_pointer_cast(&d[0]));
-#ifdef TIME_BREAKDOWN
- if (order == 1) cudaEventRecord(CudaManager::et[2], CudaManager::s1);
- if (order == 2) cudaEventRecord(CudaManager::et[15], CudaManager::s1);
-#endif
  cudaCheckError();
  
  static magnitude result;
@@ -284,10 +262,6 @@ typename TypeTraits<typename Vector::ScalarType>::magnitude_type
 
  //TODO do this with GPU direct?
  cudaMemcpyAsync(&result,thrust::raw_pointer_cast(&d[0]),sizeof(magnitude),cudaMemcpyDeviceToHost,CudaManager::s1);
-#ifdef TIME_BREAKDOWN
- if (order == 1) cudaEventRecord(CudaManager::et[3], CudaManager::s1);
- if (order == 2) cudaEventRecord(CudaManager::et[16], CudaManager::s1);
-#endif
  cudaEventRecord(CudaManager::e1,CudaManager::s1);
  cudaEventSynchronize(CudaManager::e1);
 
@@ -295,13 +269,7 @@ typename TypeTraits<typename Vector::ScalarType>::magnitude_type
   nvtxRangeId_t r1=nvtxRangeStartA("MPI All Reduce");
   magnitude local_dot = result, global_dot = 0;
   MPI_Datatype mpi_dtype = TypeTraits<magnitude>::mpi_type();  
-#ifdef TIME_BREAKDOWN
-  double mpi_start_time = MPI_Wtime();
-#endif
   MPI_Allreduce(&local_dot, &global_dot, 1, mpi_dtype, MPI_SUM, MPI_COMM_WORLD);
-#ifdef TIME_BREAKDOWN
-  if (order == 1 || order == 2) mpi_times[order-1] = (MPI_Wtime() - mpi_start_time) * 1000;
-#endif
   nvtxRangeEnd(r1);
 
   return global_dot;

@@ -37,6 +37,7 @@
 #endif
 
 #include <outstream.hpp>
+#include <fstream>
 
 #include <TypeTraits.hpp>
 
@@ -54,7 +55,7 @@ template<typename MatrixType,
          typename VectorType>
 void
 exchange_externals(MatrixType& A,
-                   VectorType& x)
+                   VectorType& x, double* times, int* call_counts)
 {
 #ifdef HAVE_MPI
 #ifdef MINIFE_DEBUG
@@ -62,8 +63,9 @@ exchange_externals(MatrixType& A,
   os << "entering exchange_externals\n";
 #endif
 
-  int numprocs = 1;
+  int numprocs = 1, myproc;
   MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
+  MPI_Comm_rank(MPI_COMM_WORLD, &myproc);
 
   if (numprocs < 2) return;
   
@@ -122,12 +124,92 @@ exchange_externals(MatrixType& A,
 
   MPI_Datatype mpi_dtype = TypeTraits<Scalar>::mpi_type();
 
+  double mpi_start_time;
+  /* Internal pingpong test */
+  /*
+  static bool start = false;
+
+  if (!start) {
+    start = true;
+    MPI_Request recv_req;
+    MPI_Status wait_status;
+
+    std::vector<int> double_counts = {1, 2, 4, 8, 16, 32, 64, 128, 192, 256, 384, 512, 768};
+    int double_count = 1024;
+    while (double_count <= 1536) {
+      double_counts.push_back(double_count);
+      double_count += 32;
+    }
+    while (double_count <= 50000) {
+      double_counts.push_back(double_count);
+      double_count += 512;
+    }
+
+    double* recv_buf = (double*)std::malloc(sizeof(double) * 1048576);
+    double* send_buf = (double*)std::malloc(sizeof(double) * 1048576);
+    int types = double_counts.size();
+    double* acc_times = (double*)std::malloc(sizeof(double) * types * 3);
+    double* global_acc_times = (double*)std::malloc(sizeof(double) * types * 3);
+
+    for (int i = 0; i < types; i++) {
+      int count = double_counts[i];
+      for (int j = 0; j < 3; j++) acc_times[3*i+j] = global_acc_times[3*i+j] = 0.0;
+
+      MPI_Barrier(MPI_COMM_WORLD);
+
+      for (int j = 0; j < 1000; j++) {
+        mpi_start_time = MPI_Wtime();
+        MPI_Irecv(recv_buf, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD, &recv_req);
+        acc_times[3*i] += MPI_Wtime() - mpi_start_time;
+
+        mpi_start_time = MPI_Wtime();
+        MPI_Send(send_buf, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD);
+        acc_times[3*i+1] += MPI_Wtime() - mpi_start_time;
+
+        mpi_start_time = MPI_Wtime();
+        MPI_Wait(&recv_req, &wait_status);
+        acc_times[3*i+2] += MPI_Wtime() - mpi_start_time;
+      }
+    }
+
+    MPI_Barrier(MPI_COMM_WORLD);
+    MPI_Reduce(acc_times, global_acc_times, types * 3, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+    for (int i = 0; i < types * 3; i++) global_acc_times[i] /= numprocs;
+
+    if (myproc == 0) {
+      std::ofstream myfile;
+      myfile.open("pingpong.csv");
+      myfile << "Count,MPI_Irecv,MPI_Send,MPI_Wait\n";
+
+      for (int i = 0; i < types; i++) {
+        myfile << double_counts[i] << "," << global_acc_times[3*i] * 1000 << "," <<
+          global_acc_times[3*i+1] * 1000 << "," << global_acc_times[3*i+2] * 1000 << "\n";
+      }
+
+      myfile.close();
+    }
+  }
+  */
+
+  MPI_Barrier(MPI_COMM_WORLD);
+  int neighbor_types[num_neighbors] = {0};
+
   // Post receives first
   for(int i=0; i<num_neighbors; ++i) {
     int n_recv = recv_length[i];
+    mpi_start_time = MPI_Wtime();
     MPI_Irecv(x_external, n_recv, mpi_dtype, neighbors[i], MPI_MY_TAG,
               MPI_COMM_WORLD, &request[i]);
     x_external += n_recv;
+
+    int type;
+    if (n_recv == 1) type = 0;
+    if (n_recv > 100 && n_recv < 300) type = 1; // Count 200
+    if (n_recv > 39000 && n_recv < 41000) type = 2; // Count 40000
+    neighbor_types[i] = type; // For MPI_Wait
+    if (call_counts != NULL) call_counts[type]++; // Only at receive
+
+    if (times != NULL) times[1+type*3] = MPI_Wtime() - mpi_start_time;
   }
 
 #ifdef MINIFE_DEBUG
@@ -150,9 +232,17 @@ exchange_externals(MatrixType& A,
 
   for(int i=0; i<num_neighbors; ++i) {
     int n_send = send_length[i];
-    MPI_Send(s_buffer, n_send, mpi_dtype, neighbors[i], MPI_MY_TAG,
+    mpi_start_time = MPI_Wtime();
+    MPI_Send(s_buffer, n_send, MPI_DOUBLE, neighbors[i], MPI_MY_TAG,
              MPI_COMM_WORLD);
     s_buffer += n_send;
+
+    int type;
+    if (n_send == 1) type = 0;
+    if (n_send > 100 && n_send < 300) type = 1; // Count 200
+    if (n_send > 39000 && n_send < 41000) type = 2; // Count 40000
+
+    if (times != NULL) times[2+type*3] = MPI_Wtime() - mpi_start_time;
   }
 
 #ifdef MINIFE_DEBUG
@@ -165,11 +255,15 @@ exchange_externals(MatrixType& A,
 
   MPI_Status status;
   for(int i=0; i<num_neighbors; ++i) {
+    mpi_start_time = MPI_Wtime();
     if (MPI_Wait(&request[i], &status) != MPI_SUCCESS) {
       std::cerr << "MPI_Wait error\n"<<std::endl;
       MPI_Abort(MPI_COMM_WORLD, -1);
     }
+    int type = neighbor_types[i];
+    if (times != NULL) times[3+type*3] = MPI_Wtime() - mpi_start_time;
   }
+
   
 #ifndef GPUDIRECT
   x.copyToDeviceAsync(local_nrow,CudaManager::s1);
@@ -191,7 +285,7 @@ template<typename MatrixType,
          typename VectorType>
 void
 begin_exchange_externals(MatrixType& A,
-                         VectorType& x, double& mpi_start_time)
+                         VectorType& x)
 {
 #ifdef HAVE_MPI
 
@@ -234,7 +328,6 @@ begin_exchange_externals(MatrixType& A,
 
   MPI_Datatype mpi_dtype = TypeTraits<Scalar>::mpi_type();
 
-  mpi_start_time = MPI_Wtime();
   // Post receives first
   for(int i=0; i<num_neighbors; ++i) {
     int n_recv = recv_length[i];
@@ -252,25 +345,16 @@ begin_exchange_externals(MatrixType& A,
   cudaEventRecord(CudaManager::e1,CudaManager::s1);
   cudaStreamWaitEvent(CudaManager::s2,CudaManager::e1,0);
 
-#ifdef TIME_BREAKDOWN
-  cudaEventRecord(CudaManager::et[6], CudaManager::s2);
-#endif
   copyElementsToBuffer<<<BLOCKS,BLOCK_SIZE,0,CudaManager::s2>>>(thrust::raw_pointer_cast(&x.d_coefs[0]),
                                      thrust::raw_pointer_cast(&A.d_send_buffer[0]), 
                                      thrust::raw_pointer_cast(&A.d_elements_to_send[0]),
                                      A.d_elements_to_send.size());
-#ifdef TIME_BREAKDOWN
-  cudaEventRecord(CudaManager::et[7], CudaManager::s2);
-#endif
   cudaCheckError();
   //This isn't necessary for correctness but I want to make sure this starts before the interrior kernel
   cudaStreamWaitEvent(CudaManager::s1,CudaManager::e2,0); 
 #ifndef GPUDIRECT
   std::vector<Scalar>& send_buffer = A.send_buffer;
   cudaMemcpyAsync(&send_buffer[0],thrust::raw_pointer_cast(&A.d_send_buffer[0]),sizeof(Scalar)*A.d_elements_to_send.size(),cudaMemcpyDeviceToHost,CudaManager::s2);
-#ifdef TIME_BREAKDOWN
-  cudaEventRecord(CudaManager::et[8], CudaManager::s2);
-#endif
   cudaCheckError();
 #endif
   cudaEventRecord(CudaManager::e2,CudaManager::s2);
@@ -281,7 +365,7 @@ template<typename MatrixType,
          typename VectorType>
 inline
 void
-finish_exchange_externals(MatrixType &A, VectorType &x, double& mpi_end_time)
+finish_exchange_externals(MatrixType &A, VectorType &x)
 {
 #ifdef HAVE_MPI
   typedef typename MatrixType::ScalarType Scalar;
@@ -325,8 +409,6 @@ finish_exchange_externals(MatrixType &A, VectorType &x, double& mpi_end_time)
       MPI_Abort(MPI_COMM_WORLD, -1);
     }
   }
-
-  mpi_end_time = MPI_Wtime();
 
 //endif HAVE_MPI
 #endif

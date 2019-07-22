@@ -102,7 +102,7 @@ time_kernels(OperatorType& A,
 
   TICK();
   for(OrdinalType i=0; i<max_iter; ++i) {
-    waxpby(one, x, zero, x, p, -1);
+    waxpby(one, x, zero, x, p);
   }
 #ifdef MINIFE_HAVE_CUDA
   cudaThreadSynchronize();
@@ -111,7 +111,7 @@ time_kernels(OperatorType& A,
 
   TICK();
   for(OrdinalType i=0; i<max_iter; ++i) {
-    matvec(A, p, x, NULL);
+    matvec(A, p, x, NULL, NULL);
   }
 #ifdef MINIFE_HAVE_CUDA
   cudaThreadSynchronize();
@@ -121,7 +121,7 @@ time_kernels(OperatorType& A,
   TICK();
   xdotp = 0;
   for(OrdinalType i=0; i<max_iter; ++i) {
-    xdotp += dot(x, p, -1, NULL);
+    xdotp += dot(x, p);
   }
 #ifdef MINIFE_HAVE_CUDA
   cudaThreadSynchronize();
