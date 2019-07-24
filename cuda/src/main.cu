@@ -96,6 +96,8 @@ inline void print_box(int myproc, const char* name, const Box& box,
 void setCudaDeviceFromRank(miniFE::Parameters &params) {
   char* str;
   int local_rank = 0;
+  int rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   if(params.num_devices<0)
     cudaGetDeviceCount(&params.num_devices);
@@ -105,20 +107,26 @@ void setCudaDeviceFromRank(miniFE::Parameters &params) {
     params.device = local_rank % params.num_devices;
     if(params.device >= params.skip_device) params.device++;
   }
-
-  if((str = getenv("OMPI_COMM_WORLD_LOCAL_RANK")) != NULL) {
+  else if((str = getenv("OMPI_COMM_WORLD_LOCAL_RANK")) != NULL) {
     local_rank = atoi(str);
     params.device = local_rank % params.num_devices;
     if(params.device >= params.skip_device) params.device++;
   }
-
-  if((str = getenv("SLURM_LOCALID")) != NULL) {
+  /*
+  else if((str = getenv("SLURM_LOCALID")) != NULL) {
     local_rank = atoi(str);
     params.device = local_rank % params.num_devices;
     if(params.device >= params.skip_device) params.device++;
+  }
+  */
+  else {
+    // For PSC Bridges
+    params.device = rank % params.num_devices;
+    if (params.device >= params.skip_device) params.device++;
   }
 
   cudaSetDevice(params.device);
+  printf("Mapped MPI rank %d to device %d\n", rank, params.device);
 }
 
 int main(int argc, char** argv) {
@@ -126,8 +134,8 @@ int main(int argc, char** argv) {
   miniFE::get_parameters(argc, argv, params);
 
   int numprocs = 1, myproc = 0;
-  setCudaDeviceFromRank(params);
   miniFE::initialize_mpi(argc, argv, numprocs, myproc);
+  setCudaDeviceFromRank(params);
   if(myproc==0)
     printf(" OMP_NUM_THREADS=%d\n", omp_get_max_threads());
   cudaDeviceProp info;
