@@ -172,6 +172,7 @@ cg_solve(OperatorType& A,
   double acc_times[TIME_COUNT] = {0.0};
   double global_acc_times[TIME_COUNT];
   int call_counts[3] = {0}; // 0: Count 1, 1: Count 200, 2: Count 40000
+  int global_call_counts[3] = {0};
   double iter_start_time;
 
   for(LocalOrdinalType k=1; k <= max_iter && normr > tolerance; ++k) {
@@ -240,16 +241,37 @@ cg_solve(OperatorType& A,
 
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Reduce(acc_times, global_acc_times, TIME_COUNT, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-  for (int i = 0; i < TIME_COUNT; i++) global_acc_times[i] /= world_size;
-
-  if (myproc == 0) {
-    printf("Call counts: %d, %d, %d\n", call_counts[0], call_counts[1], call_counts[2]);
-    printf("[AVERAGE] Overhead: %.6lf us\n", global_acc_times[0] * 1000000 / num_iters);
-    printf("[AVERAGE] MPI_Irecv: %.6lf us\n", global_acc_times[1] * 1000000 / num_iters);
-    printf("[AVERAGE] MPI_Send: %.6lf us\n", global_acc_times[2] * 1000000 / num_iters);
-    printf("[AVERAGE] MPI_Wait: %.6lf us\n", global_acc_times[3] * 1000000 / num_iters);
+  MPI_Reduce(call_counts, global_call_counts, 3, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+  global_acc_times[0] /= world_size;
+  global_acc_times[3] /= world_size;
+  for (int i = 1; i < TIME_COUNT; i++) {
+    if (i >= 1 && i <= 2) {
+      if (global_call_counts[0] > 0) global_acc_times[i] /= global_call_counts[0];
+      else global_acc_times[i] = 0.0;
+    }
+    else if (i >= 4 && i <= 5) {
+      if (global_call_counts[1] > 0) global_acc_times[i] /= global_call_counts[1];
+      else global_acc_times[i] = 0.0;
+    }
+    else if (i >= 7 && i <= 8) {
+      if (global_call_counts[2] > 0) global_acc_times[i] /= global_call_counts[2];
+      else global_acc_times[i] = 0.0;
+    }
   }
 
+  printf("[Rank %d] Call counts: %d, %d, %d\n", myproc, call_counts[0], call_counts[1], call_counts[2]);
+  if (myproc == 0) {
+    printf("[AVERAGE] Overhead: %.6lf us\n", global_acc_times[0] * 1000000 / num_iters);
+    printf("[AVERAGE] Count 1, MPI_Irecv: %.6lf us\n", global_acc_times[1] * 1000000);
+    printf("[AVERAGE] Count 1, MPI_Isend: %.6lf us\n", global_acc_times[2] * 1000000);
+    printf("[AVERAGE] Count 1, MPI_Wait: %.6lf us\n", global_acc_times[3] * 1000000 / num_iters);
+    printf("[AVERAGE] Count 200, MPI_Irecv: %.6lf us\n", global_acc_times[4] * 1000000);
+    printf("[AVERAGE] Count 200, MPI_Isend: %.6lf us\n", global_acc_times[5] * 1000000);
+    printf("[AVERAGE] Count 200, MPI_Wait: %.6lf us\n", global_acc_times[6] * 1000000);
+    printf("[AVERAGE] Count 40000, MPI_Irecv: %.6lf us\n", global_acc_times[7] * 1000000);
+    printf("[AVERAGE] Count 40000, MPI_Isend: %.6lf us\n", global_acc_times[8] * 1000000);
+    printf("[AVERAGE] Count 40000, MPI_Wait: %.6lf us\n", global_acc_times[9] * 1000000);
+  }
   
 #ifdef HAVE_MPI
 #ifndef GPUDIRECT

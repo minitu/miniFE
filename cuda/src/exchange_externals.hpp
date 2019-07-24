@@ -125,14 +125,14 @@ exchange_externals(MatrixType& A,
   MPI_Datatype mpi_dtype = TypeTraits<Scalar>::mpi_type();
 
   double mpi_start_time;
+#if 0
   /* Internal pingpong test */
-  /*
   static bool start = false;
 
   if (!start) {
     start = true;
-    MPI_Request recv_req;
-    MPI_Status wait_status;
+    MPI_Request requests[2];
+    MPI_Status waits[2];
 
     std::vector<int> double_counts = {1, 2, 4, 8, 16, 32, 64, 128, 192, 256, 384, 512, 768};
     int double_count = 1024;
@@ -159,15 +159,15 @@ exchange_externals(MatrixType& A,
 
       for (int j = 0; j < 1000; j++) {
         mpi_start_time = MPI_Wtime();
-        MPI_Irecv(recv_buf, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD, &recv_req);
+        MPI_Irecv(recv_buf, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD, &requests[0]);
         acc_times[3*i] += MPI_Wtime() - mpi_start_time;
 
         mpi_start_time = MPI_Wtime();
-        MPI_Send(send_buf, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD);
+        MPI_Isend(send_buf, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD, &requests[1]);
         acc_times[3*i+1] += MPI_Wtime() - mpi_start_time;
 
         mpi_start_time = MPI_Wtime();
-        MPI_Wait(&recv_req, &wait_status);
+        MPI_Waitall(2, requests, waits);
         acc_times[3*i+2] += MPI_Wtime() - mpi_start_time;
       }
     }
@@ -179,7 +179,7 @@ exchange_externals(MatrixType& A,
     if (myproc == 0) {
       std::ofstream myfile;
       myfile.open("pingpong.csv");
-      myfile << "Count,MPI_Irecv,MPI_Send,MPI_Wait\n";
+      myfile << "Count,MPI_Irecv,MPI_Isend,MPI_Waitall\n";
 
       for (int i = 0; i < types; i++) {
         myfile << double_counts[i] << "," << global_acc_times[3*i] * 1000 << "," <<
@@ -189,7 +189,74 @@ exchange_externals(MatrixType& A,
       myfile.close();
     }
   }
-  */
+#endif
+
+#if 1
+  /* Internal halo exchange test */
+  static bool start = false;
+
+  if (!start) {
+    start = true;
+    std::vector<std::vector<int>> countss {
+      {40000},
+      {200, 40000, 40000},
+      {1, 200, 200, 200, 40000, 40000, 40000},
+      {1, 1, 200, 200, 200, 200, 200, 40000, 40000, 40000, 40000},
+      {1, 1, 1, 1, 200, 200, 200, 200, 200, 200, 200, 200, 40000, 40000, 40000, 40000, 40000}
+    };
+    MPI_Request reqs[40];
+    MPI_Status stats[40];
+    double* recv_buf = (double*)std::malloc(sizeof(double) * 1048576);
+    double* send_buf = (double*)std::malloc(sizeof(double) * 1048576);
+    double acc_times[3] = {0.0};
+    double global_acc_times[3] = {0.0};
+
+    std::ofstream myfile;
+    if (myproc == 0) {
+      myfile.open("halo.csv");
+      myfile << "Neighbors,MPI_Irecv,MPI_Isend,MPI_Waitall\n";
+    }
+
+    for (auto& counts : countss) {
+      MPI_Barrier(MPI_COMM_WORLD);
+      int num_neighbors = counts.size();
+
+      for (int i = 0; i < 1000; i++) {
+        mpi_start_time = MPI_Wtime();
+        for (int j = 0; j < num_neighbors; j++) {
+          int count = counts[j];
+          MPI_Irecv(recv_buf, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD, &reqs[j]);
+        }
+        acc_times[0] += MPI_Wtime() - mpi_start_time;
+
+        mpi_start_time = MPI_Wtime();
+        for (int j = 0; j < num_neighbors; j++) {
+          int count = counts[j];
+          MPI_Isend(send_buf, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD, &reqs[num_neighbors+j]);
+        }
+        acc_times[1] += MPI_Wtime() - mpi_start_time;
+
+        mpi_start_time = MPI_Wtime();
+        MPI_Waitall(2*num_neighbors, reqs, stats);
+        acc_times[2] += MPI_Wtime() - mpi_start_time;
+      }
+
+      MPI_Barrier(MPI_COMM_WORLD);
+      MPI_Reduce(acc_times, global_acc_times, 3, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+      for (int i = 0; i < 3; i++) global_acc_times[i] /= numprocs;
+      if (myproc == 0) {
+        myfile << num_neighbors << "," << global_acc_times[0] * 1000 << "," << global_acc_times[1] * 1000 << "," << global_acc_times[2] * 1000 << "\n";
+      }
+    }
+
+    if (myproc == 0) {
+      myfile.close();
+    }
+  }
+#endif
+
+  MPI_Request mpi_request[num_neighbors*2];
+  MPI_Status mpi_status[num_neighbors*2];
 
   MPI_Barrier(MPI_COMM_WORLD);
   int neighbor_types[num_neighbors] = {0};
@@ -199,7 +266,7 @@ exchange_externals(MatrixType& A,
     int n_recv = recv_length[i];
     mpi_start_time = MPI_Wtime();
     MPI_Irecv(x_external, n_recv, mpi_dtype, neighbors[i], MPI_MY_TAG,
-              MPI_COMM_WORLD, &request[i]);
+              MPI_COMM_WORLD, &mpi_request[i]);
     x_external += n_recv;
 
     int type;
@@ -227,14 +294,14 @@ exchange_externals(MatrixType& A,
   Scalar* s_buffer = &send_buffer[0];
 #endif
   //wait for packing or copy to host to finish
-  cudaEventSynchronize(CudaManager::e1);
-  cudaCheckError();
+  //cudaEventSynchronize(CudaManager::e1);
+  //cudaCheckError();
 
   for(int i=0; i<num_neighbors; ++i) {
     int n_send = send_length[i];
     mpi_start_time = MPI_Wtime();
-    MPI_Send(s_buffer, n_send, MPI_DOUBLE, neighbors[i], MPI_MY_TAG,
-             MPI_COMM_WORLD);
+    MPI_Isend(s_buffer, n_send, MPI_DOUBLE, neighbors[i], MPI_MY_TAG,
+             MPI_COMM_WORLD, &mpi_request[num_neighbors+i]);
     s_buffer += n_send;
 
     int type;
@@ -253,6 +320,7 @@ exchange_externals(MatrixType& A,
   // Complete the reads issued above
   //
 
+  /*
   MPI_Status status;
   for(int i=0; i<num_neighbors; ++i) {
     mpi_start_time = MPI_Wtime();
@@ -263,7 +331,13 @@ exchange_externals(MatrixType& A,
     int type = neighbor_types[i];
     if (times != NULL) times[3+type*3] = MPI_Wtime() - mpi_start_time;
   }
-
+  */
+  mpi_start_time = MPI_Wtime();
+  MPI_Waitall(num_neighbors*2, mpi_request, mpi_status);
+  if (times != NULL) {
+    times[3] = MPI_Wtime() - mpi_start_time;
+    times[6] = times[9] = 0.0;
+  }
   
 #ifndef GPUDIRECT
   x.copyToDeviceAsync(local_nrow,CudaManager::s1);
