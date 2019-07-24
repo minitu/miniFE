@@ -191,18 +191,20 @@ exchange_externals(MatrixType& A,
   }
 #endif
 
-#if 1
+#if 0
   /* Internal halo exchange test */
   static bool start = false;
 
   if (!start) {
     start = true;
+    int base = 800;
+    int base_sq = base * base;
     std::vector<std::vector<int>> countss {
-      {40000},
-      {200, 40000, 40000},
-      {1, 200, 200, 200, 40000, 40000, 40000},
-      {1, 1, 200, 200, 200, 200, 200, 40000, 40000, 40000, 40000},
-      {1, 1, 1, 1, 200, 200, 200, 200, 200, 200, 200, 200, 40000, 40000, 40000, 40000, 40000}
+      {base_sq},
+      {base, base_sq, base_sq},
+      {1, base, base, base, base_sq, base_sq, base_sq},
+      {1, 1, base, base, base, base, base, base_sq, base_sq, base_sq, base_sq},
+      {1, 1, 1, 1, base, base, base, base, base, base, base, base, base_sq, base_sq, base_sq, base_sq, base_sq}
     };
     MPI_Request reqs[40];
     MPI_Status stats[40];
@@ -294,8 +296,8 @@ exchange_externals(MatrixType& A,
   Scalar* s_buffer = &send_buffer[0];
 #endif
   //wait for packing or copy to host to finish
-  //cudaEventSynchronize(CudaManager::e1);
-  //cudaCheckError();
+  cudaEventSynchronize(CudaManager::e1);
+  cudaCheckError();
 
   for(int i=0; i<num_neighbors; ++i) {
     int n_send = send_length[i];
@@ -320,18 +322,6 @@ exchange_externals(MatrixType& A,
   // Complete the reads issued above
   //
 
-  /*
-  MPI_Status status;
-  for(int i=0; i<num_neighbors; ++i) {
-    mpi_start_time = MPI_Wtime();
-    if (MPI_Wait(&request[i], &status) != MPI_SUCCESS) {
-      std::cerr << "MPI_Wait error\n"<<std::endl;
-      MPI_Abort(MPI_COMM_WORLD, -1);
-    }
-    int type = neighbor_types[i];
-    if (times != NULL) times[3+type*3] = MPI_Wtime() - mpi_start_time;
-  }
-  */
   mpi_start_time = MPI_Wtime();
   MPI_Waitall(num_neighbors*2, mpi_request, mpi_status);
   if (times != NULL) {
