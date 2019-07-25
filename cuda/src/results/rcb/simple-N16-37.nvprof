@@ -1,0 +1,173 @@
+==14230== NVPROF is profiling process 14230, command: ./miniFE.x.eval --num_devices 4 -nx 800 -ny 800 -nz 800
+==14230== Profiling application: ./miniFE.x.eval --num_devices 4 -nx 800 -ny 800 -nz 800
+==14230== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+ GPU activities:    75.62  681.4207       201  3.390152  3.382691  3.419139  void miniFE::matvec_ell_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(double, int, double)
+                    15.18  136.7956       602  0.227235  0.156351  0.230718  void miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>(doubleScalarType, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>, double, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>)
+                     5.19  46.76859       400  0.116921  0.084415  0.149566  void miniFE::dot_kernel<miniFE::PODVector<double, int, int>>(double, miniFE::dot_kernel<miniFE::PODVector<double, int, int>>, miniFE::TypeTraits<miniFE::dot_kernel<miniFE::PODVector<double, int, int>::ScalarType>>::magnitude_type*)
+                     2.09  18.86080       601  0.031382  1.25e-03  0.106111  [CUDA memcpy DtoH]
+                     1.49  13.40004       201  0.066666  0.034239  2.875239  [CUDA memcpy HtoD]
+                     0.25  2.249935       201  0.011193  0.010784  0.012128  void miniFE::copyElementsToBuffer<double, int>(double*, double, int*, int)
+                     0.10  0.882552       400  2.21e-03  2.11e-03  2.59e-03  void miniFE::dot_final_reduce_kernel<double>(double*)
+                     0.05  0.469853       400  1.17e-03  1.12e-03  1.95e-03  void miniFE::cudaMemset_kernel<double>(double*, miniFE::cudaMemset_kernel<double>, int)
+                     0.03  0.233791         4  0.058447  1.60e-03  0.078560  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)
+      API calls:    84.34  814.0497       601  1.354492  0.014790  6.264886  cudaEventSynchronize
+                     9.30  89.71988      2208  0.040634  0.022254  11.02991  cudaLaunchKernel
+                     2.65  25.54572         4  6.386431  0.024906  8.668594  cudaMalloc
+                     2.21  21.28703       802  0.026542  0.019218  0.046307  cudaMemcpyAsync
+                     0.85  8.164028         3  2.721342  2.231588  3.213958  cudaFree
+                     0.35  3.330024       601  5.54e-03  3.88e-03  0.012357  cudaEventRecord
+                     0.22  2.104880      2009  1.05e-03  5.39e-04  4.90e-03  cudaGetLastError
+                     0.06  0.538855         3  0.179618  0.053732  0.429084  cudaHostRegister
+                     0.04  0.348063         2  0.174031  0.046868  0.301195  cudaHostUnregister
+                     0.01  0.088447         4  0.022111  0.020413  0.025059  cudaFuncGetAttributes
+                     0.00  0.012594         4  3.15e-03  3.05e-03  3.31e-03  cudaGetDevice
+                     0.00  0.011052         4  2.76e-03  2.64e-03  2.91e-03  cudaDeviceGetAttribute
+                     0.00  0.010763         8  1.34e-03  8.30e-04  1.77e-03  cudaPeekAtLastError
+
+==14230== NVTX result:
+==14230==   Thread "<unnamed>" (id = 312240)
+==14230==     Domain "<unnamed>"
+==14230==       Range "Allocation of Temporary Vectors"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  82.13005         1  82.13005  82.13005  82.13005  Allocation of Temporary Vectors
+ GPU activities:   100.00  0.232191         3  0.077397  0.076351  0.078560  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)
+      API calls:   100.00  11.15923         3  3.719741  0.061888  11.02991  cudaLaunchKernel
+
+==14230==       Range "Create external_local_index"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  3.407625         1  3.407625  3.407625  3.407625  Create external_local_index
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "MPI All Reduce"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  110.1312       401  0.274641  0.013277  12.22896  MPI All Reduce
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "MPI Communication"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  7.336361         2  3.668180  1.595508  5.740853  MPI Communication
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "MPI Reduce"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  71.08111         1  71.08111  71.08111  71.08111  MPI Reduce
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "Set External Processors"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  38.72194         1  38.72194  38.72194  38.72194  Set External Processors
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "add to recv_list"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  1.54e-03         1  1.54e-03  1.54e-03  1.54e-03  add to recv_list
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "allocate device memory"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  50.29327         1  50.29327  50.29327  50.29327  allocate device memory
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "allocate host memory"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  93.10120         1  93.10120  93.10120  93.10120  allocate host memory
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "allocation"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  3.410639         1  3.410639  3.410639  3.410639  allocation
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "assemble FE data"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  222.7701         1  222.7701  222.7701  222.7701  assemble FE data
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "assign new external"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  0.954040         2  0.477020  0.199357  0.754683  assign new external
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "cgsolve"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  1.26e+03         1  1.26e+03  1.26e+03  1.26e+03  cgsolve
+ GPU activities:    75.62  681.4207       201  3.390152  3.382691  3.419139  void miniFE::matvec_ell_kernel<miniFE::PODELLMatrix<double, int, int>, miniFE::PODVector<double, int, int>>(double, int, double)
+                    15.18  136.7956       602  0.227235  0.156351  0.230718  void miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>(doubleScalarType, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>, double, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>, miniFE::waxpby_kernel<miniFE::PODVector<double, int, int>>)
+                     5.19  46.76859       400  0.116921  0.084415  0.149566  void miniFE::dot_kernel<miniFE::PODVector<double, int, int>>(double, miniFE::dot_kernel<miniFE::PODVector<double, int, int>>, miniFE::TypeTraits<miniFE::dot_kernel<miniFE::PODVector<double, int, int>::ScalarType>>::magnitude_type*)
+                     2.09  18.86080       601  0.031382  1.25e-03  0.106111  [CUDA memcpy DtoH]
+                     1.49  13.40004       201  0.066666  0.034239  2.875239  [CUDA memcpy HtoD]
+                     0.25  2.249935       201  0.011193  0.010784  0.012128  void miniFE::copyElementsToBuffer<double, int>(double*, double, int*, int)
+                     0.10  0.882552       400  2.21e-03  2.11e-03  2.59e-03  void miniFE::dot_final_reduce_kernel<double>(double*)
+                     0.05  0.469853       400  1.17e-03  1.12e-03  1.95e-03  void miniFE::cudaMemset_kernel<double>(double*, miniFE::cudaMemset_kernel<double>, int)
+                     0.03  0.233791         4  0.058447  1.60e-03  0.078560  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>, thrust::cuda_cub::__uninitialized_fill::functor<thrust::device_ptr<double>, double>, unsigned long>(thrust::device_ptr<double>, double)
+      API calls:    80.82  89.71988      2208  0.040634  0.022254  11.02991  cudaLaunchKernel
+                    19.18  21.28703       802  0.026542  0.019218  0.046307  cudaMemcpyAsync
+
+==14230==       Range "create recv list"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  1.019641         1  1.019641  1.019641  1.019641  create recv list
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "create tmp_neighbors"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  1.246120         1  1.246120  1.246120  1.246120  create tmp_neighbors
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "generate matrix structure"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  1.03e+03         1  1.03e+03  1.03e+03  1.03e+03  generate matrix structure
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "impose boundary conditions"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  27.51502         1  27.51502  27.51502  27.51502  impose boundary conditions
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "make local matrix"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  159.6380         1  159.6380  159.6380  159.6380  make local matrix
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
+==14230==       Range "reserve space in A"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+                        %        ms                  ms        ms        ms
+          Range:   100.00  51.76394         1  51.76394  51.76394  51.76394  reserve space in A
+No kernels were profiled in this range.
+No API activities were profiled in this range.
+
