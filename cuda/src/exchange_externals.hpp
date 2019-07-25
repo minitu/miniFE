@@ -197,44 +197,65 @@ exchange_externals(MatrixType& A,
 
   if (!start) {
     start = true;
-    int base = 800;
+    int base = 200;
     int base_sq = base * base;
     std::vector<std::vector<int>> countss {
-      {base_sq},
-      {base, base_sq, base_sq},
-      {1, base, base, base, base_sq, base_sq, base_sq},
-      {1, 1, base, base, base, base, base, base_sq, base_sq, base_sq, base_sq},
-      {1, 1, 1, 1, base, base, base, base, base, base, base, base, base_sq, base_sq, base_sq, base_sq, base_sq}
+      {base_sq}, // 1 neighbor (1 face)
+      {base, base_sq, base_sq}, // 3 neighbors (1 edge, 2 faces)
+      {1, base, base, base, base_sq, base_sq, base_sq}, // 7 neighbors (1 point, 3 edges, 3 faces)
+      {1, 1, base, base, base, base, base,
+       base_sq, base_sq, base_sq, base_sq}, // 11 neighbors (2 points, 5 edges, 4 faces)
+      {1, 1, 1, 1, base, base, base, base, base, base, base, base,
+       base_sq, base_sq, base_sq, base_sq, base_sq}, // 17 neighbors (4 points, 8 edges, 5 faces)
+      {1, 1, 1, 1, 1, 1, 1, 1, base, base, base, base, base, base,
+       base, base, base, base, base, base, base_sq, base_sq, base_sq,
+       base_sq, base_sq, base_sq} // 26 neighbors (8 points, 12 edges, 6 faces)
     };
-    MPI_Request reqs[40];
-    MPI_Status stats[40];
+
+    MPI_Request reqs[100];
+    MPI_Status stats[100];
+
     double* recv_buf = (double*)std::malloc(sizeof(double) * 1048576);
     double* send_buf = (double*)std::malloc(sizeof(double) * 1048576);
-    double acc_times[3] = {0.0};
-    double global_acc_times[3] = {0.0};
 
-    std::ofstream myfile;
+    double acc_times[3] = {0.0};
+    double acc_times_sum[3] = {0.0};
+    double acc_times_max[3] = {0.0};
+
+    std::ofstream rank_file, max_file, avg_file;
     if (myproc == 0) {
-      myfile.open("halo.csv");
-      myfile << "Neighbors,MPI_Irecv,MPI_Isend,MPI_Waitall\n";
+      rank_file.open("halo-p0.csv");
+      max_file.open("halo-max.csv");
+      max_file << "Neighbors,MPI_Irecv,MPI_Isend,MPI_Waitall\n";
+      avg_file.open("halo-avg.csv");
+      avg_file << "Neighbors,MPI_Irecv,MPI_Isend,MPI_Waitall\n";
     }
+    else {
+      rank_file.open("halo-p1.csv");
+    }
+    rank_file << "Neighbors,MPI_Irecv,MPI_Isend,MPI_Waitall\n";
 
     for (auto& counts : countss) {
       MPI_Barrier(MPI_COMM_WORLD);
       int num_neighbors = counts.size();
 
       for (int i = 0; i < 1000; i++) {
+        MPI_Barrier(MPI_COMM_WORLD);
+        int offset = 0;
+
         mpi_start_time = MPI_Wtime();
         for (int j = 0; j < num_neighbors; j++) {
           int count = counts[j];
-          MPI_Irecv(recv_buf, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD, &reqs[j]);
+          MPI_Irecv(recv_buf + offset, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD, &reqs[j]);
+          offset += count;
         }
         acc_times[0] += MPI_Wtime() - mpi_start_time;
 
         mpi_start_time = MPI_Wtime();
         for (int j = 0; j < num_neighbors; j++) {
           int count = counts[j];
-          MPI_Isend(send_buf, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD, &reqs[num_neighbors+j]);
+          MPI_Isend(send_buf + offset, count, MPI_DOUBLE, 1-myproc, MPI_MY_TAG, MPI_COMM_WORLD, &reqs[num_neighbors+j]);
+          offset += count;
         }
         acc_times[1] += MPI_Wtime() - mpi_start_time;
 
@@ -244,16 +265,25 @@ exchange_externals(MatrixType& A,
       }
 
       MPI_Barrier(MPI_COMM_WORLD);
-      MPI_Reduce(acc_times, global_acc_times, 3, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-      for (int i = 0; i < 3; i++) global_acc_times[i] /= numprocs;
+      MPI_Reduce(acc_times, acc_times_sum, 3, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+      MPI_Reduce(acc_times, acc_times_max, 3, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
+      for (int i = 0; i < 3; i++) acc_times_sum[i] /= numprocs;
+
       if (myproc == 0) {
-        myfile << num_neighbors << "," << global_acc_times[0] * 1000 << "," << global_acc_times[1] * 1000 << "," << global_acc_times[2] * 1000 << "\n";
+        max_file << num_neighbors << "," << acc_times_max[0] * 1000 << ","
+          << acc_times_max[1] * 1000 << "," << acc_times_max[2] * 1000 << "\n";
+        avg_file << num_neighbors << "," << acc_times_sum[0] * 1000 << ","
+          << acc_times_sum[1] * 1000 << "," << acc_times_sum[2] * 1000 << "\n";
       }
+      rank_file << num_neighbors << "," << acc_times[0] * 1000 << ","
+        << acc_times[1] * 1000 << "," << acc_times[2] * 1000 << "\n";
     }
 
     if (myproc == 0) {
-      myfile.close();
+      max_file.close();
+      avg_file.close();
     }
+    rank_file.close();
   }
 #endif
 
