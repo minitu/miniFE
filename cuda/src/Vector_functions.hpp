@@ -227,7 +227,7 @@ __global__ void dot_final_reduce_kernel(Scalar *d) {
 template<typename Vector>
 typename TypeTraits<typename Vector::ScalarType>::magnitude_type
   dot(const Vector& x,
-      const Vector& y)
+      const Vector& y, double* times)
 {
   typedef typename Vector::ScalarType Scalar;
   typedef typename TypeTraits<typename Vector::ScalarType>::magnitude_type magnitude;
@@ -269,7 +269,9 @@ typename TypeTraits<typename Vector::ScalarType>::magnitude_type
   nvtxRangeId_t r1=nvtxRangeStartA("MPI All Reduce");
   magnitude local_dot = result, global_dot = 0;
   MPI_Datatype mpi_dtype = TypeTraits<magnitude>::mpi_type();  
+  double mpi_start_time = MPI_Wtime();
   MPI_Allreduce(&local_dot, &global_dot, 1, mpi_dtype, MPI_SUM, MPI_COMM_WORLD);
+  if (times) times[8] = MPI_Wtime() - mpi_start_time;
   nvtxRangeEnd(r1);
 
   return global_dot;

@@ -69,8 +69,8 @@ bool breakdown(typename VectorType::ScalarType inner,
 //v and w are considered orthogonal if
 //  |inner| < 100 * ||v||_2 * ||w||_2 * epsilon
 
-  magnitude vnorm = std::sqrt(dot(v,v));
-  magnitude wnorm = std::sqrt(dot(w,w));
+  magnitude vnorm = std::sqrt(dot(v,v,NULL));
+  magnitude wnorm = std::sqrt(dot(w,w,NULL));
   return std::abs(inner) <= 100*vnorm*wnorm*std::numeric_limits<magnitude>::epsilon();
 }
 
@@ -147,7 +147,7 @@ cg_solve(OperatorType& A,
 
   TICK(); waxpby(one, b, -one, Ap, r); TOCK(tWAXPY);
 
-  TICK(); rtrans = dot(r, r); TOCK(tDOT);
+  TICK(); rtrans = dot(r, r, NULL); TOCK(tDOT);
 
   normr = std::sqrt(rtrans);
 
@@ -162,17 +162,19 @@ cg_solve(OperatorType& A,
   os << "brkdown_tol = " << brkdown_tol << std::endl;
 #endif
 
-#define TIME_COUNT 10
+#define TIME_COUNT 9
   // For timing
-  // 0: overhead
-  // 1-3: Count 1, MPI_Irecv, MPI_Send, MPI_Wait
-  // 4-6: Count 200
-  // 7-9: Count 40000
+  // 0: Iteration
+  // 1-2: Count 1, MPI_Irecv, MPI_Isend
+  // 3-4: Count 200, MPI_Irecv, MPI_Isend
+  // 5-6: Count 40000, MPI_Irecv, MPI_Isend
+  // 7: MPI_Waitall
+  // 8: MPI_Allreduce
   double times[TIME_COUNT] = {0.0};
   double acc_times[TIME_COUNT] = {0.0};
-  double global_acc_times[TIME_COUNT];
+  double acc_times_sum[TIME_COUNT];
+  double acc_times_max[TIME_COUNT];
   int call_counts[3] = {0}; // 0: Count 1, 1: Count 200, 2: Count 40000
-  int global_call_counts[3] = {0};
   double iter_start_time;
 
   for(LocalOrdinalType k=1; k <= max_iter && normr > tolerance; ++k) {
@@ -183,7 +185,7 @@ cg_solve(OperatorType& A,
     }
     else {
       oldrtrans = rtrans;
-      TICK(); rtrans = dot(r, r); TOCK(tDOT);
+      TICK(); rtrans = dot(r, r, times); TOCK(tDOT);
       magnitude_type beta = rtrans/oldrtrans;
       TICK(); waxpby(one, r, beta, p, p); TOCK(tWAXPY);
     }
@@ -199,7 +201,7 @@ cg_solve(OperatorType& A,
 
     TICK(); matvec(A, p, Ap, times, call_counts); TOCK(tMATVEC);
 
-    TICK(); p_ap_dot = dot(Ap, p); TOCK(tDOT);
+    TICK(); p_ap_dot = dot(Ap, p, times); TOCK(tDOT);
 
 #ifdef MINIFE_DEBUG
     os << "iter " << k << ", p_ap_dot = " << p_ap_dot;
@@ -229,9 +231,8 @@ cg_solve(OperatorType& A,
     TICK(); waxpby(one, x, alpha, p, x);
             waxpby(one, r, -alpha, Ap, r); TOCK(tWAXPY);
 
-    // Compute overhead time
+    // Compute iteration time
     times[0] = MPI_Wtime() - iter_start_time;
-    for (int i = 1; i < TIME_COUNT; i++) times[0] -= times[i];
 
     // Accumulate times
     for (int i = 0; i < TIME_COUNT; i++) acc_times[i] += times[i];
@@ -239,38 +240,56 @@ cg_solve(OperatorType& A,
     num_iters = k;
   }
 
-  MPI_Barrier(MPI_COMM_WORLD);
-  MPI_Reduce(acc_times, global_acc_times, TIME_COUNT, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-  MPI_Reduce(call_counts, global_call_counts, 3, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
-  global_acc_times[0] /= world_size;
-  global_acc_times[3] /= world_size;
-  for (int i = 1; i < TIME_COUNT; i++) {
-    if (i >= 1 && i <= 2) {
-      if (global_call_counts[0] > 0) global_acc_times[i] /= global_call_counts[0];
-      else global_acc_times[i] = 0.0;
-    }
-    else if (i >= 4 && i <= 5) {
-      if (global_call_counts[1] > 0) global_acc_times[i] /= global_call_counts[1];
-      else global_acc_times[i] = 0.0;
-    }
-    else if (i >= 7 && i <= 8) {
-      if (global_call_counts[2] > 0) global_acc_times[i] /= global_call_counts[2];
-      else global_acc_times[i] = 0.0;
-    }
+  // Get average iteration time
+  acc_times[0] /= num_iters;
+
+  // Get average time per iteration for each MPI call
+  for (int i = 1; i <= 2; i++) { // Count 1
+    if (call_counts[0] > 0) acc_times[i] /= call_counts[0];
+    else acc_times[i] = 0.0;
+  }
+  for (int i = 3; i <= 4; i++) { // Count 200
+    if (call_counts[1] > 0) acc_times[i] /= call_counts[1];
+    else acc_times[i] = 0.0;
+  }
+  for (int i = 5; i <= 6; i++) { // Count 40000
+    if (call_counts[2] > 0) acc_times[i] /= call_counts[2];
+    else acc_times[i] = 0.0;
   }
 
-  printf("[Rank %d] Call counts: %d, %d, %d\n", myproc, call_counts[0], call_counts[1], call_counts[2]);
+  // Get average time per iteration for MPI_Waitall and MPI_Allreduce
+  acc_times[7] /= num_iters;
+  acc_times[8] /= 2*num_iters-1;
+
+  MPI_Barrier(MPI_COMM_WORLD);
+
+  MPI_Reduce(acc_times, acc_times_sum, TIME_COUNT, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+  MPI_Reduce(acc_times, acc_times_max, TIME_COUNT, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
+
   if (myproc == 0) {
-    printf("[AVERAGE] Overhead: %.6lf us\n", global_acc_times[0] * 1000000 / num_iters);
-    printf("[AVERAGE] Count 1, MPI_Irecv: %.6lf us\n", global_acc_times[1] * 1000000);
-    printf("[AVERAGE] Count 1, MPI_Isend: %.6lf us\n", global_acc_times[2] * 1000000);
-    printf("[AVERAGE] Count 1, MPI_Wait: %.6lf us\n", global_acc_times[3] * 1000000 / num_iters);
-    printf("[AVERAGE] Count 200, MPI_Irecv: %.6lf us\n", global_acc_times[4] * 1000000);
-    printf("[AVERAGE] Count 200, MPI_Isend: %.6lf us\n", global_acc_times[5] * 1000000);
-    printf("[AVERAGE] Count 200, MPI_Wait: %.6lf us\n", global_acc_times[6] * 1000000);
-    printf("[AVERAGE] Count 40000, MPI_Irecv: %.6lf us\n", global_acc_times[7] * 1000000);
-    printf("[AVERAGE] Count 40000, MPI_Isend: %.6lf us\n", global_acc_times[8] * 1000000);
-    printf("[AVERAGE] Count 40000, MPI_Wait: %.6lf us\n", global_acc_times[9] * 1000000);
+    // Get average times over all MPI ranks
+    for (int i = 0; i < TIME_COUNT; i++) {
+      acc_times_sum[i] /= world_size;
+    }
+
+    printf("[Average] Iteration: %.6lf us\n", acc_times_sum[0] * 1000000);
+    printf("[Average] Count 1, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
+        acc_times_sum[1] * 1000000, acc_times_sum[2] * 1000000);
+    printf("[Average] Count 200, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
+        acc_times_sum[3] * 1000000, acc_times_sum[4] * 1000000);
+    printf("[Average] Count 40000, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
+        acc_times_sum[5] * 1000000, acc_times_sum[6] * 1000000);
+    printf("[Average] MPI_Waitall: %.6lf us, MPI_Allreduce: %.6lf us\n",
+        acc_times_sum[7] * 1000000, acc_times_sum[8] * 1000000);
+    printf("[Max] Iteration: %.6lf us\n", acc_times_max[0] * 1000000);
+    printf("[Max] Count 1, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
+        acc_times_max[1] * 1000000, acc_times_max[2] * 1000000);
+    printf("[Max] Count 200, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
+        acc_times_max[3] * 1000000, acc_times_max[4] * 1000000);
+    printf("[Max] Count 40000, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
+        acc_times_max[5] * 1000000, acc_times_max[6] * 1000000);
+    printf("[Max] MPI_Waitall: %.6lf us, MPI_Allreduce: %.6lf us\n",
+        acc_times_max[7] * 1000000, acc_times_max[8] * 1000000);
   }
   
 #ifdef HAVE_MPI

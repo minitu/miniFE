@@ -121,7 +121,7 @@ time_kernels(OperatorType& A,
   TICK();
   xdotp = 0;
   for(OrdinalType i=0; i<max_iter; ++i) {
-    xdotp += dot(x, p);
+    xdotp += dot(x, p, NULL);
   }
 #ifdef MINIFE_HAVE_CUDA
   cudaThreadSynchronize();
