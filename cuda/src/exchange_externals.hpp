@@ -37,7 +37,6 @@
 #endif
 
 #include <outstream.hpp>
-#include <fstream>
 
 #include <TypeTraits.hpp>
 
@@ -222,19 +221,6 @@ exchange_externals(MatrixType& A,
     double acc_times_sum[3] = {0.0};
     double acc_times_max[3] = {0.0};
 
-    std::ofstream rank_file, max_file, avg_file;
-    if (myproc == 0) {
-      rank_file.open("halo-p0.csv");
-      max_file.open("halo-max.csv");
-      max_file << "Neighbors,MPI_Irecv,MPI_Isend,MPI_Waitall\n";
-      avg_file.open("halo-avg.csv");
-      avg_file << "Neighbors,MPI_Irecv,MPI_Isend,MPI_Waitall\n";
-    }
-    else {
-      rank_file.open("halo-p1.csv");
-    }
-    rank_file << "Neighbors,MPI_Irecv,MPI_Isend,MPI_Waitall\n";
-
     for (auto& counts : countss) {
       MPI_Barrier(MPI_COMM_WORLD);
       int num_neighbors = counts.size();
@@ -270,20 +256,14 @@ exchange_externals(MatrixType& A,
       for (int i = 0; i < 3; i++) acc_times_sum[i] /= numprocs;
 
       if (myproc == 0) {
-        max_file << num_neighbors << "," << acc_times_max[0] * 1000 << ","
-          << acc_times_max[1] * 1000 << "," << acc_times_max[2] * 1000 << "\n";
-        avg_file << num_neighbors << "," << acc_times_sum[0] * 1000 << ","
-          << acc_times_sum[1] * 1000 << "," << acc_times_sum[2] * 1000 << "\n";
+        std::cout << "[Average] Neighbors: " << num_neighbors << ", MPI_Irecv: "
+          << acc_times_sum[0] * 1000 << ", MPI_Isend: " << acc_times_sum[1] * 1000
+          << ", MPI_Waitall: " << acc_times_sum[2] * 1000 << std::endl;
+        std::cout << "[Max] Neighbors: " << num_neighbors << ", MPI_Irecv: "
+          << acc_times_max[0] * 1000 << ", MPI_Isend: " << acc_times_max[1] * 1000
+          << ", MPI_Waitall: " << acc_times_max[2] * 1000 << std::endl;
       }
-      rank_file << num_neighbors << "," << acc_times[0] * 1000 << ","
-        << acc_times[1] * 1000 << "," << acc_times[2] * 1000 << "\n";
     }
-
-    if (myproc == 0) {
-      max_file.close();
-      avg_file.close();
-    }
-    rank_file.close();
   }
 #endif
 
