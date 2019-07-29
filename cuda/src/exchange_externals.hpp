@@ -214,8 +214,8 @@ exchange_externals(MatrixType& A,
     MPI_Request reqs[100];
     MPI_Status stats[100];
 
-    double* recv_buf = (double*)std::malloc(sizeof(double) * 1048576);
-    double* send_buf = (double*)std::malloc(sizeof(double) * 1048576);
+    double* recv_buf = (double*)std::malloc(sizeof(double) * 10485760);
+    double* send_buf = (double*)std::malloc(sizeof(double) * 10485760);
 
     double acc_times[3] = {0.0};
     double acc_times_sum[3] = {0.0};
