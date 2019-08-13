@@ -186,6 +186,7 @@ cg_solve(OperatorType& A,
     else {
       oldrtrans = rtrans;
       TICK(); rtrans = dot(r, r, times); TOCK(tDOT);
+      acc_times[8] += times[8];
       magnitude_type beta = rtrans/oldrtrans;
       TICK(); waxpby(one, r, beta, p, p); TOCK(tWAXPY);
     }
@@ -202,6 +203,7 @@ cg_solve(OperatorType& A,
     TICK(); matvec(A, p, Ap, times, call_counts); TOCK(tMATVEC);
 
     TICK(); p_ap_dot = dot(Ap, p, times); TOCK(tDOT);
+    acc_times[8] += times[8];
 
 #ifdef MINIFE_DEBUG
     os << "iter " << k << ", p_ap_dot = " << p_ap_dot;
@@ -233,9 +235,10 @@ cg_solve(OperatorType& A,
 
     // Compute iteration time
     times[0] = MPI_Wtime() - iter_start_time;
+    acc_times[0] += times[0];
 
-    // Accumulate times
-    for (int i = 0; i < TIME_COUNT; i++) acc_times[i] += times[i];
+    // FIXME WRONG!!! Accumulate times
+    //for (int i = 0; i < TIME_COUNT; i++) acc_times[i] += times[i];
 
     num_iters = k;
   }
