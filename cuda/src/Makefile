@@ -18,11 +18,11 @@ CXXFLAGS = -O3
 # the exchange_externals function.
 
 #CPPFLAGS = -I. -I../utils -I../fem $(MINIFE_TYPES) $(MINIFE_MATRIX_TYPE) -DHAVE_MPI -DMPICH_IGNORE_CXX_SEEK  #-DMINIFE_DEBUG
-CPPFLAGS = -I. -I../utils -I../fem $(MINIFE_TYPES) $(MINIFE_MATRIX_TYPE) -DHAVE_MPI -DMPICH_IGNORE_CXX_SEEK -DMATVEC_OVERLAP #-DGPUDIRECT #-DMINIFE_DEBUG
+CPPFLAGS = -std=c++11 -g -I. -I../utils -I../fem $(MINIFE_TYPES) $(MINIFE_MATRIX_TYPE) -DHAVE_MPI -DMPICH_IGNORE_CXX_SEEK #-DMATVEC_OVERLAP #-DGPUDIRECT #-DMINIFE_DEBUG
 #CPPFLAGS = -I. -I../utils -I../fem $(MINIFE_TYPES) $(MINIFE_MATRIX_TYPE) #-DHAVE_MPI -DMPICH_IGNORE_CXX_SEEK -DMATVEC_OVERLAP #-DGPUDIRECT #-DMATVEC_OVERLAP #-DMINIFE_DEBUG
 #CPPFLAGS = -I. -I../utils -I../fem $(MINIFE_TYPES) $(MINIFE_MATRIX_TYPE) -DHAVE_MPI -DMPICH_IGNORE_CXX_SEEK -DGPUDIRECT -DMATVEC_OVERLAP #-DMINIFE_DEBUG
 
-LDFLAGS = -L${CUDA_HOME}/lib64 -fopenmp
+LDFLAGS = -g -L${CUDA_HOME}/lib64 -fopenmp #-L${PPT_ROOT}/lib64 -lmpitrace -lotf2trace #-Wl,--hash-style=sysv -Wl,--emit-stub-syms
 LIBS = -ldl -lm -lrt -lnsl -lutil -lnvToolsExt -lcudart
 
 # The MPICH_IGNORE_CXX_SEEK macro is required for some mpich versions,
@@ -39,7 +39,7 @@ MPICFLAGS=-I$(MPI_HOME)/include -pthread
 
 NVCCFLAGS=-lineinfo -gencode=arch=compute_70,code=\"sm_70,compute_70\"
 
-NVCC=nvcc -Xcompiler -fopenmp
+NVCC=nvcc -Xcompiler -fopenmp -Xptxas -dlcm=cg
 CXX=mpicxx
 CC=mpicc
 
