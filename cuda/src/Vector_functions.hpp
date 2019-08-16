@@ -269,6 +269,8 @@ typename TypeTraits<typename Vector::ScalarType>::magnitude_type
   nvtxRangeId_t r1=nvtxRangeStartA("MPI All Reduce");
   magnitude local_dot = result, global_dot = 0;
   MPI_Datatype mpi_dtype = TypeTraits<magnitude>::mpi_type();  
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Barrier(MPI_COMM_WORLD);
   double mpi_start_time = MPI_Wtime();
   MPI_Allreduce(&local_dot, &global_dot, 1, mpi_dtype, MPI_SUM, MPI_COMM_WORLD);
   if (times) times[8] = MPI_Wtime() - mpi_start_time;
