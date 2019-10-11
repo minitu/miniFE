@@ -55,6 +55,10 @@
 #include <miniFE_no_info.hpp>
 #endif
 
+#ifdef DUMPI_TRACE
+#include <dumpi/libdumpi/libdumpi.h>
+#endif
+
 //The following macros should be specified as compile-macros in the
 //makefile. They are defaulted here just in case...
 #ifndef MINIFE_SCALAR
@@ -145,7 +149,10 @@ int main(int argc, char** argv) {
 
   miniFE::CudaManager::initialize();
 
-
+#ifdef DUMPI_TRACE
+  // Turn off DUMPI tracing
+  libdumpi_disable_profiling();
+#endif
 
   miniFE::timer_type start_time = miniFE::mytimer();
 

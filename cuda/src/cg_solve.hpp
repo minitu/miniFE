@@ -40,6 +40,10 @@
 #define N_TIMER 11
 #define N_DUR 5
 
+#ifdef DUMPI_TRACE
+#include <dumpi/libdumpi/libdumpi.h>
+#endif
+
 namespace miniFE {
 
 template<typename Scalar>
@@ -177,6 +181,11 @@ cg_solve(OperatorType& A,
   }
   double durs_global[N_DUR*world_size];
 
+#ifdef DUMPI_TRACE
+  // Turn on DUMPI tracing
+  libdumpi_enable_profiling();
+#endif
+
   // Main iteration loop
   for(LocalOrdinalType k=1; k <= max_iter && normr > tolerance; ++k) {
     for (int i = 0; i < N_TIMER; i++) {
@@ -275,6 +284,11 @@ cg_solve(OperatorType& A,
 
     num_iters = k;
   }
+
+#ifdef DUMPI_TRACE
+  // Turn off DUMPI tracing
+  libdumpi_disable_profiling();
+#endif
 
 #ifdef MEASURE_TIME
   // Print average times
