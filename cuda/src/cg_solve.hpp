@@ -121,10 +121,12 @@ cg_solve(OperatorType& A,
 #ifdef HAVE_MPI
 #ifndef GPUDIRECT
   //TODO move outside?
+  /*
   cudaHostRegister(&p.coefs[0],ncols*sizeof(typename VectorType::ScalarType),0);
   cudaCheckError();
   if(A.send_buffer.size()>0) cudaHostRegister(&A.send_buffer[0],A.send_buffer.size()*sizeof(typename VectorType::ScalarType),0);
   cudaCheckError();
+  */
 #endif
 #endif
 
