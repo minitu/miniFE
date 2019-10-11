@@ -37,6 +37,9 @@
 
 #include <outstream.hpp>
 
+#define N_TIMER 11
+#define N_DUR 5
+
 namespace miniFE {
 
 template<typename Scalar>
@@ -69,8 +72,8 @@ bool breakdown(typename VectorType::ScalarType inner,
 //v and w are considered orthogonal if
 //  |inner| < 100 * ||v||_2 * ||w||_2 * epsilon
 
-  magnitude vnorm = std::sqrt(dot(v,v,NULL));
-  magnitude wnorm = std::sqrt(dot(w,w,NULL));
+  magnitude vnorm = std::sqrt(dot(v,v,NULL,-1));
+  magnitude wnorm = std::sqrt(dot(w,w,NULL,-1));
   return std::abs(inner) <= 100*vnorm*wnorm*std::numeric_limits<magnitude>::epsilon();
 }
 
@@ -96,10 +99,10 @@ cg_solve(OperatorType& A,
   timer_type t0 = 0, tWAXPY = 0, tDOT = 0, tMATVEC = 0, tMATVECDOT = 0;
   timer_type total_time = mytimer();
 
-  int myproc = 0, world_size;
+  int rank = 0, world_size;
 #ifdef HAVE_MPI
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
-  MPI_Comm_rank(MPI_COMM_WORLD, &myproc);
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 #endif
 
   if (!A.has_local_indices) {
@@ -144,16 +147,16 @@ cg_solve(OperatorType& A,
   TICK(); waxpby(one, x, zero, x, p); TOCK(tWAXPY);
 
   TICK();
-  matvec(A, p, Ap, NULL, NULL);
+  matvec(A, p, Ap, NULL);
   TOCK(tMATVEC);
 
   TICK(); waxpby(one, b, -one, Ap, r); TOCK(tWAXPY);
 
-  TICK(); rtrans = dot(r, r, NULL); TOCK(tDOT);
+  TICK(); rtrans = dot(r, r, NULL, -1); TOCK(tDOT);
 
   normr = std::sqrt(rtrans);
 
-  if (myproc == 0) {
+  if (rank == 0) {
     std::cout << "Initial Residual = "<< normr << std::endl;
   }
 
@@ -164,48 +167,45 @@ cg_solve(OperatorType& A,
   os << "brkdown_tol = " << brkdown_tol << std::endl;
 #endif
 
-#define TIME_COUNT 9
-  // For timing
-  // 0: Iteration
-  // 1-2: Count 1, MPI_Irecv, MPI_Isend
-  // 3-4: Count 200, MPI_Irecv, MPI_Isend
-  // 5-6: Count 40000, MPI_Irecv, MPI_Isend
-  // 7: MPI_Waitall
-  // 8: MPI_Allreduce
-  double times[TIME_COUNT] = {0.0};
-  double acc_times[TIME_COUNT] = {0.0};
-  double acc_times_sum[TIME_COUNT];
-  double acc_times_max[TIME_COUNT];
-  int call_counts[3] = {0}; // 0: Count 1, 1: Count 200, 2: Count 40000
-  double iter_start_time;
+  double times[N_TIMER];
+  double durs[N_DUR];
+  double durs_min[N_DUR];
+  double durs_sum[N_DUR];
+  for (int i = 0; i < N_DUR; i++) {
+    durs_min[i] = std::numeric_limits<double>::max();
+    durs_sum[i] = 0;
+  }
+  double durs_global[N_DUR*world_size];
 
+  // Main iteration loop
   for(LocalOrdinalType k=1; k <= max_iter && normr > tolerance; ++k) {
-    iter_start_time = MPI_Wtime();
+    for (int i = 0; i < N_TIMER; i++) {
+      times[i] = 0;
+    }
+    times[0] = MPI_Wtime();
 
     if (k == 1) {
       TICK(); waxpby(one, r, zero, r, p); TOCK(tWAXPY);
     }
     else {
       oldrtrans = rtrans;
-      TICK(); rtrans = dot(r, r, times); TOCK(tDOT);
-      acc_times[8] += times[8];
+      TICK(); rtrans = dot(r, r, times, 0); TOCK(tDOT);
       magnitude_type beta = rtrans/oldrtrans;
       TICK(); waxpby(one, r, beta, p, p); TOCK(tWAXPY);
     }
 
     normr = std::sqrt(rtrans);
 
-    if (myproc == 0 && (k%print_freq==0 || k==max_iter)) {
+    if (rank == 0 && (k%print_freq==0 || k==max_iter)) {
       std::cout << "Iteration = "<<k<<"   Residual = "<<normr<<std::endl;
     }
 
     magnitude_type alpha = 0;
     magnitude_type p_ap_dot = 0;
 
-    TICK(); matvec(A, p, Ap, times, call_counts); TOCK(tMATVEC);
+    TICK(); matvec(A, p, Ap, times); TOCK(tMATVEC);
 
-    TICK(); p_ap_dot = dot(Ap, p, times); TOCK(tDOT);
-    acc_times[8] += times[8];
+    TICK(); p_ap_dot = dot(Ap, p, times, 1); TOCK(tDOT);
 
 #ifdef MINIFE_DEBUG
     os << "iter " << k << ", p_ap_dot = " << p_ap_dot;
@@ -235,67 +235,112 @@ cg_solve(OperatorType& A,
     TICK(); waxpby(one, x, alpha, p, x);
             waxpby(one, r, -alpha, Ap, r); TOCK(tWAXPY);
 
-    // Compute iteration time
-    times[0] = MPI_Wtime() - iter_start_time;
-    acc_times[0] += times[0];
+    times[10] = MPI_Wtime();
 
-    // FIXME WRONG!!! Accumulate times
-    //for (int i = 0; i < TIME_COUNT; i++) acc_times[i] += times[i];
+#ifdef MEASURE_TIME
+    // Compute durations
+    durs[0] = times[3] - times[2]; // allreduce 1
+    durs[1] = times[6] - times[5]; // halo
+    durs[2] = times[9] - times[8]; // allreduce 2
+    durs[3] = (times[1] - times[0]) + (times[4] - times[3]) + (times[7] - times[6])
+      + (times[10] - times[9]); // overhead
+    durs[4] = (times[10] - times[0]) - (times[2] - times[1]) - (times[5] - times[4])
+      - (times[8] - times[7]); // iteration time (minus barrier times)
+
+    // Calculate min and sum but don't include 1st iteration
+    if (k > 1) {
+      for (int i = 0; i < N_DUR; i++) {
+        if (durs[i] < durs_min[i]) {
+          durs_min[i] = durs[i];
+        }
+        durs_sum[i] += durs[i];
+      }
+    }
+
+    // Print per-iteration times
+    MPI_Gather(durs, N_DUR, MPI_DOUBLE, durs_global, N_DUR, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    if (rank == 0) {
+      for (int j = 0; j < world_size; j++) {
+        // Convert to us
+        for (int i = 0; i < N_DUR; i++) {
+          durs_global[N_DUR*j+i] *= 1000000;
+        }
+        printf("[%03d,%03d] Allreduce 1: %.3lf, Halo: %.3lf, Allreduce 2: %.3lf, "
+            "Overhead (inc. kernels): %.3lf, Iteration: %.3lf\n", k, j,
+            durs_global[N_DUR*j], durs_global[N_DUR*j+1], durs_global[N_DUR*j+2],
+            durs_global[N_DUR*j+3], durs_global[N_DUR*j+4]);
+      }
+    }
+#endif
 
     num_iters = k;
   }
 
-  // Get average iteration time
-  acc_times[0] /= num_iters;
+#ifdef MEASURE_TIME
+  // Print average times
+  MPI_Gather(durs_sum, N_DUR, MPI_DOUBLE, durs_global, N_DUR, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  if (rank == 0) {
+    for (int j = 0; j < world_size; j++) {
+      // Compute average and convert to us
+      for (int i = 0; i < N_DUR; i++) {
+        durs_global[N_DUR*j+i] /= (num_iters-1);
+        durs_global[N_DUR*j+i] *= 1000000;
+      }
 
-  // Get average time per iteration for each MPI call
-  for (int i = 1; i <= 2; i++) { // Count 1
-    if (call_counts[0] > 0) acc_times[i] /= call_counts[0];
-    else acc_times[i] = 0.0;
+      printf("[average,%03d] Allreduce 1: %.3lf, Halo: %.3lf, Allreduce 2: %.3lf, "
+          "Overhead (inc. kernels): %.3lf, Iteration: %.3lf\n", j,
+          durs_global[N_DUR*j], durs_global[N_DUR*j+1], durs_global[N_DUR*j+2],
+          durs_global[N_DUR*j+3], durs_global[N_DUR*j+4]);
+    }
   }
-  for (int i = 3; i <= 4; i++) { // Count 200
-    if (call_counts[1] > 0) acc_times[i] /= call_counts[1];
-    else acc_times[i] = 0.0;
+
+  // Print minimum times
+  MPI_Gather(durs_min, N_DUR, MPI_DOUBLE, durs_global, N_DUR, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  if (rank == 0) {
+    for (int j = 0; j < world_size; j++) {
+      // Convert to us
+      for (int i = 0; i < N_DUR; i++) {
+        durs_global[N_DUR*j+i] *= 1000000;
+      }
+
+      printf("[minimum,%03d] Allreduce 1: %.3lf, Halo: %.3lf, Allreduce 2: %.3lf, "
+          "Overhead (inc. kernels): %.3lf, Iteration: %.3lf\n", j,
+          durs_global[N_DUR*j], durs_global[N_DUR*j+1], durs_global[N_DUR*j+2],
+          durs_global[N_DUR*j+3], durs_global[N_DUR*j+4]);
+    }
   }
-  for (int i = 5; i <= 6; i++) { // Count 40000
-    if (call_counts[2] > 0) acc_times[i] /= call_counts[2];
-    else acc_times[i] = 0.0;
-  }
 
-  // Get average time per iteration for MPI_Waitall and MPI_Allreduce
-  acc_times[7] /= num_iters;
-  acc_times[8] /= 2*num_iters-1;
+  // Print times of rank with maximum halo and maximum allreduce 1
+  if (rank == 0) {
+    double max_halo = 0;
+    double max_allreduce = 0;
+    int max_halo_rank = 0;
+    int max_allreduce_rank = 0;
 
-  MPI_Barrier(MPI_COMM_WORLD);
-
-  MPI_Reduce(acc_times, acc_times_sum, TIME_COUNT, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-  MPI_Reduce(acc_times, acc_times_max, TIME_COUNT, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
-
-  if (myproc == 0) {
-    // Get average times over all MPI ranks
-    for (int i = 0; i < TIME_COUNT; i++) {
-      acc_times_sum[i] /= world_size;
+    for (int j = 0; j < world_size; j++) {
+      if (durs_global[N_DUR*j+1] > max_halo) {
+        max_halo = durs_global[N_DUR*j+1];
+        max_halo_rank = j;
+      }
+      if (durs_global[N_DUR*j] > max_allreduce) {
+        max_allreduce = durs_global[N_DUR*j];
+        max_allreduce_rank = j;
+      }
     }
 
-    printf("[Average] Iteration: %.6lf us\n", acc_times_sum[0] * 1000000);
-    printf("[Average] Count 1, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
-        acc_times_sum[1] * 1000000, acc_times_sum[2] * 1000000);
-    printf("[Average] Count 200, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
-        acc_times_sum[3] * 1000000, acc_times_sum[4] * 1000000);
-    printf("[Average] Count 40000, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
-        acc_times_sum[5] * 1000000, acc_times_sum[6] * 1000000);
-    printf("[Average] MPI_Waitall: %.6lf us, MPI_Allreduce: %.6lf us\n",
-        acc_times_sum[7] * 1000000, acc_times_sum[8] * 1000000);
-    printf("[Max] Iteration: %.6lf us\n", acc_times_max[0] * 1000000);
-    printf("[Max] Count 1, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
-        acc_times_max[1] * 1000000, acc_times_max[2] * 1000000);
-    printf("[Max] Count 200, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
-        acc_times_max[3] * 1000000, acc_times_max[4] * 1000000);
-    printf("[Max] Count 40000, MPI_Irecv: %.6lf us, MPI_Isend: %.6lf us\n",
-        acc_times_max[5] * 1000000, acc_times_max[6] * 1000000);
-    printf("[Max] MPI_Waitall: %.6lf us, MPI_Allreduce: %.6lf us\n",
-        acc_times_max[7] * 1000000, acc_times_max[8] * 1000000);
+    printf("[max halo] Allreduce 1: %.3lf, Halo: %.3lf, Allreduce 2: %.3lf, "
+        "Overhead (inc. kernels): %.3lf, Iteration: %.3lf\n",
+        durs_global[N_DUR*max_halo_rank], durs_global[N_DUR*max_halo_rank+1],
+        durs_global[N_DUR*max_halo_rank+2], durs_global[N_DUR*max_halo_rank+3],
+        durs_global[N_DUR*max_halo_rank+4]);
+
+    printf("[max allreduce] Allreduce 1: %.3lf, Halo: %.3lf, Allreduce 2: %.3lf, "
+        "Overhead (inc. kernels): %.3lf, Iteration: %.3lf\n",
+        durs_global[N_DUR*max_allreduce_rank], durs_global[N_DUR*max_allreduce_rank+1],
+        durs_global[N_DUR*max_allreduce_rank+2], durs_global[N_DUR*max_allreduce_rank+3],
+        durs_global[N_DUR*max_allreduce_rank+4]);
   }
+#endif
   
 #ifdef HAVE_MPI
 #ifndef GPUDIRECT

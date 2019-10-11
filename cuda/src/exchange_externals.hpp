@@ -54,7 +54,7 @@ template<typename MatrixType,
          typename VectorType>
 void
 exchange_externals(MatrixType& A,
-                   VectorType& x, double* times, int* call_counts)
+                   VectorType& x, double* times)
 {
 #ifdef HAVE_MPI
 #ifdef MINIFE_DEBUG
@@ -123,28 +123,28 @@ exchange_externals(MatrixType& A,
 
   MPI_Datatype mpi_dtype = TypeTraits<Scalar>::mpi_type();
 
-  double mpi_start_time;
+  //wait for packing or copy to host to finish
+  cudaEventSynchronize(CudaManager::e1);
+  cudaCheckError();
 
   MPI_Request mpi_request[num_neighbors*2];
   MPI_Status mpi_status[num_neighbors*2];
 
+  if (times) times[4] = MPI_Wtime();
+
+#ifdef MEASURE_TIME
   MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Barrier(MPI_COMM_WORLD);
+#endif
+
+  if (times) times[5] = MPI_Wtime();
 
   // Post receives first
   for(int i=0; i<num_neighbors; ++i) {
     int n_recv = recv_length[i];
-    mpi_start_time = MPI_Wtime();
     MPI_Irecv(x_external, n_recv, mpi_dtype, neighbors[i], MPI_MY_TAG,
               MPI_COMM_WORLD, &mpi_request[i]);
     x_external += n_recv;
-
-    int type;
-    if (n_recv == 1) type = 0;
-    if (n_recv > 100 && n_recv < 300) type = 1; // Count 200
-    if (n_recv > 39000 && n_recv < 41000) type = 2; // Count 40000
-    if (call_counts != NULL) call_counts[type]++; // Only at receive
-
-    if (times) times[1+type*2] = MPI_Wtime() - mpi_start_time;
   }
 
 #ifdef MINIFE_DEBUG
@@ -161,23 +161,12 @@ exchange_externals(MatrixType& A,
 #else
   Scalar* s_buffer = &send_buffer[0];
 #endif
-  //wait for packing or copy to host to finish
-  cudaEventSynchronize(CudaManager::e1);
-  cudaCheckError();
 
   for(int i=0; i<num_neighbors; ++i) {
     int n_send = send_length[i];
-    mpi_start_time = MPI_Wtime();
     MPI_Isend(s_buffer, n_send, MPI_DOUBLE, neighbors[i], MPI_MY_TAG,
              MPI_COMM_WORLD, &mpi_request[num_neighbors+i]);
     s_buffer += n_send;
-
-    int type;
-    if (n_send == 1) type = 0;
-    if (n_send > 100 && n_send < 300) type = 1; // Count 200
-    if (n_send > 39000 && n_send < 41000) type = 2; // Count 40000
-
-    if (times) times[2+type*2] = MPI_Wtime() - mpi_start_time;
   }
 
 #ifdef MINIFE_DEBUG
@@ -188,9 +177,9 @@ exchange_externals(MatrixType& A,
   // Complete the reads issued above
   //
 
-  mpi_start_time = MPI_Wtime();
   MPI_Waitall(num_neighbors*2, mpi_request, mpi_status);
-  if (times) times[7] = MPI_Wtime() - mpi_start_time;
+
+  if (times) times[6] = MPI_Wtime();
   
 #ifndef GPUDIRECT
   x.copyToDeviceAsync(local_nrow,CudaManager::s1);
