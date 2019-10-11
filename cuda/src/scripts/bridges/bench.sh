@@ -17,5 +17,5 @@ export I_MPI_JOB_RESPECT_PROCESS_PLACEMENT=0
 for iter in 1 2 3
 do
   echo "Running iteration $iter"
-  mpiexec -print-rank-map -n $ranks -ppn 2 -genv I_MPI_DEBUG=5 ./miniFE-b -nx 400 -ny 400 -nz 240 > miniFE-n"$ranks"-"$iter".out
+  mpiexec -print-rank-map -n $ranks -ppn 2 -genv I_MPI_DEBUG=5 ./miniFE-b -nx 400 -ny 400 -nz 400 > miniFE-n"$ranks"-"$iter".out
 done
