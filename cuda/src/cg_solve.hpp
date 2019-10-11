@@ -300,10 +300,12 @@ cg_solve(OperatorType& A,
 #ifdef HAVE_MPI
 #ifndef GPUDIRECT
   //TODO move outside?
+  /*
   cudaHostUnregister(&p.coefs[0]);
   cudaCheckError();
   if(A.send_buffer.size()>0) cudaHostUnregister(&A.send_buffer[0]);
   cudaCheckError();
+  */
 #endif
 #endif
 
