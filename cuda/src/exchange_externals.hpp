@@ -129,6 +129,7 @@ exchange_externals(MatrixType& A,
 
   MPI_Request mpi_request[num_neighbors*2];
   MPI_Status mpi_status[num_neighbors*2];
+  int req_i = 0;
 
   if (times) times[4] = MPI_Wtime();
 
@@ -142,8 +143,10 @@ exchange_externals(MatrixType& A,
   // Post receives first
   for(int i=0; i<num_neighbors; ++i) {
     int n_recv = recv_length[i];
-    MPI_Irecv(x_external, n_recv, mpi_dtype, neighbors[i], MPI_MY_TAG,
-              MPI_COMM_WORLD, &mpi_request[i]);
+    if (neighbors[i] >= 0) {
+      MPI_Irecv(x_external, n_recv, mpi_dtype, neighbors[i], MPI_MY_TAG,
+                MPI_COMM_WORLD, &mpi_request[req_i++]);
+    }
     x_external += n_recv;
   }
 
@@ -164,8 +167,10 @@ exchange_externals(MatrixType& A,
 
   for(int i=0; i<num_neighbors; ++i) {
     int n_send = send_length[i];
-    MPI_Isend(s_buffer, n_send, MPI_DOUBLE, neighbors[i], MPI_MY_TAG,
-             MPI_COMM_WORLD, &mpi_request[num_neighbors+i]);
+    if (neighbors[i] >= 0) {
+      MPI_Isend(s_buffer, n_send, MPI_DOUBLE, neighbors[i], MPI_MY_TAG,
+               MPI_COMM_WORLD, &mpi_request[req_i++]);
+    }
     s_buffer += n_send;
   }
 
@@ -177,7 +182,7 @@ exchange_externals(MatrixType& A,
   // Complete the reads issued above
   //
 
-  MPI_Waitall(num_neighbors*2, mpi_request, mpi_status);
+  MPI_Waitall(req_i, mpi_request, mpi_status);
 
   if (times) times[6] = MPI_Wtime();
   
