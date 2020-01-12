@@ -488,6 +488,9 @@ namespace miniFE {
 #ifndef MATVEC_OVERLAP
           exchange_externals(A, x, times);
           matvec_ell_kernel<<<NUM_BLOCKS,BLOCK_SIZE,0,CudaManager::s1>>>(A.getPOD(), x.getPOD(), y.getPOD());
+#ifdef MEASURE_TIME
+          cudaStreamSynchronize(CudaManager::s1);
+#endif
 #else
           nvtxRangeId_t r1=nvtxRangeStartA("begin exchange");
           begin_exchange_externals(A,x);

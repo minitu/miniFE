@@ -37,9 +37,6 @@
 
 #include <outstream.hpp>
 
-#define N_TIMER 11
-#define N_DUR 5
-
 #ifdef DUMPI_TRACE
 #include <dumpi/libdumpi/libdumpi.h>
 #endif
@@ -76,8 +73,8 @@ bool breakdown(typename VectorType::ScalarType inner,
 //v and w are considered orthogonal if
 //  |inner| < 100 * ||v||_2 * ||w||_2 * epsilon
 
-  magnitude vnorm = std::sqrt(dot(v,v,NULL,-1));
-  magnitude wnorm = std::sqrt(dot(w,w,NULL,-1));
+  magnitude vnorm = std::sqrt(dot(v,v,-1));
+  magnitude wnorm = std::sqrt(dot(w,w,-1));
   return std::abs(inner) <= 100*vnorm*wnorm*std::numeric_limits<magnitude>::epsilon();
 }
 
@@ -156,7 +153,7 @@ cg_solve(OperatorType& A,
 
   TICK(); waxpby(one, b, -one, Ap, r); TOCK(tWAXPY);
 
-  TICK(); rtrans = dot(r, r, NULL, -1); TOCK(tDOT);
+  TICK(); rtrans = dot(r, r, -1); TOCK(tDOT);
 
   normr = std::sqrt(rtrans);
 
@@ -171,36 +168,46 @@ cg_solve(OperatorType& A,
   os << "brkdown_tol = " << brkdown_tol << std::endl;
 #endif
 
-  double times[N_TIMER];
-  double durs[N_DUR];
-  double durs_min[N_DUR];
-  double durs_sum[N_DUR];
-  for (int i = 0; i < N_DUR; i++) {
-    durs_min[i] = std::numeric_limits<double>::max();
-    durs_sum[i] = 0;
-  }
-  double durs_global[N_DUR*world_size];
-
 #ifdef DUMPI_TRACE
   // Turn on DUMPI tracing
   libdumpi_enable_profiling();
 #endif
 
+  double* iter_times;
+  double* dot1_times;
+  double* waxpby1_times;
+  double* matvec_times; // MPI_Irecvs, MPI_Isends, MPI_Waitall, Matvec total
+  double* dot2_times;
+  double* waxpby2_times;
+  double* waxpby3_times;
+
+  iter_times = (double*)malloc(sizeof(double) * max_iter);
+  dot1_times = (double*)malloc(sizeof(double) * max_iter);
+  waxpby1_times = (double*)malloc(sizeof(double) * max_iter);
+  matvec_times = (double*)malloc(sizeof(double) * max_iter * 4);
+  dot2_times = (double*)malloc(sizeof(double) * max_iter);
+  waxpby2_times = (double*)malloc(sizeof(double) * max_iter);
+  waxpby3_times = (double*)malloc(sizeof(double) * max_iter);
+
   // Main iteration loop
   for(LocalOrdinalType k=1; k <= max_iter && normr > tolerance; ++k) {
-    for (int i = 0; i < N_TIMER; i++) {
-      times[i] = 0;
-    }
-    times[0] = MPI_Wtime();
+    iter_times[k-1] = MPI_Wtime();
 
     if (k == 1) {
+      dot1_times[k-1] = 0;
+      waxpby1_times[k-1] = MPI_Wtime();
       TICK(); waxpby(one, r, zero, r, p); TOCK(tWAXPY);
+      waxpby1_times[k-1] = MPI_Wtime() - waxpby1_times[k-1];
     }
     else {
       oldrtrans = rtrans;
-      TICK(); rtrans = dot(r, r, times, 0); TOCK(tDOT);
+      dot1_times[k-1] = MPI_Wtime();
+      TICK(); rtrans = dot(r, r, 0); TOCK(tDOT);
+      dot1_times[k-1] = MPI_Wtime() - dot1_times[k-1];
       magnitude_type beta = rtrans/oldrtrans;
+      waxpby1_times[k-1] = MPI_Wtime();
       TICK(); waxpby(one, r, beta, p, p); TOCK(tWAXPY);
+      waxpby1_times[k-1] = MPI_Wtime() - waxpby1_times[k-1];
     }
 
     normr = std::sqrt(rtrans);
@@ -212,9 +219,13 @@ cg_solve(OperatorType& A,
     magnitude_type alpha = 0;
     magnitude_type p_ap_dot = 0;
 
-    TICK(); matvec(A, p, Ap, times); TOCK(tMATVEC);
+    matvec_times[(k-1)*4+3] = MPI_Wtime();
+    TICK(); matvec(A, p, Ap, &matvec_times[(k-1)*4]); TOCK(tMATVEC);
+    matvec_times[(k-1)*4+3] = MPI_Wtime() - matvec_times[(k-1)*4+3];
 
-    TICK(); p_ap_dot = dot(Ap, p, times, 1); TOCK(tDOT);
+    dot2_times[k-1] = MPI_Wtime();
+    TICK(); p_ap_dot = dot(Ap, p, 1); TOCK(tDOT);
+    dot2_times[k-1] = MPI_Wtime() - dot2_times[k-1];
 
 #ifdef MINIFE_DEBUG
     os << "iter " << k << ", p_ap_dot = " << p_ap_dot;
@@ -241,47 +252,16 @@ cg_solve(OperatorType& A,
     os << ", rtrans = " << rtrans << ", alpha = " << alpha << std::endl;
 #endif
 
-    TICK(); waxpby(one, x, alpha, p, x);
-            waxpby(one, r, -alpha, Ap, r); TOCK(tWAXPY);
+    TICK();
+    waxpby2_times[k-1] = MPI_Wtime();
+    waxpby(one, x, alpha, p, x);
+    waxpby2_times[k-1] = MPI_Wtime() - waxpby2_times[k-1];
+    waxpby3_times[k-1] = MPI_Wtime();
+    waxpby(one, r, -alpha, Ap, r);
+    waxpby3_times[k-1] = MPI_Wtime() - waxpby3_times[k-1];
+    TOCK(tWAXPY);
 
-    times[10] = MPI_Wtime();
-
-#ifdef MEASURE_TIME
-    // Compute durations
-    durs[0] = times[3] - times[2]; // allreduce 1
-    durs[1] = times[6] - times[5]; // halo
-    durs[2] = times[9] - times[8]; // allreduce 2
-    durs[3] = (times[1] - times[0]) + (times[4] - times[3]) + (times[7] - times[6])
-      + (times[10] - times[9]); // overhead
-    durs[4] = (times[10] - times[0]) - (times[2] - times[1]) - (times[5] - times[4])
-      - (times[8] - times[7]); // iteration time (minus barrier times)
-
-    // Calculate min and sum but don't include 1st iteration
-    if (k > 1) {
-      for (int i = 0; i < N_DUR; i++) {
-        if (durs[i] < durs_min[i]) {
-          durs_min[i] = durs[i];
-        }
-        durs_sum[i] += durs[i];
-      }
-    }
-
-    // Print per-iteration times
-    MPI_Gather(durs, N_DUR, MPI_DOUBLE, durs_global, N_DUR, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    if (rank == 0) {
-      for (int j = 0; j < world_size; j++) {
-        // Convert to us
-        for (int i = 0; i < N_DUR; i++) {
-          durs_global[N_DUR*j+i] *= 1000000;
-        }
-        printf("[%03d,%03d] Allreduce 1: %.3lf, Halo: %.3lf, Allreduce 2: %.3lf, "
-            "Overhead (inc. kernels): %.3lf, Iteration: %.3lf\n", k, j,
-            durs_global[N_DUR*j], durs_global[N_DUR*j+1], durs_global[N_DUR*j+2],
-            durs_global[N_DUR*j+3], durs_global[N_DUR*j+4]);
-      }
-    }
-#endif
-
+    iter_times[k-1] = MPI_Wtime() - iter_times[k-1];
     num_iters = k;
   }
 
@@ -291,68 +271,115 @@ cg_solve(OperatorType& A,
 #endif
 
 #ifdef MEASURE_TIME
-  // Print average times
-  MPI_Gather(durs_sum, N_DUR, MPI_DOUBLE, durs_global, N_DUR, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  if (rank == 0) {
-    for (int j = 0; j < world_size; j++) {
-      // Compute average and convert to us
-      for (int i = 0; i < N_DUR; i++) {
-        durs_global[N_DUR*j+i] /= (num_iters-1);
-        durs_global[N_DUR*j+i] *= 1000000;
-      }
+  double* iter_times_global;
+  double* dot1_times_global;
+  double* waxpby1_times_global;
+  double* matvec_times_global;
+  double* dot2_times_global;
+  double* waxpby2_times_global;
+  double* waxpby3_times_global;
 
-      printf("[average,%03d] Allreduce 1: %.3lf, Halo: %.3lf, Allreduce 2: %.3lf, "
-          "Overhead (inc. kernels): %.3lf, Iteration: %.3lf\n", j,
-          durs_global[N_DUR*j], durs_global[N_DUR*j+1], durs_global[N_DUR*j+2],
-          durs_global[N_DUR*j+3], durs_global[N_DUR*j+4]);
-    }
+  if (rank == 0) {
+    iter_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
+    dot1_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
+    waxpby1_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
+    matvec_times_global = (double*)malloc(sizeof(double) * world_size * max_iter * 4);
+    dot2_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
+    waxpby2_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
+    waxpby3_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
   }
 
-  // Print minimum times
-  MPI_Gather(durs_min, N_DUR, MPI_DOUBLE, durs_global, N_DUR, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gather(iter_times, max_iter, MPI_DOUBLE, iter_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gather(dot1_times, max_iter, MPI_DOUBLE, dot1_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gather(waxpby1_times, max_iter, MPI_DOUBLE, waxpby1_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gather(matvec_times, max_iter * 4, MPI_DOUBLE, matvec_times_global, max_iter * 4, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gather(dot2_times, max_iter, MPI_DOUBLE, dot2_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gather(waxpby2_times, max_iter, MPI_DOUBLE, waxpby2_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gather(waxpby3_times, max_iter, MPI_DOUBLE, waxpby3_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
   if (rank == 0) {
-    for (int j = 0; j < world_size; j++) {
-      // Convert to us
-      for (int i = 0; i < N_DUR; i++) {
-        durs_global[N_DUR*j+i] *= 1000000;
-      }
+    double waitall_max = 0;
+    double waitall_max_values[10];
+    double waitall_max_rank;
 
-      printf("[minimum,%03d] Allreduce 1: %.3lf, Halo: %.3lf, Allreduce 2: %.3lf, "
-          "Overhead (inc. kernels): %.3lf, Iteration: %.3lf\n", j,
-          durs_global[N_DUR*j], durs_global[N_DUR*j+1], durs_global[N_DUR*j+2],
-          durs_global[N_DUR*j+3], durs_global[N_DUR*j+4]);
+    for (int r = 0; r < world_size; r++) {
+      /*
+      for (int i = 0; i < max_iter; i++) {
+        printf("[Iteration %d]\n", i);
+        printf("DOT1: %.3lf\n", dot1_times_global[max_iter*r+i] * 1000000);
+        printf("WAXPBY1: %.3lf\n", waxpby1_times_global[max_iter*r+i] * 1000000);
+        printf("MATVEC: %.3lf (Irecv %.3lf -> Isend %.3lf -> Waitall %.3lf)\n",
+            matvec_times_global[(max_iter*r+i)*4+3] * 1000000, matvec_times_global[(max_iter*r+i)*4] * 1000000,
+            matvec_times_global[(max_iter*r+i)*4+1] * 1000000, matvec_times_global[(max_iter*r+i)*4+2] * 1000000);
+        printf("DOT2: %.3lf\n", dot2_times_global[max_iter*r+i] * 1000000);
+        printf("WAXPBY2: %.3lf\n", waxpby2_times_global[max_iter*r+i] * 1000000);
+        printf("WAXPBY3: %.3lf\n", waxpby3_times_global[max_iter*r+i] * 1000000);
+        printf("Iteration: %.3lf\n", iter_times_global[max_iter*r+i] * 1000000);
+      }
+      */
+      double dot1_average = 0;
+      double waxpby1_average = 0;
+      double matvec_averages[4] = {0, 0, 0, 0};
+      double dot2_average = 0;
+      double waxpby2_average = 0;
+      double waxpby3_average = 0;
+      double iter_average = 0;
+
+      // Exclude 1st iteration from average
+      for (int i = 1; i < max_iter; i++) {
+        dot1_average += dot1_times_global[max_iter*r+i];
+        waxpby1_average += waxpby1_times_global[max_iter*r+i];
+        for (int j = 0; j < 4; j++) {
+          matvec_averages[j] += matvec_times_global[(max_iter*r+i)*4+j];
+        }
+        dot2_average += dot2_times_global[max_iter*r+i];
+        waxpby2_average += waxpby2_times_global[max_iter*r+i];
+        waxpby3_average += waxpby3_times_global[max_iter*r+i];
+        iter_average += iter_times_global[max_iter*r+i];
+      }
+      dot1_average /= (max_iter-1);
+      waxpby1_average /= (max_iter-1);
+      for (int j = 0; j < 4; j++) {
+        matvec_averages[j] /= (max_iter-1);
+      }
+      dot2_average /= (max_iter-1);
+      waxpby2_average /= (max_iter-1);
+      waxpby3_average /= (max_iter-1);
+      iter_average /= (max_iter-1);
+
+      printf("[Rank %4d] DOT1: %.3lf, WAXPBY1: %.3lf, MATVEC: %.3lf "
+          "(Irecv %.3lf -> Isend %.3lf -> Waitall %.3lf), "
+          "DOT2: %.3lf, WAXPBY2: %.3lf, WAXPBY3: %.3lf, Iter: %.3lf\n",
+          r, dot1_average * 1000000, waxpby1_average * 1000000,
+          matvec_averages[3] * 1000000, matvec_averages[0] * 1000000,
+          matvec_averages[1] * 1000000, matvec_averages[2] * 1000000,
+          dot2_average * 1000000, waxpby2_average * 1000000,
+          waxpby3_average * 1000000, iter_average * 1000000);
+
+      // Find rank with maximum waitall time
+      if (matvec_averages[2] > waitall_max) {
+        waitall_max = matvec_averages[2];
+        waitall_max_rank = r;
+        waitall_max_values[0] = dot1_average;
+        waitall_max_values[1] = waxpby1_average;
+        waitall_max_values[2] = matvec_averages[3];
+        waitall_max_values[3] = matvec_averages[0];
+        waitall_max_values[4] = matvec_averages[1];
+        waitall_max_values[5] = matvec_averages[2];
+        waitall_max_values[6] = dot2_average;
+        waitall_max_values[7] = waxpby2_average;
+        waitall_max_values[8] = waxpby3_average;
+        waitall_max_values[9] = iter_average;
+      }
     }
-  }
 
-  // Print times of rank with maximum halo and maximum allreduce 1
-  if (rank == 0) {
-    double max_halo = 0;
-    double max_allreduce = 0;
-    int max_halo_rank = 0;
-    int max_allreduce_rank = 0;
-
-    for (int j = 0; j < world_size; j++) {
-      if (durs_global[N_DUR*j+1] > max_halo) {
-        max_halo = durs_global[N_DUR*j+1];
-        max_halo_rank = j;
-      }
-      if (durs_global[N_DUR*j] > max_allreduce) {
-        max_allreduce = durs_global[N_DUR*j];
-        max_allreduce_rank = j;
-      }
-    }
-
-    printf("[max halo] Allreduce 1: %.3lf, Halo: %.3lf, Allreduce 2: %.3lf, "
-        "Overhead (inc. kernels): %.3lf, Iteration: %.3lf\n",
-        durs_global[N_DUR*max_halo_rank], durs_global[N_DUR*max_halo_rank+1],
-        durs_global[N_DUR*max_halo_rank+2], durs_global[N_DUR*max_halo_rank+3],
-        durs_global[N_DUR*max_halo_rank+4]);
-
-    printf("[max allreduce] Allreduce 1: %.3lf, Halo: %.3lf, Allreduce 2: %.3lf, "
-        "Overhead (inc. kernels): %.3lf, Iteration: %.3lf\n",
-        durs_global[N_DUR*max_allreduce_rank], durs_global[N_DUR*max_allreduce_rank+1],
-        durs_global[N_DUR*max_allreduce_rank+2], durs_global[N_DUR*max_allreduce_rank+3],
-        durs_global[N_DUR*max_allreduce_rank+4]);
+    printf("[Max waitall, Rank %d] DOT1: %.3lf, WAXPBY1: %.3lf, MATVEC: %.3lf "
+        "(Irecv %.3lf -> Isend %.3lf -> Waitall %.3lf), "
+        "DOT2: %.3lf, WAXPBY2: %.3lf, WAXPBY3: %.3lf, Iter: %.3lf\n",
+        waitall_max_rank, waitall_max_values[0] * 1000000, waitall_max_values[1] * 1000000,
+        waitall_max_values[2] * 1000000, waitall_max_values[3] * 1000000, waitall_max_values[4] * 1000000,
+        waitall_max_values[5] * 1000000, waitall_max_values[6] * 1000000, waitall_max_values[7] * 1000000,
+        waitall_max_values[8] * 1000000, waitall_max_values[9] * 1000000);
   }
 #endif
   

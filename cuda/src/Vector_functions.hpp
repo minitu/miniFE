@@ -162,6 +162,10 @@ void
 
   waxpby_kernel<<<BLOCKS,BLOCK_SIZE,0,CudaManager::s1>>>(alpha, x.getPOD(), beta, y.getPOD(), w.getPOD());
   cudaCheckError();
+
+#ifdef MEASURE_TIME
+  cudaStreamSynchronize(CudaManager::s1);
+#endif
 }
 
 //-----------------------------------------------------------
@@ -227,7 +231,7 @@ __global__ void dot_final_reduce_kernel(Scalar *d) {
 template<typename Vector>
 typename TypeTraits<typename Vector::ScalarType>::magnitude_type
   dot(const Vector& x,
-      const Vector& y, double* times, int seq)
+      const Vector& y, int seq)
 {
   typedef typename Vector::ScalarType Scalar;
   typedef typename TypeTraits<typename Vector::ScalarType>::magnitude_type magnitude;
@@ -270,27 +274,7 @@ typename TypeTraits<typename Vector::ScalarType>::magnitude_type
   magnitude local_dot = result, global_dot = 0;
   MPI_Datatype mpi_dtype = TypeTraits<magnitude>::mpi_type();  
 
-  if (times) {
-    if (seq == 0) times[1] = MPI_Wtime();
-    else if (seq == 1) times[7] = MPI_Wtime();
-  }
-
-#ifdef MEASURE_TIME
-  MPI_Barrier(MPI_COMM_WORLD);
-  MPI_Barrier(MPI_COMM_WORLD);
-#endif
-
-  if (times) {
-    if (seq == 0) times[2] = MPI_Wtime();
-    else if (seq == 1) times[8] = MPI_Wtime();
-  }
-
   MPI_Allreduce(&local_dot, &global_dot, 1, mpi_dtype, MPI_SUM, MPI_COMM_WORLD);
-
-  if (times) {
-    if (seq == 0) times[3] = MPI_Wtime();
-    else if (seq == 1) times[9] = MPI_Wtime();
-  }
 
   nvtxRangeEnd(r1);
 
