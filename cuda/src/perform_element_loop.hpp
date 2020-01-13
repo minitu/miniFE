@@ -288,7 +288,7 @@ perform_element_loop_cuda(const simple_mesh_description<typename MatrixType::Glo
   thrust::fill(b.d_coefs.begin(),b.d_coefs.end(),0);
 
   const int BLOCK_SIZE=128;
-  const int NUM_BLOCKS=min((num_elems+BLOCK_SIZE-1)/BLOCK_SIZE,896); //64 blocks per SM
+  const int NUM_BLOCKS=min((num_elems+BLOCK_SIZE-1)/BLOCK_SIZE,static_cast<GlobalOrdinal>(896)); //64 blocks per SM
 
   cudaThreadSetCacheConfig(cudaFuncCachePreferL1);
   cudaDeviceSetSharedMemConfig(cudaSharedMemBankSizeEightByte);

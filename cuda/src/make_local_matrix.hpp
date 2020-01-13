@@ -68,7 +68,8 @@ struct PODColMarkMap {
       a = (a ^ 0xd3a2646c) + (a << 9);
       a = (a + 0xfd7046c5) + (a << 3);
       a = (a ^ 0xb55a4f09) + (a >> 16);
-      return abs(a^0x4a51e590) %  table_size;
+      a = (a ^ 0x4a51e590);
+      return (a > 0) ? (a % table_size) : (-a % table_size);
     }
  };
 
@@ -175,7 +176,7 @@ __global__ void renumberExternals(MatrixType A,
         //compute global column index
         col=-col -2;
         //find global column index entry
-        GlobalOrdinal loc=binarySearch(externals_list,0,num_externals-1,col);
+        GlobalOrdinal loc=binarySearch<GlobalOrdinal>(externals_list,0,num_externals-1,col);
         if(loc==-1) printf("Error unable to find column: %d, in external list\n",col);
         assert(loc!=-1);
         //map to new local index
@@ -245,6 +246,7 @@ make_local_matrix(MatrixType& A)
   int NUM_BLOCKS=min(MAX_BLOCKS,(int)(A.rows.size()+BLOCK_SIZE-1)/BLOCK_SIZE);
 
   renumberExternalsAndCount<<<NUM_BLOCKS,BLOCK_SIZE,0,CudaManager::s1>>>(A.getPOD(),start_row, stop_row, thrust::raw_pointer_cast(&num_cols_est[0]));
+  cudaCheckError();
 
   ColMarkMap<GlobalOrdinal> d_map(num_cols_est[0]*20); //TODO tune this multiplier and test
   BLOCK_SIZE=256;

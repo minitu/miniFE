@@ -109,6 +109,18 @@ struct TypeTraits<unsigned> {
 };
 
 template<>
+struct TypeTraits<unsigned long long> {
+  typedef unsigned magnitude_type;
+
+  static const char* name() {return "unsigned long long";}
+
+#ifdef HAVE_MPI
+  static MPI_Datatype mpi_type() {return MPI_UNSIGNED_LONG_LONG;}
+#endif
+};
+
+
+template<>
 struct TypeTraits<std::complex<float> > {
   typedef float magnitude_type;
 
