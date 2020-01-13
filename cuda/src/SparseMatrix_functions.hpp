@@ -217,7 +217,7 @@ namespace miniFE {
         else {
           //if we didn't get the local-row index using direct lookup, try a
           //more expensive binary-search:
-          local_row=binarySearch<GlobalOrdinal>(A.rows, 0, A.num_rows-1, row);
+          local_row=binarySearch(A.rows, 0, A.num_rows-1, row);
           if(local_row==-1)
             continue;
         }
@@ -315,7 +315,7 @@ namespace miniFE {
         GlobalOrdinal local_row = i;
         GlobalOrdinal row = A.rows[i];
         //if this row is a bc_row
-        if (binarySearch<GlobalOrdinal>(bc_rows,0,num_bc_rows-1,row)!=-1) continue;
+        if (binarySearch(bc_rows,0,num_bc_rows-1,row)!=-1) continue;
         Scalar sum=0;
 
         //zero row 
@@ -325,7 +325,7 @@ namespace miniFE {
 
           if(col==-1) break;
 
-          if(binarySearch<GlobalOrdinal>(bc_rows,0,num_bc_rows-1,col)!=-1) {
+          if(binarySearch(bc_rows,0,num_bc_rows-1,col)!=-1) {
             sum+=A.coefs[idx];
             A.coefs[idx]=0;
           }

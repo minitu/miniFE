@@ -3,7 +3,7 @@
 MINIFE_TYPES =  \
         -DMINIFE_SCALAR=double   \
         -DMINIFE_LOCAL_ORDINAL=int      \
-        -DMINIFE_GLOBAL_ORDINAL="unsigned long long"
+        -DMINIFE_GLOBAL_ORDINAL=int
 
 MINIFE_MATRIX_TYPE = -DMINIFE_ELL_MATRIX
 

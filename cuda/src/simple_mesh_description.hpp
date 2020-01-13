@@ -45,7 +45,7 @@ struct PODMap {
 
   __device__ __inline__
   GlobalOrdinal find_row_for_id(const GlobalOrdinal id) const {
-    GlobalOrdinal loc=lowerBound<GlobalOrdinal>(ids,0,n-1,id);
+    GlobalOrdinal loc=lowerBound(ids,0,n-1,id);
     
     //if id is what we are looking for return row directly
     if(id==ids[loc])
