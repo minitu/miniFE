@@ -30,7 +30,6 @@
 //@HEADER
 
 #include <map>
-#include <limits.h>
 
 #ifdef HAVE_MPI
 #include <mpi.h>
@@ -59,8 +58,7 @@ struct PODColMarkMap {
     }
     
     __device__ __inline__ bool try_update(GlobalOrdinal loc, GlobalOrdinal i) {
-      // FIXME
-      GlobalOrdinal old=atomicCAS((unsigned long long*)table+loc, ULLONG_MAX, (unsigned long long)i);
+      GlobalOrdinal old=atomicCAS(table+loc, -1, i);
       return (old==i || old==-1);
     }
     __device__ __inline__ GlobalOrdinal hash(GlobalOrdinal a) {
@@ -101,13 +99,12 @@ template<typename MatrixType, typename MapType>
 __global__ void markExternalColumnsInMap(MatrixType A, MapType map)
 {
   //TODO also set bitmap here?
-  typedef typename MatrixType::GlobalOrdinalType GlobalOrdinal;
-  typedef typename MatrixType::LocalOrdinalType LocalOrdinal;
-  for(GlobalOrdinal row_idx=blockIdx.x*blockDim.x+threadIdx.x; row_idx<A.num_rows; row_idx+=blockDim.x*gridDim.x)
+  typedef typename MatrixType::GlobalOrdinalType GlobalOrdinalType;
+  for(int row_idx=blockIdx.x*blockDim.x+threadIdx.x;row_idx<A.num_rows;row_idx+=blockDim.x*gridDim.x)
   {
-    GlobalOrdinal offset=row_idx;
-    for(LocalOrdinal j=0; j<A.num_cols_per_row; ++j) {
-      GlobalOrdinal col=A.cols[offset];
+    int offset=row_idx;
+    for(int j=0;j<A.num_cols_per_row;++j) {
+      GlobalOrdinalType col=A.cols[offset];
       if(col==-1) break;
       //if this column is larger than the number of rows in A it is an external
       if( col<-1 ) {
@@ -117,20 +114,18 @@ __global__ void markExternalColumnsInMap(MatrixType A, MapType map)
     }
   }
 }
-
 template <typename MatrixType> 
 __global__
 void renumberExternalsAndCount(MatrixType A, typename MatrixType::GlobalOrdinalType start_row, typename MatrixType::GlobalOrdinalType stop_row, typename MatrixType::GlobalOrdinalType *num_externals) {
-  typedef typename MatrixType::GlobalOrdinalType GlobalOrdinal;
-  typedef typename MatrixType::LocalOrdinalType LocalOrdinal;
-  GlobalOrdinal sum=0;
-  for(GlobalOrdinal row_idx=blockIdx.x*blockDim.x+threadIdx.x; row_idx<A.num_rows; row_idx+=blockDim.x*gridDim.x)
+  typedef typename MatrixType::GlobalOrdinalType GlobalOrdinalType;
+  GlobalOrdinalType sum=0;
+  for(int row_idx=blockIdx.x*blockDim.x+threadIdx.x;row_idx<A.num_rows;row_idx+=blockDim.x*gridDim.x)
   {
-    GlobalOrdinal offset=row_idx;
-    for(LocalOrdinal j=0;j<A.num_cols_per_row;++j) {
-      GlobalOrdinal col=A.cols[offset];
+    int offset=row_idx;
+    for(int j=0;j<A.num_cols_per_row;++j) {
+      GlobalOrdinalType col=A.cols[offset];
       if(col==-1) break;
-      GlobalOrdinal new_col;
+      GlobalOrdinalType new_col;
       //if this column is larger than the number of rows in A it is an external
       if( ( col<start_row || col>stop_row ) ) {
         new_col=-(col + 2);
@@ -144,7 +139,7 @@ void renumberExternalsAndCount(MatrixType A, typename MatrixType::GlobalOrdinalT
     }
   }
   //TODO reduce
-  __shared__ volatile GlobalOrdinal red[512];
+  __shared__ volatile GlobalOrdinalType red[512];
   red[threadIdx.x]=sum; 
   __syncthreads(); if(threadIdx.x<256)  {sum+=red[threadIdx.x+256]; red[threadIdx.x]=sum;} 
   __syncthreads(); if(threadIdx.x<128)  {sum+=red[threadIdx.x+128]; red[threadIdx.x]=sum;} 
@@ -159,7 +154,7 @@ void renumberExternalsAndCount(MatrixType A, typename MatrixType::GlobalOrdinalT
 
 
   if(threadIdx.x==0)
-    atomicAdd((unsigned long long*)num_externals,(unsigned long long)sum);
+    atomicAdd(num_externals,sum);
 }
 
 template <typename MatrixType> 
@@ -168,13 +163,12 @@ __global__ void renumberExternals(MatrixType A,
     typename MatrixType::GlobalOrdinalType num_externals,
     typename MatrixType::GlobalOrdinalType *local_index_map) {
   typedef typename MatrixType::GlobalOrdinalType GlobalOrdinal;
-  typedef typename MatrixType::LocalOrdinalType LocalOrdinal;
 
   //copy external_local_index to device
-  for(GlobalOrdinal row_idx=blockIdx.x*blockDim.x+threadIdx.x;row_idx<A.num_rows;row_idx+=blockDim.x*gridDim.x)
+  for(int row_idx=blockIdx.x*blockDim.x+threadIdx.x;row_idx<A.num_rows;row_idx+=blockDim.x*gridDim.x)
   {
-    GlobalOrdinal offset=row_idx;
-    for(LocalOrdinal j=0;j<A.num_cols_per_row;++j) {
+    int offset=row_idx;
+    for(int j=0;j<A.num_cols_per_row;++j) {
       GlobalOrdinal col=A.cols[offset];
       if(col==-1) break;
       //if external
@@ -278,13 +272,13 @@ make_local_matrix(MatrixType& A)
 #else
   #pragma omp parallel for
   for(size_t i=0; i<A.rows.size(); ++i) {
-    GlobalOrdinal row=A.rows[i];
-    LocalOrdinal local_row=A.get_local_row(row);
+    int row=A.rows[i];
+    int local_row=A.get_local_row(row);
     GlobalOrdinal* Acols = &A.cols[0];
     size_t row_len = 27;
 
     for(size_t j=0; j<row_len; ++j) {
-      GlobalOrdinal idx=local_row+j*A.pitch;
+      int idx=local_row+j*A.pitch;
       GlobalOrdinal cur_ind = Acols[idx];
       if(cur_ind==-1) break;
 
@@ -333,7 +327,7 @@ make_local_matrix(MatrixType& A)
   nvtxRangeEnd(r0);
 
   // Go through list of externals and find the processor that owns each
-  std::vector<LocalOrdinal> external_processor(num_external);
+  std::vector<int> external_processor(num_external);
   
   nvtxRangeId_t r00=nvtxRangeStartA("Set External Processors");
   #pragma omp parallel for
@@ -391,14 +385,14 @@ make_local_matrix(MatrixType& A)
   //TODO, This only updates Acols.  We could move externals and externel_local_index to the device and then do this there...
   #pragma omp parallel for
   for(size_t i=0; i<local_nrow; ++i) {
-    GlobalOrdinal row=A.rows[i]; 
-    LocalOrdinal local_row=A.get_local_row(row);
+    int row=A.rows[i]; 
+    int local_row=A.get_local_row(row);
     size_t row_len = 27;
     GlobalOrdinal* Acols = &A.cols[0];
 
     for(size_t j=0; j<row_len; ++j) {
-      GlobalOrdinal idx=local_row+j*A.pitch;
-      GlobalOrdinal cur_ind=A.cols[idx];
+      int idx=local_row+j*A.pitch;
+      int cur_ind=A.cols[idx];
       if(cur_ind==-1) break;
       if (Acols[idx] < 0) { // Change index values of externals
         GlobalOrdinal cur_ind = -Acols[idx] - 2;
@@ -408,12 +402,12 @@ make_local_matrix(MatrixType& A)
   }
 #endif
 
-  std::vector<LocalOrdinal> new_external_processor(num_external, 0);
+  std::vector<int> new_external_processor(num_external, 0);
 
   //TODO move to device
   nvtxRangeId_t r1=nvtxRangeStartA("assign new external");
   #pragma omp parallel for
-  for(LocalOrdinal i=0; i<num_external; ++i) {
+  for(int i=0; i<num_external; ++i) {
     new_external_processor[external_local_index[i]-local_nrow] =
       external_processor[i];
   }
@@ -472,7 +466,7 @@ make_local_matrix(MatrixType& A)
   ///////////////////////////////////////////////////////////////////////
   
   nvtxRangeId_t r3=nvtxRangeStartA("create recv list");
-  std::vector<LocalOrdinal> recv_list;
+  std::vector<int> recv_list;
   recv_list.push_back(new_external_processor[0]);
   for(LocalOrdinal i=1; i<num_external; ++i) {
     if (new_external_processor[i-1] != new_external_processor[i]) {
@@ -485,7 +479,7 @@ make_local_matrix(MatrixType& A)
   // Send a 0 length message to each of our recv neighbors
   //
 
-  std::vector<LocalOrdinal> send_list(num_send_neighbors, 0);
+  std::vector<int> send_list(num_send_neighbors, 0);
 
   //
   // first post receives, these are immediate receives
@@ -496,14 +490,14 @@ make_local_matrix(MatrixType& A)
 
   nvtxRangeId_t r4=nvtxRangeStartA("MPI Communication");
   std::vector<MPI_Request> request(num_send_neighbors);
-  for(GlobalOrdinal i=0; i<num_send_neighbors; ++i) {
+  for(int i=0; i<num_send_neighbors; ++i) {
     MPI_Irecv(&tmp_buffer[i], 1, mpi_dtype, MPI_ANY_SOURCE, MPI_MY_TAG,
               MPI_COMM_WORLD, &request[i]);
   }
 
   // send messages
 
-  for(GlobalOrdinal i=0; i<num_recv_neighbors; ++i) {
+  for(int i=0; i<num_recv_neighbors; ++i) {
     MPI_Send(&tmp_buffer[i], 1, mpi_dtype, recv_list[i], MPI_MY_TAG,
              MPI_COMM_WORLD);
   }
@@ -513,7 +507,7 @@ make_local_matrix(MatrixType& A)
   ///
 
   MPI_Status status;
-  for(GlobalOrdinal i=0; i<num_send_neighbors; ++i) {
+  for(int i=0; i<num_send_neighbors; ++i) {
     if (MPI_Wait(&request[i], &status) != MPI_SUCCESS) {
       std::cerr << "MPI_Wait error\n"<<std::endl;
       MPI_Abort(MPI_COMM_WORLD, -1);
@@ -531,9 +525,9 @@ make_local_matrix(MatrixType& A)
   //////////////////////////////////////////////////////////////////////
 
   nvtxRangeId_t r5=nvtxRangeStartA("add to recv_list");
-  for(GlobalOrdinal j=0; j<num_send_neighbors; ++j) {
+  for(int j=0; j<num_send_neighbors; ++j) {
     int found = 0;
-    for(GlobalOrdinal i=0; i<num_recv_neighbors; ++i) {
+    for(int i=0; i<num_recv_neighbors; ++i) {
       if (recv_list[i] == send_list[j]) found = 1;
     }
 
@@ -585,15 +579,15 @@ make_local_matrix(MatrixType& A)
   // First post receives
 
   nvtxRangeId_t r52=nvtxRangeStartA("MPI Communication");
-  for(GlobalOrdinal i=0; i<num_recv_neighbors; ++i) {
-    LocalOrdinal partner = recv_list[i];
+  for(int i=0; i<num_recv_neighbors; ++i) {
+    int partner = recv_list[i];
     MPI_Irecv(&lengths[i], 1, MPI_INT, partner, MPI_MY_TAG, MPI_COMM_WORLD,
               &request[i]);
   }
 
   std::vector<int>& neighbors = A.neighbors;
-  std::vector<LocalOrdinal>& recv_length = A.recv_length;
-  std::vector<LocalOrdinal>& send_length = A.send_length;
+  std::vector<int>& recv_length = A.recv_length;
+  std::vector<int>& send_length = A.send_length;
 
   neighbors.resize(num_recv_neighbors, 0);
   A.request.resize(num_recv_neighbors);
@@ -601,9 +595,9 @@ make_local_matrix(MatrixType& A)
   send_length.resize(num_recv_neighbors, 0);
 
   LocalOrdinal j = 0;
-  for(GlobalOrdinal i=0; i<num_recv_neighbors; ++i) {
-    LocalOrdinal start = j;
-    LocalOrdinal newlength = 0;
+  for(int i=0; i<num_recv_neighbors; ++i) {
+    int start = j;
+    int newlength = 0;
 
     //go through list of external elements until updating
     //processor changes
@@ -624,7 +618,7 @@ make_local_matrix(MatrixType& A)
 
   // Complete the receives of the number of externals
 
-  for(GlobalOrdinal i=0; i<num_recv_neighbors; ++i) {
+  for(int i=0; i<num_recv_neighbors; ++i) {
     if (MPI_Wait(&request[i], &status) != MPI_SUCCESS) {
       std::cerr << "MPI_Wait error\n"<<std::endl;
       MPI_Abort(MPI_COMM_WORLD, -1);
@@ -640,14 +634,14 @@ make_local_matrix(MatrixType& A)
   ++MPI_MY_TAG;
 
   j = 0;
-  for(GlobalOrdinal i=0; i<num_recv_neighbors; ++i) {
+  for(int i=0; i<num_recv_neighbors; ++i) {
     MPI_Irecv(&A.elements_to_send[j], send_length[i], mpi_dtype, neighbors[i],
               MPI_MY_TAG, MPI_COMM_WORLD, &request[i]);
     j += send_length[i];
   }
 
   j = 0;
-  for(GlobalOrdinal i=0; i<num_recv_neighbors; ++i) {
+  for(int i=0; i<num_recv_neighbors; ++i) {
     LocalOrdinal start = j;
     LocalOrdinal newlength = 0;
 
@@ -667,7 +661,7 @@ make_local_matrix(MatrixType& A)
 
   // receive from each neighbor the global index list of external elements
 
-  for(GlobalOrdinal i=0; i<num_recv_neighbors; ++i) {
+  for(int i=0; i<num_recv_neighbors; ++i) {
     if (MPI_Wait(&request[i], &status) != MPI_SUCCESS) {
       std::cerr << "MPI_Wait error\n"<<std::endl;
       MPI_Abort(MPI_COMM_WORLD, -1);
