@@ -487,10 +487,13 @@ namespace miniFE {
 
 #ifndef MATVEC_OVERLAP
           exchange_externals(A, x, times);
+
+          double gpu_start_time = MPI_Wtime();
           matvec_ell_kernel<<<NUM_BLOCKS,BLOCK_SIZE,0,CudaManager::s1>>>(A.getPOD(), x.getPOD(), y.getPOD());
 #ifdef MEASURE_TIME
           cudaStreamSynchronize(CudaManager::s1);
 #endif
+          if (times) times[4] = MPI_Wtime() - gpu_start_time;
 #else
           nvtxRangeId_t r1=nvtxRangeStartA("begin exchange");
           begin_exchange_externals(A,x);

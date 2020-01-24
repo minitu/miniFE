@@ -129,12 +129,14 @@ exchange_externals(MatrixType& A,
   MPI_Status mpi_status[num_neighbors*2];
   int req_i = 0;
 
+  if (times) times[0] = MPI_Wtime();
 #ifdef MEASURE_TIME
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
+  if (times) times[0] = MPI_Wtime() - times[0];
 
-  if (times) times[0] = MPI_Wtime();
+  if (times) times[1] = MPI_Wtime();
   // Post receives first
   for(int i=0; i<num_neighbors; ++i) {
     int n_recv = recv_length[i];
@@ -144,7 +146,7 @@ exchange_externals(MatrixType& A,
     }
     x_external += n_recv;
   }
-  if (times) times[0] = MPI_Wtime() - times[0];
+  if (times) times[1] = MPI_Wtime() - times[1];
 
 #ifdef MINIFE_DEBUG
   os << "launched recvs\n";
@@ -161,7 +163,7 @@ exchange_externals(MatrixType& A,
   Scalar* s_buffer = &send_buffer[0];
 #endif
 
-  if (times) times[1] = MPI_Wtime();
+  if (times) times[2] = MPI_Wtime();
   for(int i=0; i<num_neighbors; ++i) {
     int n_send = send_length[i];
     if (neighbors[i] >= 0) {
@@ -170,7 +172,7 @@ exchange_externals(MatrixType& A,
     }
     s_buffer += n_send;
   }
-  if (times) times[1] = MPI_Wtime() - times[1];
+  if (times) times[2] = MPI_Wtime() - times[2];
 
 #ifdef MINIFE_DEBUG
   os << "send to " << num_neighbors << std::endl;
@@ -180,9 +182,9 @@ exchange_externals(MatrixType& A,
   // Complete the reads issued above
   //
 
-  if (times) times[2] = MPI_Wtime();
+  if (times) times[3] = MPI_Wtime();
   MPI_Waitall(req_i, mpi_request, mpi_status);
-  if (times) times[2] = MPI_Wtime() - times[2];
+  if (times) times[3] = MPI_Wtime() - times[3];
   
 #ifndef GPUDIRECT
   x.copyToDeviceAsync(local_nrow,CudaManager::s1);

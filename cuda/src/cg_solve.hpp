@@ -73,8 +73,8 @@ bool breakdown(typename VectorType::ScalarType inner,
 //v and w are considered orthogonal if
 //  |inner| < 100 * ||v||_2 * ||w||_2 * epsilon
 
-  magnitude vnorm = std::sqrt(dot(v,v,-1));
-  magnitude wnorm = std::sqrt(dot(w,w,-1));
+  magnitude vnorm = std::sqrt(dot(v,v,-1,NULL));
+  magnitude wnorm = std::sqrt(dot(w,w,-1,NULL));
   return std::abs(inner) <= 100*vnorm*wnorm*std::numeric_limits<magnitude>::epsilon();
 }
 
@@ -153,7 +153,7 @@ cg_solve(OperatorType& A,
 
   TICK(); waxpby(one, b, -one, Ap, r); TOCK(tWAXPY);
 
-  TICK(); rtrans = dot(r, r, -1); TOCK(tDOT);
+  TICK(); rtrans = dot(r, r, -1, NULL); TOCK(tDOT);
 
   normr = std::sqrt(rtrans);
 
@@ -174,18 +174,18 @@ cg_solve(OperatorType& A,
 #endif
 
   double* iter_times;
-  double* dot1_times;
+  double* dot1_times; // MPI_Barrier, MPI_Allreduce, Dot total
   double* waxpby1_times;
-  double* matvec_times; // MPI_Irecvs, MPI_Isends, MPI_Waitall, Matvec total
+  double* matvec_times; // MPI_Barrier, MPI_Irecvs, MPI_Isends, MPI_Waitall, GPU kernel, Matvec total
   double* dot2_times;
   double* waxpby2_times;
   double* waxpby3_times;
 
   iter_times = (double*)malloc(sizeof(double) * max_iter);
-  dot1_times = (double*)malloc(sizeof(double) * max_iter);
+  dot1_times = (double*)malloc(sizeof(double) * max_iter * 3);
   waxpby1_times = (double*)malloc(sizeof(double) * max_iter);
-  matvec_times = (double*)malloc(sizeof(double) * max_iter * 4);
-  dot2_times = (double*)malloc(sizeof(double) * max_iter);
+  matvec_times = (double*)malloc(sizeof(double) * max_iter * 6);
+  dot2_times = (double*)malloc(sizeof(double) * max_iter * 3);
   waxpby2_times = (double*)malloc(sizeof(double) * max_iter);
   waxpby3_times = (double*)malloc(sizeof(double) * max_iter);
 
@@ -194,16 +194,18 @@ cg_solve(OperatorType& A,
     iter_times[k-1] = MPI_Wtime();
 
     if (k == 1) {
-      dot1_times[k-1] = 0;
+      dot1_times[(k-1)*3] = 0;
+      dot1_times[(k-1)*3+1] = 0;
+      dot1_times[(k-1)*3+2] = 0;
       waxpby1_times[k-1] = MPI_Wtime();
       TICK(); waxpby(one, r, zero, r, p); TOCK(tWAXPY);
       waxpby1_times[k-1] = MPI_Wtime() - waxpby1_times[k-1];
     }
     else {
       oldrtrans = rtrans;
-      dot1_times[k-1] = MPI_Wtime();
-      TICK(); rtrans = dot(r, r, 0); TOCK(tDOT);
-      dot1_times[k-1] = MPI_Wtime() - dot1_times[k-1];
+      dot1_times[(k-1)*3+2] = MPI_Wtime();
+      TICK(); rtrans = dot(r, r, 0, &dot1_times[(k-1)*3]); TOCK(tDOT);
+      dot1_times[(k-1)*3+2] = MPI_Wtime() - dot1_times[(k-1)*3+2];
       magnitude_type beta = rtrans/oldrtrans;
       waxpby1_times[k-1] = MPI_Wtime();
       TICK(); waxpby(one, r, beta, p, p); TOCK(tWAXPY);
@@ -219,13 +221,13 @@ cg_solve(OperatorType& A,
     magnitude_type alpha = 0;
     magnitude_type p_ap_dot = 0;
 
-    matvec_times[(k-1)*4+3] = MPI_Wtime();
-    TICK(); matvec(A, p, Ap, &matvec_times[(k-1)*4]); TOCK(tMATVEC);
-    matvec_times[(k-1)*4+3] = MPI_Wtime() - matvec_times[(k-1)*4+3];
+    matvec_times[(k-1)*6+5] = MPI_Wtime();
+    TICK(); matvec(A, p, Ap, &matvec_times[(k-1)*6]); TOCK(tMATVEC);
+    matvec_times[(k-1)*6+5] = MPI_Wtime() - matvec_times[(k-1)*6+5];
 
-    dot2_times[k-1] = MPI_Wtime();
-    TICK(); p_ap_dot = dot(Ap, p, 1); TOCK(tDOT);
-    dot2_times[k-1] = MPI_Wtime() - dot2_times[k-1];
+    dot2_times[(k-1)*3+2] = MPI_Wtime();
+    TICK(); p_ap_dot = dot(Ap, p, 1, &dot2_times[(k-1)*3]); TOCK(tDOT);
+    dot2_times[(k-1)*3+2] = MPI_Wtime() - dot2_times[(k-1)*3+2];
 
 #ifdef MINIFE_DEBUG
     os << "iter " << k << ", p_ap_dot = " << p_ap_dot;
@@ -281,25 +283,25 @@ cg_solve(OperatorType& A,
 
   if (rank == 0) {
     iter_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
-    dot1_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
+    dot1_times_global = (double*)malloc(sizeof(double) * world_size * max_iter * 3);
     waxpby1_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
-    matvec_times_global = (double*)malloc(sizeof(double) * world_size * max_iter * 4);
-    dot2_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
+    matvec_times_global = (double*)malloc(sizeof(double) * world_size * max_iter * 6);
+    dot2_times_global = (double*)malloc(sizeof(double) * world_size * max_iter * 3);
     waxpby2_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
     waxpby3_times_global = (double*)malloc(sizeof(double) * world_size * max_iter);
   }
 
   MPI_Gather(iter_times, max_iter, MPI_DOUBLE, iter_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  MPI_Gather(dot1_times, max_iter, MPI_DOUBLE, dot1_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gather(dot1_times, max_iter * 3, MPI_DOUBLE, dot1_times_global, max_iter * 3, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Gather(waxpby1_times, max_iter, MPI_DOUBLE, waxpby1_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  MPI_Gather(matvec_times, max_iter * 4, MPI_DOUBLE, matvec_times_global, max_iter * 4, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  MPI_Gather(dot2_times, max_iter, MPI_DOUBLE, dot2_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gather(matvec_times, max_iter * 6, MPI_DOUBLE, matvec_times_global, max_iter * 6, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gather(dot2_times, max_iter * 3, MPI_DOUBLE, dot2_times_global, max_iter * 3, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Gather(waxpby2_times, max_iter, MPI_DOUBLE, waxpby2_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Gather(waxpby3_times, max_iter, MPI_DOUBLE, waxpby3_times_global, max_iter, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
   if (rank == 0) {
     double waitall_max = 0;
-    double waitall_max_values[10];
+    double waitall_max_values[16];
     double waitall_max_rank;
 
     for (int r = 0; r < world_size; r++) {
@@ -317,69 +319,88 @@ cg_solve(OperatorType& A,
         printf("Iteration: %.3lf\n", iter_times_global[max_iter*r+i] * 1000000);
       }
       */
-      double dot1_average = 0;
+      double dot1_averages[3] = {0, 0, 0};
       double waxpby1_average = 0;
-      double matvec_averages[4] = {0, 0, 0, 0};
-      double dot2_average = 0;
+      double matvec_averages[6] = {0, 0, 0, 0, 0, 0};
+      double dot2_averages[3] = {0, 0, 0};
       double waxpby2_average = 0;
       double waxpby3_average = 0;
       double iter_average = 0;
 
       // Exclude 1st iteration from average
       for (int i = 1; i < max_iter; i++) {
-        dot1_average += dot1_times_global[max_iter*r+i];
-        waxpby1_average += waxpby1_times_global[max_iter*r+i];
-        for (int j = 0; j < 4; j++) {
-          matvec_averages[j] += matvec_times_global[(max_iter*r+i)*4+j];
+        for (int j = 0; j < 3; j++) {
+          dot1_averages[j] += dot1_times_global[(max_iter*r+i)*3+j];
         }
-        dot2_average += dot2_times_global[max_iter*r+i];
+        waxpby1_average += waxpby1_times_global[max_iter*r+i];
+        for (int j = 0; j < 6; j++) {
+          matvec_averages[j] += matvec_times_global[(max_iter*r+i)*6+j];
+        }
+        for (int j = 0; j < 3; j++) {
+          dot2_averages[j] += dot2_times_global[(max_iter*r+i)*3+j];
+        }
         waxpby2_average += waxpby2_times_global[max_iter*r+i];
         waxpby3_average += waxpby3_times_global[max_iter*r+i];
         iter_average += iter_times_global[max_iter*r+i];
       }
-      dot1_average /= (max_iter-1);
+      for (int j = 0; j < 3; j++) {
+        dot1_averages[j] /= (max_iter-1);
+      }
       waxpby1_average /= (max_iter-1);
-      for (int j = 0; j < 4; j++) {
+      for (int j = 0; j < 6; j++) {
         matvec_averages[j] /= (max_iter-1);
       }
-      dot2_average /= (max_iter-1);
+      for (int j = 0; j < 3; j++) {
+        dot2_averages[j] /= (max_iter-1);
+      }
       waxpby2_average /= (max_iter-1);
       waxpby3_average /= (max_iter-1);
       iter_average /= (max_iter-1);
 
-      printf("[Rank %4d] DOT1: %.3lf, WAXPBY1: %.3lf, MATVEC: %.3lf "
-          "(Irecv %.3lf -> Isend %.3lf -> Waitall %.3lf), "
-          "DOT2: %.3lf, WAXPBY2: %.3lf, WAXPBY3: %.3lf, Iter: %.3lf\n",
-          r, dot1_average * 1000000, waxpby1_average * 1000000,
-          matvec_averages[3] * 1000000, matvec_averages[0] * 1000000,
-          matvec_averages[1] * 1000000, matvec_averages[2] * 1000000,
-          dot2_average * 1000000, waxpby2_average * 1000000,
-          waxpby3_average * 1000000, iter_average * 1000000);
+      printf("[Rank %4d] Dot1: %.3lf (Barrier: %.3lf -> Allreduce: %.3lf), Waxpby1: %.3lf, "
+          "Matvec: %.3lf (Barrier: %.3lf -> Irecv %.3lf -> Isend %.3lf -> Waitall %.3lf -> "
+          "GPU: %.3lf), Dot2: %.3lf (Barrier: %.3lf -> Allreduce: %.3lf), Waxpby2: %.3lf, "
+          "Waxpby3: %.3lf, Iter: %.3lf\n",
+          r, dot1_averages[2] * 1000000, dot1_averages[0] * 1000000, dot1_averages[1] * 1000000,
+          waxpby1_average * 1000000, matvec_averages[5] * 1000000, matvec_averages[0] * 1000000,
+          matvec_averages[1] * 1000000, matvec_averages[2] * 1000000, matvec_averages[3] * 1000000,
+          matvec_averages[4] * 1000000, dot2_averages[2] * 1000000, dot2_averages[0] * 1000000,
+          dot2_averages[1] * 1000000, waxpby2_average * 1000000, waxpby3_average * 1000000,
+          iter_average * 1000000);
 
       // Find rank with maximum waitall time
-      if (matvec_averages[2] > waitall_max) {
-        waitall_max = matvec_averages[2];
+      if (matvec_averages[3] > waitall_max) {
+        waitall_max = matvec_averages[3];
         waitall_max_rank = r;
-        waitall_max_values[0] = dot1_average;
-        waitall_max_values[1] = waxpby1_average;
-        waitall_max_values[2] = matvec_averages[3];
-        waitall_max_values[3] = matvec_averages[0];
-        waitall_max_values[4] = matvec_averages[1];
-        waitall_max_values[5] = matvec_averages[2];
-        waitall_max_values[6] = dot2_average;
-        waitall_max_values[7] = waxpby2_average;
-        waitall_max_values[8] = waxpby3_average;
-        waitall_max_values[9] = iter_average;
+        waitall_max_values[0] = dot1_averages[2];
+        waitall_max_values[1] = dot1_averages[0];
+        waitall_max_values[2] = dot1_averages[1];
+        waitall_max_values[3] = waxpby1_average;
+        waitall_max_values[4] = matvec_averages[5];
+        waitall_max_values[5] = matvec_averages[0];
+        waitall_max_values[6] = matvec_averages[1];
+        waitall_max_values[7] = matvec_averages[2];
+        waitall_max_values[8] = matvec_averages[3];
+        waitall_max_values[9] = matvec_averages[4];
+        waitall_max_values[10] = dot2_averages[2];
+        waitall_max_values[11] = dot2_averages[0];
+        waitall_max_values[12] = dot2_averages[1];
+        waitall_max_values[13] = waxpby2_average;
+        waitall_max_values[14] = waxpby3_average;
+        waitall_max_values[15] = iter_average;
       }
     }
 
-    printf("[Max waitall, Rank %d] DOT1: %.3lf, WAXPBY1: %.3lf, MATVEC: %.3lf "
-        "(Irecv %.3lf -> Isend %.3lf -> Waitall %.3lf), "
-        "DOT2: %.3lf, WAXPBY2: %.3lf, WAXPBY3: %.3lf, Iter: %.3lf\n",
+    printf("[Max waitall, Rank %4d] Dot1: %.3lf (Barrier: %.3lf -> Allreduce: %.3lf), Waxpby1: %.3lf, "
+        "Matvec: %.3lf (Barrier: %.3lf -> Irecv %.3lf -> Isend %.3lf -> Waitall %.3lf -> "
+        "GPU: %.3lf), Dot2: %.3lf (Barrier: %.3lf -> Allreduce: %.3lf), Waxpby2: %.3lf, "
+        "Waxpby3: %.3lf, Iter: %.3lf\n",
         waitall_max_rank, waitall_max_values[0] * 1000000, waitall_max_values[1] * 1000000,
         waitall_max_values[2] * 1000000, waitall_max_values[3] * 1000000, waitall_max_values[4] * 1000000,
         waitall_max_values[5] * 1000000, waitall_max_values[6] * 1000000, waitall_max_values[7] * 1000000,
-        waitall_max_values[8] * 1000000, waitall_max_values[9] * 1000000);
+        waitall_max_values[8] * 1000000, waitall_max_values[9] * 1000000, waitall_max_values[10] * 1000000,
+        waitall_max_values[11] * 1000000, waitall_max_values[12] * 1000000, waitall_max_values[13] * 1000000,
+        waitall_max_values[14] * 1000000, waitall_max_values[15] * 1000000);
   }
 #endif
   
