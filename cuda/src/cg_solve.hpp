@@ -302,7 +302,7 @@ cg_solve(OperatorType& A,
   if (rank == 0) {
     double waitall_max = 0;
     double waitall_max_values[16];
-    double waitall_max_rank;
+    int waitall_max_rank;
 
     for (int r = 0; r < world_size; r++) {
       /*
